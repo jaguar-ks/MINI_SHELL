@@ -6,14 +6,19 @@
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/01/07 14:10:52 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:02:52 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <stdio.h>
+# include <dirent.h>
+# include <ttyent.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -22,8 +27,12 @@
 # include <limits.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/ioctl.h>
 # include <math.h>
+# include <termios.h>
+# include <termcap.h>
 
 typedef struct s_list
 {
