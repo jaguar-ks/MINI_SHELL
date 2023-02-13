@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   my_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 18:05:14 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/13 21:16:56 by faksouss         ###   ########.fr       */
+/*   Created: 2023/02/13 19:32:59 by faksouss          #+#    #+#             */
+/*   Updated: 2023/02/13 19:45:26 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#include"../inc/execution.h"
 
-# include "../libtool/inc/libft.h"
+int	main()
+{
+	char	cd[PATH_MAX];
 
-# define HEREDOC 1
-# define CMD 2
-# define FL 3
-# define APND 4
-# define TRNC 5
-# define INPT 6
-# define FLG 7
-
-#endif
+	if (getcwd(cd, sizeof(cd)))
+		printf("%s\n", cd);
+	else
+		perror("MINI_SHELL:");
+}
