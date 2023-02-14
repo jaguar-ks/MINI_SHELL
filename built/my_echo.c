@@ -6,11 +6,23 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:44:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/14 01:52:01 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/14 14:47:58 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/execution.h"
+
+void	where_to_write(char **av, int i, int *fd)
+{
+	if (av[i + 1] && av[i + 2] && (!ft_strncmp(av[i + 1], ">>", 3)
+			|| !ft_strncmp(av[i + 1], ">", 2)))
+	{
+		if (!ft_strncmp(av[i + 1], ">>", 3))
+			*fd = open(av[i + 2], O_CREAT, O_APPEND);
+		else if (!ft_strncmp(av[i + 1], ">", 2))
+			*fd = open(av[i + 2], O_CREAT, O_TRUNC);
+	}
+}
 
 int	main(int ac, char **av)
 {
@@ -19,21 +31,16 @@ int	main(int ac, char **av)
 
 	if (ac > 1)
 	{
-		i = (ft_strncmp(av[1], "-n", 3) == 0 || ft_strncmp(av[1], "<<", 3) == 0);
+		i = (ft_strncmp(av[1], "-n", 3) == 0
+				|| ft_strncmp(av[1], "<<", 3) == 0);
 		fd = 1;
 		while (av[++i])
 		{
 			if (!ft_strncmp(av[i], "<<", 3) || !ft_strncmp(av[i], "<", 2))
 				break ;
-			if (av[i + 1] && av[i + 2] && (!ft_strncmp(av[i + 1], ">>", 3) || !ft_strncmp(av[i + 1], ">", 2)))
-			{
-				if (!ft_strncmp(av[i + 1], ">>", 3))
-					fd = open(av[i + 2], O_CREAT, O_APPEND);
-				else if (!ft_strncmp(av[i + 1], ">", 2))
-					fd = open(av[i + 2], O_CREAT, O_TRUNC);
-				if (fd < 0)
-					return (0);
-			}
+			where_to_write(av, i, &fd);
+			if (fd < 0)
+				return (perror("MINISHELL: "), errno);
 			write(fd, av[i], ft_strlen(av[i]));
 			if (av[i + 1])
 				write(fd, " ", 1);
