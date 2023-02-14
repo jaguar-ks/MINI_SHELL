@@ -1,38 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_cd.c                                            :+:      :+:    :+:   */
+/*   mini_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 14:56:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/14 16:37:08 by faksouss         ###   ########.fr       */
+/*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
+/*   Updated: 2023/02/14 18:40:09 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../inc/execution.h"
+#include"../inc/mini_shell.h"
+
+char	*pass_to_readline(void)
+{
+	char	cd[PATH_MAX];
+	char	*ttl;
+	int		i;
+
+	i = 0;
+	if (getcwd(cd, PATH_MAX) < 0)
+		exit(errno);
+	else
+	{
+		while (cd[i])
+			i++;
+		while (cd[i] != '/')
+			i--;
+		ttl = ft_strjoin("(", cd + i + 1);
+		ttl = ft_strjoin(ttl, ")~> ");
+	}
+	return (ttl);
+}
 
 int	main(int ac, char **av, char **en)
 {
-	int	i;
+	t_list	*env;
+	char	*cd;
+	char	*ln;
 
-	i = -1;
 	if (ac == 1)
 	{
-		while (en[++i])
+		while (1)
 		{
-			if (!ft_strncmp(en[i], "HOME=", 5))
-			{
-				if (chdir(en[i] + 5) < 0)
-					return (ft_printf("CD: %s\n", 2, strerror(errno)), errno);
-				else
-					return (0);
-			}
+			cd = pass_to_readline();
+			ln = readline(cd);
+			if (!ln)
+				return (errno);
 		}
-		if (!en[i])
-			return (0);
 	}
-	else if (ac == 2)
-		if (chdir(av[1]) < 0)
-			return (ft_printf("CD: %s: %s\n", 2, strerror(errno), av[1]), errno);
 }

@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 22:45:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/14 18:36:39 by faksouss         ###   ########.fr       */
+/*   Created: 2023/02/06 18:05:14 by faksouss          #+#    #+#             */
+/*   Updated: 2023/02/14 18:08:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../inc/libft.h"
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*d;
+# include"../../libtool/inc/libft.h"
 
-	if (!s1 && s2)
-		return (s2);
-	if (!s2 && s1)
-		return (s1);
-	if (s1 && s2)
-	{
-		i = -1;
-		j = -1;
-		d = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-		if (!d)
-			return (NULL);
-		while (s1[++i])
-			d[i] = s1[i];
-		while (s2[++j])
-			d[i + j] = s2[j];
-		d[i + j] = '\0';
-		return (d);
-	}
-	return (NULL);
-}
+# define HEREDOC 1
+# define CMD 2
+# define FL 3
+# define APND 4
+# define TRNC 5
+# define INPT 6
+# define FLG 7
+# define ENV 8
+
+#endif

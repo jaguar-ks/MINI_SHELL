@@ -1,40 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   take_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 22:45:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/14 18:36:39 by faksouss         ###   ########.fr       */
+/*   Created: 2023/02/14 17:52:06 by faksouss          #+#    #+#             */
+/*   Updated: 2023/02/14 18:10:38 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../inc/libft.h"
+#include"../inc/parsing.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+t_list	*take_env(char **en)
 {
+	t_list	*env;
 	int		i;
-	int		j;
-	char	*d;
 
-	if (!s1 && s2)
-		return (s2);
-	if (!s2 && s1)
-		return (s1);
-	if (s1 && s2)
-	{
-		i = -1;
-		j = -1;
-		d = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-		if (!d)
-			return (NULL);
-		while (s1[++i])
-			d[i] = s1[i];
-		while (s2[++j])
-			d[i + j] = s2[j];
-		d[i + j] = '\0';
-		return (d);
-	}
-	return (NULL);
+	i = -1;
+	while (en[++i])
+		ft_lstadd_back(&env, ft_lstnew(en[i], ENV));
+	return (env);
 }

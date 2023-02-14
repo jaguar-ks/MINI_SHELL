@@ -1,43 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Mini_Shell.c                                       :+:      :+:    :+:   */
+/*   my_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 21:52:20 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/13 22:11:02 by faksouss         ###   ########.fr       */
+/*   Created: 2023/02/14 14:56:39 by faksouss          #+#    #+#             */
+/*   Updated: 2023/02/14 18:00:13 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/parcing.h"
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdio.h>
+#include"../inc/built.h"
 
 int	main(int ac, char **av, char **en)
 {
-	char	cd[PATH_MAX];
-	char	**nm;
-	char	*ms;
-	char	*cmd_ln;
-	int		i;
+	int	i;
 
-	while (1)
+	i = -1;
+	if (ac == 1)
 	{
-		i = 0;
-		if (getcwd(cd, sizeof(cd)))
+		while (en[++i])
 		{
-			nm = ft_split(cd, '/');
-			while (nm[i + 1])
-				i++;
-			ms = ft_strjoin("(", nm[i]);
-			ms = ft_strjoin(ms, ")~> ");
-			cmd_ln = readline(ms);
-			if (!cmd_ln)
-				return (1);
+			if (!ft_strncmp(en[i], "HOME=", 5))
+			{
+				if (chdir(en[i] + 5) < 0)
+					return (ft_printf("CD: %s\n", 2, strerror(errno)), errno);
+				else
+					return (0);
+			}
 		}
-		else
-			return (1);
+		if (!en[i])
+			return (0);
 	}
+	else if (ac == 2)
+		if (chdir(av[1]) < 0)
+			return (ft_printf("CD: %s: %s\n", 2, strerror(errno), av[1]), errno);
 }
