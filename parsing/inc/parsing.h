@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/14 18:14:05 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/14 19:38:06 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@
 # define TRNC 5
 # define INPT 6
 # define FLG 7
-# define ENV 8
+# define VRB 8
+# define PP 9
+# define LM 10
+# define ARG 11
 
 /*Store the environment*/
 t_list	*take_env(char **en);
