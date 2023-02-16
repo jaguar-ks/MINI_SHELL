@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: deman_wolf <deman_wolf@student.42.fr>      +#+  +:+       +#+         #
+#    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 00:28:28 by faksouss          #+#    #+#              #
-#    Updated: 2023/01/12 00:20:16 by deman_wolf       ###   ########.fr        #
+#    Updated: 2023/02/16 23:32:46 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS_MD = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c\
 		ft_strdup.c ft_striteri.c ft_strjoin.c  ft_strlcat.c ft_strlcpy.c ft_strlen.c\
 		ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c\
 		ft_toupper.c ft_printf.c print_functions.c ft_lstnew.c ft_lstadd_back.c ft_lstadd_front.c ft_lstlast.c ft_lstsize.c ft_lstdelone.c\
-		ft_lstclear.c ft_lstmap.c ft_lstiter.c get_next_line.c
+		ft_lstclear.c ft_lstmap.c ft_lstiter.c get_next_line.c ft_isspace.c\
 FLAGS = -Wall -Wextra -Werror -c
 
 CC = cc

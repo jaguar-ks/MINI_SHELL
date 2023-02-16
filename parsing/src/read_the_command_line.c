@@ -1,37 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_shell.c                                       :+:      :+:    :+:   */
+/*   read_the_command_line.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/16 23:24:31 by faksouss         ###   ########.fr       */
+/*   Created: 2023/02/15 21:26:45 by faksouss          #+#    #+#             */
+/*   Updated: 2023/02/16 22:54:01 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../inc/mini_shell.h"
-
-char	*pass_to_readline(void)
-{
-	char	cd[PATH_MAX];
-	char	*ttl;
-	int		i;
-
-	i = 0;
-	if (getcwd(cd, PATH_MAX) < 0)
-		exit(errno);
-	else
-	{
-		while (cd[i])
-			i++;
-		while (cd[i] != '/')
-			i--;
-		ttl = ft_strjoin("(", cd + i + 1);
-		ttl = ft_strjoin(ttl, ")~> ");
-	}
-	return (ttl);
-}
+#include"../inc/parsing.h"
 
 int	valid_ct(char *cl)
 {
@@ -51,8 +30,6 @@ int	valid_ct(char *cl)
 					break ;
 			if (cl[j] == '\0')
 				return (1);
-			else
-				i = j;
 		}
 	}
 	return (0);
@@ -61,7 +38,7 @@ int	valid_ct(char *cl)
 int	is_spc_cr(char c)
 {
 	if (c == 32 || c == 34 || c == 39 || c == '|' || c == '<' || c == '>'
-		|| c == '-' || c == '$' || c == '\n' || c == '\0')
+		|| c == '-' || c == '$')
 		return (1);
 	else
 		return (0);
@@ -74,14 +51,24 @@ t_list	*cmd_line(char *cl)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	while (cl[i])
+	while (cl[++i])
 	{
-		if (ft_isalpha(cl[i]))
+		if (!is_spc_cr(cl[i]))
 		{
-			while (cl[i] && )
+			while (cl[i] && !is_spc_cr(cl[i]))
 				i++;
+			ft_lstadd_back(&cml, ft_lstnew(ft_substr(cl, j, i - j), 0));
+			j = i;
+		}
+		else if (is_spc_cr(cl[i]))
+		{
+			j = i;
+			while (cl[i + 1] && !is_spc_cr(cl[i + 1]))
+				i++;
+			ft_lstadd_back(&cml, ft_lstnew(ft_substr(cl, j, i - j), 0));
+			j = i;
 		}
 	}
 	tmp = cml;
@@ -91,24 +78,4 @@ t_list	*cmd_line(char *cl)
 		tmp = tmp->next;
 	}
 	return (cml);
-}
-
-int	main(int ac, char **av, char **en)
-{
-	t_list	*env;
-	t_list	*tmp;
-	char	*cd;
-	char	*ln;
-
-	if (ac == 1)
-	{
-		while (1)
-		{
-			cd = pass_to_readline();
-			ln = readline(cd);
-			if (!ln)
-				return (errno);
-			env = cmd_line(ln);
-		}
-	}
 }
