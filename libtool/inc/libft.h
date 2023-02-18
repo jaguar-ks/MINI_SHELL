@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/16 23:30:01 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:24:02 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@
 # include <termios.h>
 # include <termcap.h>
 # include <errno.h>
+
+typedef struct s_minishell
+{
+	int		ext_st;
+	char	*line;
+	char	*prompt;
+	t_list	*cmd;
+	t_list	*env;
+}	t_minishell;
+
+typedef struct s_cmd
+{
+	char	**cmd;
+	char	*pth;
+	int		in_f;
+	int		out_f;
+}	t_cmd;
 
 typedef struct s_list
 {
