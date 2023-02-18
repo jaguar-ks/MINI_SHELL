@@ -6,21 +6,30 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/16 23:24:31 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/17 23:24:38 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/mini_shell.h"
 
-char	*pass_to_readline(void)
+void	out(t_minishell *mini)
 {
-	char	cd[PATH_MAX];
-	char	*ttl;
-	int		i;
+	ft_lstclear(&mini->env);
+	ft_lstclear(&mini->cmd);
+	free(mini->prompt);
+	exit(0);
+}
+
+char	*inisialise_prompt(void)
+{
+	char		cd[PATH_MAX];
+	char		*ttl;
+	static char	*r;
+	int			i;
 
 	i = 0;
 	if (getcwd(cd, PATH_MAX) < 0)
-		exit(errno);
+		return (r);
 	else
 	{
 		while (cd[i])
@@ -28,87 +37,31 @@ char	*pass_to_readline(void)
 		while (cd[i] != '/')
 			i--;
 		ttl = ft_strjoin("(", cd + i + 1);
-		ttl = ft_strjoin(ttl, ")~> ");
+		r = ft_strjoin(ttl, ")~> ");
+		free(ttl);
 	}
-	return (ttl);
+	return (r);
 }
 
-int	valid_ct(char *cl)
+void	mini_shell(t_minishell *mini, char **en)
 {
-	int	i;
-	int	j;
-	int	ct;
-
-	i = -1;
-	while (cl[++i])
-	{
-		if (cl[i] == 34 || cl[i] == 39)
-		{
-			ct = cl[i];
-			j = i;
-			while (cl[++j])
-				if (cl[j] == ct)
-					break ;
-			if (cl[j] == '\0')
-				return (1);
-			else
-				i = j;
-		}
-	}
-	return (0);
-}
-
-int	is_spc_cr(char c)
-{
-	if (c == 32 || c == 34 || c == 39 || c == '|' || c == '<' || c == '>'
-		|| c == '-' || c == '$' || c == '\n' || c == '\0')
-		return (1);
-	else
-		return (0);
-}
-
-t_list	*cmd_line(char *cl)
-{
-	t_list	*cml;
-	t_list	*tmp;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (cl[i])
-	{
-		if (ft_isalpha(cl[i]))
-		{
-			while (cl[i] && )
-				i++;
-		}
-	}
-	tmp = cml;
-	while (tmp)
-	{
-		printf("->(%s)\n", tmp->pt);
-		tmp = tmp->next;
-	}
-	return (cml);
+	mini->prompt = inisialise_prompt();
+	mini->line = readline(mini->prompt);
+	free(mini->prompt);
+	if (!mini->line)
+		out(mini);
+	add_history(mini->line);
+	mini->cmd = parss_command_line(mini);
+	free(mini->line);
 }
 
 int	main(int ac, char **av, char **en)
 {
-	t_list	*env;
-	t_list	*tmp;
-	char	*cd;
-	char	*ln;
+	t_minishell	mini;
 
-	if (ac == 1)
-	{
-		while (1)
-		{
-			cd = pass_to_readline();
-			ln = readline(cd);
-			if (!ln)
-				return (errno);
-			env = cmd_line(ln);
-		}
-	}
+	(void)ac;
+	(void)av;
+	mini.env = take_env(en);
+	while (1)
+		mini_shell(&mini, en);
 }
