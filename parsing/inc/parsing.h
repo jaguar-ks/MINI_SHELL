@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/18 02:40:40 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/21 16:18:36 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,34 @@
 # define QTS 12
 # define ENV 13
 
+/*check synstax*/
+int		check_syntax(char *line);
+int		empty_line(char *line);
+int		valid_pipe(char *line);
+int		valid_rediraction(char *line);
+int		check_output(char *line, int i);
+int		check_input(char *line, int i);
+int		check_heredoc(char *line, int i);
+int		in_quotes(char *line, int i);
+int		valid_ct(char *cl);
 /*Store the environment*/
 t_list	*take_env(char **en);
-/*checking if quotes are valide*/
-int		valid_ct(char *cl);
 /*take qoutes*/
 void	take_quotes(t_minishell *mini, t_list **cmd, int *i);
-/*take dollar*/
+char	*take_double_qts(t_minishell *mini, int i);
+/*take Dollar*/
 char	*take_dollar(t_minishell *mini, int *i);
-/*check if you should try expand Dollar $*/
 int		check_expand(char *str);
-/*try expand the variable*/
 char	*expan_variable(char *var, t_minishell *mini);
+/*take rediraction*/
+void	take_redirection(t_minishell *mini, t_list **cmd, int *i);
+void	take_input(t_minishell *mini, t_list **cmd, int *i);
+void	take_input_fl(t_minishell *mini, t_list **cmd, int *i);
+void	take_heredoc(t_minishell *mini, t_list **cmd, int *i);
+char	*take_lemiter(t_minishell *mini, int *i);
+void	take_output(t_minishell *mini, t_list **cmd, int *i);
+void	take_outfile(t_minishell *mini, t_list **cmd, int *i, int tp);
+/*skiping white spaces*/
+void	skip_white_spaces(t_minishell *mini, int *i);
 
 #endif

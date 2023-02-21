@@ -6,11 +6,32 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:27:24 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/18 02:29:56 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/21 16:00:25 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/parsing.h"
+
+int	in_quotes(char *line, int i)
+{
+	int	j;
+	int	in;
+
+	j = -1;
+	in = 0;
+	while (line[++j])
+	{
+		if (line[j] == '\'' || line[j] == '"')
+		{
+			if (!in)
+				in = 1;
+			else
+				in = 0;
+		}
+		if (j == i)
+			return (in);
+	}
+}
 
 int	valid_ct(char *cl)
 {
