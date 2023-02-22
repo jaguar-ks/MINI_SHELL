@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:56:09 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 17:34:26 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:35:02 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ char	*take_lemiter(t_minishell *mini, int *i)
 	if (mini->line[*i] == '\'' || mini->line[*i] == '"')
 	{
 		while (mini->line[++j])
-			if (mini->line[j] == '\'' || mini->line[j] == '"')
+			if (mini->line[j] == mini->line[*i])
 				break ;
-		lim = ft_substr(mini->line, *i, j - *i);
+		lim = ft_substr(mini->line, *i + 1, j - *i - 1);
 		j++;
 	}
 	else
@@ -32,10 +32,39 @@ char	*take_lemiter(t_minishell *mini, int *i)
 		while (mini->line[++j])
 			if (ft_isspace(mini->line[j]))
 				break ;
-		lim = ft_substr(mini->line, *i, j - *i - 1);
+		lim = ft_substr(mini->line, *i, j - *i);
 	}
 	*i = j;
 	return (lim);
+}
+
+char	*take_heredoc_line(char *line, t_minishell *mini)
+{
+	int		j;
+	int		x;
+	char	*r;
+
+	j = 0;
+	r = NULL;
+	while (1)
+	{
+		x = j;
+		while (line[j])
+		{
+			if (line[j] == '$')
+				break ;
+			j++;
+		}
+		r = ft_strjoin(r, ft_substr(line, x, j - x));
+		if (line[j] == '$')
+			r = ft_strjoin(r, take_dollar(mini, line, &j));
+		if (line[j] == '\0')
+		{
+			r = ft_strjoin(r, ft_strdup("\n"));
+			break ;
+		}
+	}
+	return (free(line), r);
 }
 
 void	take_heredoc(t_minishell *mini, t_list **cmd, int *i)
@@ -45,17 +74,18 @@ void	take_heredoc(t_minishell *mini, t_list **cmd, int *i)
 	char	*line;
 
 	lim = take_lemiter(mini, i);
+	herdoc = NULL;
 	while (1)
 	{
 		line = readline("[HEREDOC]> ");
-		if (!line || !ft_strncmp(line, lim, ft_strlen(lim)))
+		if (!line)
+			break ;
+		if (!ft_strncmp(line, lim, ft_strlen(lim)))
 		{
-			if (line)
-				free(line);
+			free(line);
 			break ;
 		}
-		herdoc = ft_strjoin(herdoc, line);
-		free(line);
+		herdoc = ft_strjoin(herdoc, take_heredoc_line(line, mini));
 	}
 	free(lim);
 	ft_lstadd_back(cmd, ft_lstnew(herdoc, HEREDOC));

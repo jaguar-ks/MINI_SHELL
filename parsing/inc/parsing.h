@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 19:42:46 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:25:02 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		take_quotes(t_minishell *mini, t_list **cmd, int i);
 char	*take_double_qts(t_minishell *mini, int i);
 /*take Dollar*/
 int		take_var(t_minishell *mini, int i);
-char	*take_dollar(t_minishell *mini, int *i);
+char	*take_dollar(t_minishell *mini, char *line, int *i);
 int		check_expand(char *str);
 char	*expan_variable(char *var, t_minishell *mini);
 /*take rediraction*/

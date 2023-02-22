@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:27:24 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 18:27:23 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:28:39 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*take_double_qts(t_minishell *mini, int i)
 		}
 		r = ft_strjoin(r, ft_substr(mini->line, x, j - x));
 		if (mini->line[j] == '$')
-			r = ft_strjoin(r, take_dollar(mini, &j));
+			r = ft_strjoin(r, take_dollar(mini, mini->line, &j));
 		if (mini->line[j] == '"')
 			break ;
 	}
