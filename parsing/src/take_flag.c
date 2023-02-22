@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   take_redirction.c                                  :+:      :+:    :+:   */
+/*   take_flag.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/20 19:36:17 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 17:11:08 by faksouss         ###   ########.fr       */
+/*   Created: 2023/02/21 17:15:28 by faksouss          #+#    #+#             */
+/*   Updated: 2023/02/22 19:46:20 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/parsing.h"
 
-int	take_rediraction(t_minishell *mini, t_list **cmd, int i)
+int	take_flag(t_minishell *mini, t_list **cmd, int i)
 {
-	if (mini->line[i] == '<')
-		i = take_input(mini, cmd, i);
-	else
-		i = take_output(mini, cmd, i);
-	return (i);
+	char	*flg;
+	int		j;
+
+	j = i + 1;
+	while (mini->line[j])
+	{
+		if (ft_isspace(mini->line[j]) || (!ft_isalnum(mini->line[j])
+				&& mini->line[j] != '='))
+			break ;
+		j++;
+	}
+	flg = ft_substr(mini->line, i, j - i);
+	ft_lstadd_back(cmd, ft_lstnew(flg, FLG));
+	free(flg);
+	return (j);
 }
