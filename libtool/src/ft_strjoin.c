@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 22:45:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/14 18:36:39 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 19:28:55 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		while (s2[++j])
 			d[i + j] = s2[j];
 		d[i + j] = '\0';
-		return (d);
+		return (free(s1), free(s2), d);
 	}
 	return (NULL);
 }

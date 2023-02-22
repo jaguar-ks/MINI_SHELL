@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/17 22:24:02 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:02:29 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@
 # include <termcap.h>
 # include <errno.h>
 
+typedef struct s_list
+{
+	char			*pt;
+	int				wt;
+	int				acs;
+	struct s_list	*next;
+}	t_list;
+
 typedef struct s_minishell
 {
 	int		ext_st;
@@ -51,14 +59,6 @@ typedef struct s_cmd
 	int		in_f;
 	int		out_f;
 }	t_cmd;
-
-typedef struct s_list
-{
-	char			*pt;
-	int				wt;
-	int				acs;
-	struct s_list	*next;
-}	t_list;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
