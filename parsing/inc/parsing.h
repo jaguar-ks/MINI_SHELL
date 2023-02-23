@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 20:25:02 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:57:04 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 
 # include"../../libtool/inc/libft.h"
 
-# define EMPTY 0
 # define HEREDOC 1
 # define CMD 2
-# define FL 3
 # define APND 4
 # define TRNC 5
 # define INPT 6
 # define FLG 7
 # define VRB 8
 # define PP 9
-# define LM 10
-# define ARG 11
+# define IND 10
 # define WRD 12
 # define QTS 13
 # define EN 14
+# define SP 15
 
 /*check synstax*/
 int		check_syntax(char *line);
@@ -60,13 +58,14 @@ char	*take_lemiter(t_minishell *mini, int *i);
 int		take_output(t_minishell *mini, t_list **cmd, int i);
 int		take_outfile(t_minishell *mini, t_list **cmd, int i, int tp);
 /*take pipe*/
-int		take_pipe(t_minishell *mini, t_list **cmd, int i);
+int		take_pipe(t_minishell *mini, int i);
 /*take flag*/
 int		take_flag(t_minishell *mini, t_list **cmd, int i);
+/*take a word*/
+char	*take_wrd(t_minishell *mini, int *i);
+int		take_word(t_minishell *mini, int i);
 /*skiping white spaces*/
 int		skip_white_spaces(t_minishell *mini, int i);
 void	parss_command_line(t_minishell *mini);
-char	*take_wrd(t_minishell *mini, int *i);
-int		take_word(t_minishell *mini, int i);
 
 #endif

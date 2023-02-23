@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:27:24 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/23 15:06:35 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:58:02 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	take_quotes(t_minishell *mini, t_list **cmd, int i)
 	char	*pt;
 
 	j = i;
+	pt = NULL;
 	while (mini->line[++j])
 		if (mini->line[i] == mini->line[j])
 			break ;

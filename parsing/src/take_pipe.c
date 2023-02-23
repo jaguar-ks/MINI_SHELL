@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:58 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 17:19:32 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:56:47 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	valid_pipe(char *line)
 	return (1);
 }
 
-int	take_pipe(t_minishell *mini, t_list **cmd, int i)
+int	take_pipe(t_minishell *mini, int i)
 {
-	ft_lstadd_back(cmd, ft_lstnew("|", PP));
+	ft_lstadd_back(&mini->cmd, ft_lstnew("|", PP));
 	i += 1;
 	return (i);
 }
