@@ -5,63 +5,48 @@
 #                                                     +:+ +:+         +:+      #
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/02/23 19:40:33 by faksouss         ###   ########.fr        #
+#    Created: 2023/02/23 18:10:27 by faksouss          #+#    #+#              #
+#    Updated: 2023/02/23 18:11:38 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAG = -Wall -Wextra -Werror 
+S_F = 
 
-INC = main/inc/mini_shell.h
-
-RM = rm -rf
-
-NAME = minishell
-
-S_F = mini_shell.c
+S_D = src
 
 O_D = obj
-
-S_D = main/src
 
 OBJ = $(addprefix $(O_D)/,$(S_F:.c=.o))
 
 SRC = $(addprefix $(S_D)/,$(S_F))
 
-PRS = parsing/parsing.a
+FLAG = -Wall -Wextra -Werror
 
-LIBTOOL = libtool/libft.a
+INC = inc/execution.h
+
+RM = rm -rf
+
+NAME = execution.a
 
 all: $(O_D) $(NAME)
 
+$(NAME): $(OBJ)
+	ar -rc $@ $(OBJ)
+
 $(O_D):
 	mkdir $@
-
-$(NAME): $(OBJ) $(PRS) $(LIBTOOL)
-	cc $(FLAG) -lreadline $^ -o $@
-
-$(PRS):
-	make -C parsing
-
-$(LIBTOOL):
-	make -C libtool
 
 $(O_D)/%.o: $(S_D)/%.c $(INC)
 	@cc $(FLAG) -c $< -o $@
 
 clean:
-	make -C libtool clean
-	make -C parsing clean
 	$(RM) $(O_D)
 
 fclean: clean
-	make -C libtool fclean
-	make -C parsing fclean
 	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all fclean clean re
+.PHONY: all clean fclean re
 
-.SILENT: all clean fclean re $(NAME) $(O_D) $(PRS) $(LIBTOOL)
-
+.SILENT: all clean fclean re $(NAME) $(O_D)

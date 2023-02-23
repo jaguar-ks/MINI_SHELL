@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/21 18:02:29 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:23:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ typedef struct s_minishell
 
 typedef struct s_cmd
 {
-	char	**cmd;
-	char	*pth;
-	int		in_f;
-	int		out_f;
+	char			**cmd;
+	char			*pth;
+	int				in_f;
+	int				out_f;
+	struct s_cmd	*nxt;
 }	t_cmd;
 
 int		ft_isalpha(int c);

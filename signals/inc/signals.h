@@ -6,12 +6,12 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 19:50:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/16 19:51:29 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 19:49:43 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNALS_H
-#define SIGNALS_H
+# define SIGNALS_H
 
 # include "../../libtool/inc/libft.h"
 
