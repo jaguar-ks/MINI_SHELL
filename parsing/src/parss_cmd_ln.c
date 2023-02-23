@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 23:10:55 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 19:46:04 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:05:58 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	take_other(t_minishell *mini, t_list **cmd, int i)
 	while (mini->line[++j])
 		if (ft_isspace(mini->line[j]))
 			break ;
-	smthg = ft_substr(mini->line, i, j - i - 1);
+	smthg = ft_substr(mini->line, i, j - i);
 	ft_lstadd_back(cmd, ft_lstnew(smthg, LM));
 	free(smthg);
 	return (j);
@@ -71,9 +71,11 @@ void	parss_command_line(t_minishell *mini)
 
 	mini->cmd = NULL;
 	i = skip_white_spaces(mini, 0);
-	while (mini->line[i] != '\0' || i <= ft_strlen(mini->line))
+	while (1)
 	{
-		if (mini->line[i] == '\'' || mini->line[i] == '"')
+		if (mini->line[i] == '\0' || i >= ft_strlen(mini->line))
+			break ;
+		else if (mini->line[i] == '\'' || mini->line[i] == '"')
 			i = take_quotes(mini, &mini->cmd, i);
 		else if (mini->line[i] == '<' || mini->line[i] == '>')
 			i = take_rediraction(mini, &mini->cmd, i);

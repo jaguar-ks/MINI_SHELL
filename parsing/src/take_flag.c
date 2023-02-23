@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 17:15:28 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 19:46:20 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:02:07 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	take_flag(t_minishell *mini, t_list **cmd, int i)
 	int		j;
 
 	j = i + 1;
+	if (mini->line[j] == '-')
+		j++;
 	while (mini->line[j])
 	{
 		if (ft_isspace(mini->line[j]) || (!ft_isalnum(mini->line[j])

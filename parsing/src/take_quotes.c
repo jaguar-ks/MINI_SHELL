@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:27:24 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 20:28:39 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:06:35 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,21 @@ int	valid_ct(char *cl)
 {
 	int	i;
 	int	j;
-	int	ct;
 
-	i = -1;
-	while (cl[++i])
+	i = 0;
+	while (cl[i])
 	{
-		j = 1;
 		if (cl[i] == '\'' || cl[i] == '"')
 		{
-			ct = cl[i];
-			while (cl[i + j])
-			{
-				if (cl[i + j] == ct)
+			j = i;
+			while (cl[++j])
+				if (cl[j] == cl[i])
 					break ;
-				j++;
-			}
-			if (cl[i + j] == '\0')
+			if (cl[j] == '\0')
 				return (0);
-			i += j + 1;
+			i = j;
 		}
+		i++;
 	}
 	return (1);
 }
@@ -68,7 +64,7 @@ char	*take_double_qts(t_minishell *mini, int i)
 	char	*r;
 
 	j = i + 1;
-	r = NULL;
+	r = ft_strdup("\"");
 	while (1)
 	{
 		x = j;
@@ -84,6 +80,7 @@ char	*take_double_qts(t_minishell *mini, int i)
 		if (mini->line[j] == '"')
 			break ;
 	}
+	r = ft_strjoin(r, ft_strdup("\""));
 	return (r);
 }
 
