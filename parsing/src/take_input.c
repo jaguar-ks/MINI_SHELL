@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:56:09 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 20:35:02 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:53:31 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ int	take_input_fl(t_minishell *mini, t_list **cmd, int i)
 	if (mini->line[i] == '\'' || mini->line[i] == '"')
 	{
 		while (mini->line[++j])
-			if (mini->line[j] == '\'' || mini->line[j] == '"')
+			if (mini->line[j] == mini->line[i])
 				break ;
-		fl = ft_substr(mini->line, i, j - i);
+		fl = ft_substr(mini->line, i + 1, j - i - 1);
 		j++;
 	}
 	else
