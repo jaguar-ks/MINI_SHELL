@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/24 14:59:03 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:30:07 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include"../../libtool/inc/libft.h"
 
 # define HEREDOC 1
-# define CMD 2
 # define APND 4
 # define TRNC 5
 # define INPT 6
