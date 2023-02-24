@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 22:45:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/22 19:28:55 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/24 20:12:06 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*d;
 
 	if (!s1 && s2)
-		return (s2);
+		return (d = ft_strdup(s2), free(s2), d);
 	if (!s2 && s1)
-		return (s1);
+		return (d = ft_strdup(s1), free(s1), d);
 	if (s1 && s2)
 	{
 		i = -1;

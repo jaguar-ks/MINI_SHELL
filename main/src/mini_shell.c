@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/23 19:41:41 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/24 21:11:32 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,28 @@ char	*print_type(int tp)
 	return ("indefind");
 }
 
-void	mini_shell(t_minishell *mini)
+/*************TESTING*************/
+
+/*********************************/
+
+void	take_cmd(t_minishell *mini)
 {
 	t_list	*tmp;
+
+	split_cmd_line_by_space(mini);
+	// expander(mini);
+	split_by_pp_and_rdrct(mini);
+	tmp = mini->cmd;
+	while (tmp)
+	{
+		printf("->[%s] [%s]\n", tmp->pt, print_type(tmp->wt));
+		tmp = tmp->next;
+	}
+}
+
+void	mini_shell(t_minishell *mini)
+{
+	// t_list	*tmp;
 
 	mini->prompt = inisialise_prompt();
 	mini->line = readline(mini->prompt);
@@ -83,17 +102,17 @@ void	mini_shell(t_minishell *mini)
 	else if (mini->ext_st == -1)
 		printf("empty line afrida\n");
 	else
-		parss_command_line(mini);
+		take_cmd(mini);
 	free(mini->line);
-	tmp = mini->cmd;
-	while (mini->cmd)
-	{
-		printf("->[%s] [%s]\n", mini->cmd->pt, print_type(mini->cmd->wt));
-		mini->cmd = mini->cmd->next;
-	}
-	ft_lstclear(&tmp);
+	// tmp = mini->cmd;
+	// while (mini->cmd)
+	// {
+	// 	printf("->[%s] [%s]\n", mini->cmd->pt, print_type(mini->cmd->wt));
+	// 	mini->cmd = mini->cmd->next;
+	// }
+	// ft_lstclear(&tmp);
+	system("leaks mini");
 }
-	// system("leaks mini");
 
 int	main(int ac, char **av, char **en)
 {

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/24 15:30:07 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/24 20:31:45 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,14 @@ int		take_word(t_minishell *mini, int i);
 /*skiping white spaces*/
 int		skip_white_spaces(t_minishell *mini, int i);
 void	parss_command_line(t_minishell *mini);
+/*******************************/
+int	should_be_splited(char *str);
+void	take_pp_or_rdrct(char *str, int *i, t_list **new);
+void	add_to_new_list(t_list **new, char *str);
+void	split_by_pp_and_rdrct(t_minishell *mini);
+int	check_for_expander(char *str);
+char	*expand_var(t_minishell *mini, char *old_str);
+void	expander(t_minishell *mini);
+void	split_cmd_line_by_space(t_minishell *mini);
 
 #endif
