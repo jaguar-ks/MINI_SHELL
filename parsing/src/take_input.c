@@ -6,13 +6,13 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:56:09 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/23 17:53:31 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:21:34 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parsing.h"
 
-char	*take_lemiter(t_minishell *mini, int *i)
+char	*take_lemiter(t_minishell *mini, int *i, int *exp_ch)
 {
 	char	*lim;
 	int		j;
@@ -25,6 +25,7 @@ char	*take_lemiter(t_minishell *mini, int *i)
 			if (mini->line[j] == mini->line[*i])
 				break ;
 		lim = ft_substr(mini->line, *i + 1, j - *i - 1);
+		*exp_ch = 0;
 		j++;
 	}
 	else
@@ -33,6 +34,7 @@ char	*take_lemiter(t_minishell *mini, int *i)
 			if (ft_isspace(mini->line[j]))
 				break ;
 		lim = ft_substr(mini->line, *i, j - *i);
+		*exp_ch = 1;
 	}
 	*i = j;
 	return (lim);
@@ -58,11 +60,6 @@ char	*take_heredoc_line(char *line, t_minishell *mini)
 		r = ft_strjoin(r, ft_substr(line, x, j - x));
 		if (line[j] == '$')
 			r = ft_strjoin(r, take_dollar(mini, line, &j));
-		if (line[j] == '\0')
-		{
-			r = ft_strjoin(r, ft_strdup("\n"));
-			break ;
-		}
 	}
 	return (free(line), r);
 }
@@ -72,8 +69,9 @@ void	take_heredoc(t_minishell *mini, t_list **cmd, int *i)
 	char	*herdoc;
 	char	*lim;
 	char	*line;
+	int		exp_ch;
 
-	lim = take_lemiter(mini, i);
+	lim = take_lemiter(mini, i, &exp_ch);
 	herdoc = NULL;
 	while (1)
 	{
@@ -85,7 +83,9 @@ void	take_heredoc(t_minishell *mini, t_list **cmd, int *i)
 			free(line);
 			break ;
 		}
-		herdoc = ft_strjoin(herdoc, take_heredoc_line(line, mini));
+		if (exp_ch == 1)
+			line = take_heredoc_line(line, mini);
+		herdoc = ft_strjoin(herdoc, ft_strjoin(line, ft_strdup("\n")));
 	}
 	free(lim);
 	ft_lstadd_back(cmd, ft_lstnew(herdoc, HEREDOC));
