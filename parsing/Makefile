@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 15:40:57 by faksouss          #+#    #+#              #
-#    Updated: 2023/02/24 20:29:05 by faksouss         ###   ########.fr        #
+#    Updated: 2023/02/26 16:12:46 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ S_F = check_redirection.c\
 		take_word.c\
 		split_by_pp_and_rdrct.c\
 		split_by_space.c\
+		lexer.c\
 
 S_D = src
 

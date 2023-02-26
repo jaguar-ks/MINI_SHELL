@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 20:21:30 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/24 20:21:51 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/26 17:46:18 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,37 @@ int	should_be_splited(char *str)
 
 void	take_pp_or_rdrct(char *str, int *i, t_list **new)
 {
-	int		tp;
 	char	*r;
 
 	r = NULL;
 	if (str[*i] == '|')
-	{
 		r = ft_strdup("|");
+	else if (!ft_strncmp(&str[*i], "<<", 2))
+		r = ft_strdup("<<");
+	else if (!ft_strncmp(&str[*i], ">>", 2))
+		r = ft_strdup(">>");
+	else if (!ft_strncmp(&str[*i], ">", 1))
+		r = ft_strdup(">");
+	else if (!ft_strncmp(&str[*i], "<", 1))
+		r = ft_strdup("<");
+	if (!ft_strncmp(&str[*i], "<<", 2) || !ft_strncmp(&str[*i], ">>", 2))
+		*i += 2;
+	else
 		*i += 1;
-	}
-	else if (str[*i] == '>' || str[*i] == '<')
-	{
-		tp = str[*i];
-		if (str[*i + 1] == tp)
-		{
-			r = ft_substr(str, *i, 2);
-			*i += 2;
-		}
-		else
-		{
-			r = ft_substr(str, *i, 1);
-			*i += 1;
-		}
-	}
 	ft_lstadd_back(new, ft_lstnew(r, IND));
 	free(r);
+}
+
+int	jst_for_norminnet(char *str, int i)
+{
+	while (str[i])
+	{
+		if ((str[i] == '|' || str[i] == '>' || str[i] == '<')
+			&& !in_quotes(str, i))
+			break ;
+		i++;
+	}
+	return (i);
 }
 
 void	add_to_new_list(t_list **new, char *str)
@@ -64,23 +70,20 @@ void	add_to_new_list(t_list **new, char *str)
 	int		s;
 	char	*prt;
 
-	i = -1;
+	i = 0;
 	while (1)
 	{
-		s = i + (i == -1);
-		while (str[++i])
-			if ((str[i] == '|' || str[i] == '>' || str[i] == '<')
-				&& !in_quotes(str, i))
-				break ;
+		s = i;
+		i = jst_for_norminnet(str, i);
 		if (i > s)
 		{
 			prt = ft_substr(str, s, i - s);
 			ft_lstadd_back(new, ft_lstnew(prt, IND));
 			free(prt);
 		}
-		if (str[i] == '|' || str[i] == '>' || str[i] == '<')
-			if (!in_quotes(str, i))
-				take_pp_or_rdrct(str, &i, new);
+		if ((str[i] == '|' || str[i] == '>' || str[i] == '<')
+			&& !in_quotes(str, i))
+			take_pp_or_rdrct(str, &i, new);
 		if (str[i] == '\0')
 			break ;
 	}

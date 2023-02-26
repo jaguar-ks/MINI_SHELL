@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:28:47 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/23 13:33:52 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:27:11 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*expan_variable(char *var, t_minishell *mini)
 			break ;
 		i++;
 	}
-	vr = ft_substr(var, 1, i - 1);
+	vr = ft_strjoin(ft_substr(var, 1, i - 1), ft_strdup("="));
 	while (tmp)
 	{
 		if (tmp->acs)

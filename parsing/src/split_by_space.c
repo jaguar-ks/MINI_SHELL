@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_cmd_line.c                                   :+:      :+:    :+:   */
+/*   split_by_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:20:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/24 20:22:24 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:17:21 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/parsing.h"
 
-int	check_for_expander(char *str)
+int	check_for_expander(t_list *prt)
 {
 	int	i;
 
 	i = -1;
-	while (str[++i])
+	if (prt->wt != LMTR)
 	{
-		if (str[i] == '$' && !in_quotes(str, i))
-			return (1);
+		while (prt->pt[++i])
+		{
+			if (prt->pt[i] == '$' && !in_quotes(prt->pt, i))
+				return (1);
+		}
 	}
 	return (0);
 }
@@ -58,7 +61,7 @@ void	expander(t_minishell *mini)
 	tmp = mini->cmd;
 	while (tmp)
 	{
-		if (check_for_expander(tmp->pt))
+		if (check_for_expander(tmp))
 			tmp->pt = expand_var(mini, tmp->pt);
 		tmp = tmp->next;
 	}

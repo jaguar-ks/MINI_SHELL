@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/24 20:31:45 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:10:44 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include"../../libtool/inc/libft.h"
 
 # define HEREDOC 1
+# define LMTR 2
 # define APND 4
 # define TRNC 5
 # define INPT 6
@@ -27,6 +28,10 @@
 # define QTS 13
 # define EN 14
 # define SP 15
+# define AP_F 16
+# define TR_F 17
+# define IN_F 18
+# define CMD 19
 
 /*check synstax*/
 int		check_syntax(char *line);
@@ -67,13 +72,16 @@ int		take_word(t_minishell *mini, int i);
 int		skip_white_spaces(t_minishell *mini, int i);
 void	parss_command_line(t_minishell *mini);
 /*******************************/
-int	should_be_splited(char *str);
+int		should_be_splited(char *str);
 void	take_pp_or_rdrct(char *str, int *i, t_list **new);
 void	add_to_new_list(t_list **new, char *str);
 void	split_by_pp_and_rdrct(t_minishell *mini);
-int	check_for_expander(char *str);
+int		check_for_expander(t_list *prt);
 char	*expand_var(t_minishell *mini, char *old_str);
 void	expander(t_minishell *mini);
 void	split_cmd_line_by_space(t_minishell *mini);
+void	identify_special_charcters(t_minishell *mini);
+void	identify_rdrct(t_minishell *mini);
+void	identify_cmd(t_minishell *mini);
 
 #endif
