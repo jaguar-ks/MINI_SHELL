@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/27 17:51:44 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:57:55 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@
 
 # define HEREDOC 1
 # define LMTR 2
-# define APND 4
-# define TRNC 5
-# define INPT 6
-# define PP 9
-# define IND 10
-# define ARG 12
-# define EN 14
-# define AP_F 16
-# define TR_F 17
-# define IN_F 18
-# define CMD 19
+# define APND 3
+# define TRNC 4
+# define INPT 5
+# define PP 6
+# define IND 7
+# define ARG 8
+# define EN 9
+# define AP_F 10
+# define TR_F 11
+# define IN_F 12
+# define CMD 13
+# define FLG 14
 
 /*check synstax*/
 int		check_syntax(char *line);

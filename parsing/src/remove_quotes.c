@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:55:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/27 17:46:58 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:58:28 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	remove_quotes(t_minishell *mini)
 		{
 			tmp->pt = take_new_str(mini, tmp);
 			if (tmp->wt == LMTR)
-				tmp->acs == 0;
+				tmp->acs = 0;
 		}
 		tmp = tmp->next;
 	}
