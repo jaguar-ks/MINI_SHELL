@@ -6,11 +6,32 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:52:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/23 18:44:36 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:52:16 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/parsing.h"
+
+void	identify_special_charcters(t_minishell *mini)
+{
+	t_list	*tmp;
+
+	tmp = mini->cmd;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->pt, "<<", 3))
+			tmp->wt = HEREDOC;
+		else if (!ft_strncmp(tmp->pt, "<", 2))
+			tmp->wt = INPT;
+		else if (!ft_strncmp(tmp->pt, ">>", 3))
+			tmp->wt = APND;
+		else if (!ft_strncmp(tmp->pt, ">", 2))
+			tmp->wt = TRNC;
+		else if (!ft_strncmp(tmp->pt, "|", 2))
+			tmp->wt = PP;
+		tmp = tmp->next;
+	}
+}
 
 void	incriment_shell_lvl(t_list **env)
 {

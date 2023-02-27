@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/26 18:10:44 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:53:21 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define VRB 8
 # define PP 9
 # define IND 10
-# define WRD 12
+# define ARG 12
 # define QTS 13
 # define EN 14
 # define SP 15
@@ -45,43 +45,38 @@ int		in_quotes(char *line, int i);
 int		valid_ct(char *cl);
 /*Store the environment*/
 t_list	*take_env(char **en);
-/*take qoutes*/
-int		take_quotes(t_minishell *mini, t_list **cmd, int i);
-char	*take_double_qts(t_minishell *mini, int i);
 /*take Dollar*/
 int		take_var(t_minishell *mini, int i);
 char	*take_dollar(t_minishell *mini, char *line, int *i);
 int		check_expand(char *str);
 char	*expan_variable(char *var, t_minishell *mini);
-/*take rediraction*/
-int		take_rediraction(t_minishell *mini, t_list **cmd, int i);
-int		take_input(t_minishell *mini, t_list **cmd, int i);
-int		take_input_fl(t_minishell *mini, t_list **cmd, int i);
-void	take_heredoc(t_minishell *mini, t_list **cmd, int *i);
-char	*take_lemiter(t_minishell *mini, int *i, int *exp_ch);
-int		take_output(t_minishell *mini, t_list **cmd, int i);
-int		take_outfile(t_minishell *mini, t_list **cmd, int i, int tp);
-/*take pipe*/
-int		take_pipe(t_minishell *mini, int i);
-/*take flag*/
-int		take_flag(t_minishell *mini, t_list **cmd, int i);
-/*take a word*/
-char	*take_wrd(t_minishell *mini, int *i);
-int		take_word(t_minishell *mini, int i);
 /*skiping white spaces*/
 int		skip_white_spaces(t_minishell *mini, int i);
-void	parss_command_line(t_minishell *mini);
-/*******************************/
+/*check if the string should be splited or not*/
 int		should_be_splited(char *str);
+/*take  the pipe or redirections and put them in a node*/
 void	take_pp_or_rdrct(char *str, int *i, t_list **new);
+/*if the string contain the special character it splite it and put in nodes*/
 void	add_to_new_list(t_list **new, char *str);
+/*split the strings by '|', '<', '>', '>>' and '<<'*/
 void	split_by_pp_and_rdrct(t_minishell *mini);
+/*check if the '$' signe should be expanded or not*/
 int		check_for_expander(t_list *prt);
+/*take the variable and replace it by it's value*/
 char	*expand_var(t_minishell *mini, char *old_str);
+/*check if there is a variable should be expanded and epand it*/
 void	expander(t_minishell *mini);
+/*split the command by spaces that ain't in quotes*/
 void	split_cmd_line_by_space(t_minishell *mini);
+/*locate <, <<, >, >> and |*/
 void	identify_special_charcters(t_minishell *mini);
+/*locate the redirections herdoc, input, output ...*/
 void	identify_rdrct(t_minishell *mini);
+/*locate the command*/
 void	identify_cmd(t_minishell *mini);
+/*locate command's flag*/
+void	identify_flag(t_minishell *mini);
+/*locate command's arguments*/
+void	identify_arg(t_minishell *mini);
 
 #endif

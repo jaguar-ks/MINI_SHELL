@@ -6,11 +6,22 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:20:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/26 16:17:21 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:35:16 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/parsing.h"
+
+int	skip_white_spaces(t_minishell *mini, int i)
+{
+	while (mini->line[i])
+	{
+		if (!ft_isspace(mini->line[i]))
+			break ;
+		i++;
+	}
+	return (i);
+}
 
 int	check_for_expander(t_list *prt)
 {

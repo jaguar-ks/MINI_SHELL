@@ -6,22 +6,14 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 15:40:57 by faksouss          #+#    #+#              #
-#    Updated: 2023/02/26 16:12:46 by faksouss         ###   ########.fr        #
+#    Updated: 2023/02/27 14:47:59 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 S_F = check_redirection.c\
 		check_syntax.c\
-		parss_cmd_ln.c\
 		take_dollar.c\
 		take_env.c\
-		take_flag.c\
-		take_input.c\
-		take_output.c\
-		take_pipe.c\
-		take_quotes.c\
-		take_redirction.c\
-		take_word.c\
 		split_by_pp_and_rdrct.c\
 		split_by_space.c\
 		lexer.c\
