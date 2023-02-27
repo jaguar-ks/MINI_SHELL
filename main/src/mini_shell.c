@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/24 21:11:32 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:21:29 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	out(t_minishell *mini)
 {
 	ft_lstclear(&mini->env);
-	ft_lstclear(&mini->cmd);
-	free(mini->prompt);
+	// free(mini->prompt);
+	// system("leaks minishell");
 	exit(0);
 }
 
@@ -46,10 +46,10 @@ char	*print_type(int tp)
 {
 	if (tp == PP)
 		return ("pipe");
-	else if (tp == WRD)
-		return ("word");
-	else if (tp == QTS)
-		return ("quots");
+	else if (tp == CMD)
+		return ("command");
+	else if (tp == ARG)
+		return ("argument");
 	else if (tp == INPT)
 		return ("input");
 	else if (tp == HEREDOC)
@@ -58,12 +58,16 @@ char	*print_type(int tp)
 		return ("apand");
 	else if (tp == TRNC)
 		return ("trunc");
-	else if (tp == VRB)
-		return ("variable");
 	else if (tp == FLG)
 		return ("flag");
-	else if (tp == SP)
-		return ("space");
+	else if (tp == IN_F)
+		return ("input file");
+	else if (tp == AP_F)
+		return ("appand file");
+	else if (tp == TR_F)
+		return ("trunc file");
+	else if (tp == LMTR)
+		return ("heredoc limtier");
 	return ("indefind");
 }
 
@@ -76,32 +80,42 @@ void	take_cmd(t_minishell *mini)
 	t_list	*tmp;
 
 	split_cmd_line_by_space(mini);
-	// expander(mini);
 	split_by_pp_and_rdrct(mini);
+	identify_special_charcters(mini);
+	identify_rdrct(mini);
+	expander(mini);
+	identify_cmd(mini);
+	remove_quotes(mini);
+	identify_flag(mini);
+	identify_arg(mini);
 	tmp = mini->cmd;
 	while (tmp)
 	{
 		printf("->[%s] [%s]\n", tmp->pt, print_type(tmp->wt));
 		tmp = tmp->next;
 	}
+	// tmp = mini->env;
+	// while (tmp)
+	// {
+	// 	printf("->[%s]\n", tmp->pt);
+	// 	tmp = tmp->next;
+	// }
+	ft_lstclear(&mini->cmd);
 }
 
 void	mini_shell(t_minishell *mini)
 {
-	// t_list	*tmp;
-
 	mini->prompt = inisialise_prompt();
 	mini->line = readline(mini->prompt);
 	free(mini->prompt);
 	if (!mini->line)
 		out(mini);
-	add_history(mini->line);
+	if (!empty_line(mini->line))
+		add_history(mini->line);
 	mini->ext_st = check_syntax(mini->line);
 	if (mini->ext_st == 256)
 		printf("sysntax error afrida\n");
-	else if (mini->ext_st == -1)
-		printf("empty line afrida\n");
-	else
+	else if (!empty_line(mini->line))
 		take_cmd(mini);
 	free(mini->line);
 	// tmp = mini->cmd;
@@ -111,7 +125,7 @@ void	mini_shell(t_minishell *mini)
 	// 	mini->cmd = mini->cmd->next;
 	// }
 	// ft_lstclear(&tmp);
-	system("leaks mini");
+	// system("leaks minishell");
 }
 
 int	main(int ac, char **av, char **en)
