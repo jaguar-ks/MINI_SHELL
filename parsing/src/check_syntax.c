@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 01:05:52 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/27 14:46:47 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:58:36 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	valid_pipe(char *line)
 int	check_syntax(char *line)
 {
 	if (empty_line(line))
-		return (-1);
+		return (0);
 	else if (!valid_ct(line))
 		return (258);
 	else if (!valid_rediraction(line))

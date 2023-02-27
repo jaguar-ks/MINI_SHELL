@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:28:47 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/26 16:27:11 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:47:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,4 @@ char	*take_dollar(t_minishell *mini, char *line, int *i)
 		return (exp);
 	}
 	return (exp);
-}
-
-int	take_var(t_minishell *mini, int i)
-{
-	char	*var;
-
-	var = take_dollar(mini, mini->line, &i);
-	ft_lstadd_back(&mini->cmd, ft_lstnew(var, VRB));
-	free(var);
-	return (i);
 }
