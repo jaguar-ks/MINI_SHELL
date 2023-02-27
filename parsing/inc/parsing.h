@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/27 14:53:21 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:25:02 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,7 @@ void	identify_cmd(t_minishell *mini);
 void	identify_flag(t_minishell *mini);
 /*locate command's arguments*/
 void	identify_arg(t_minishell *mini);
+/*remove the qouts and expand if needed*/
+void	remove_quotes(t_minishell *mini);
 
 #endif
