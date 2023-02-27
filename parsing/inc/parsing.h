@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/27 17:44:30 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:51:44 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,10 @@
 # define APND 4
 # define TRNC 5
 # define INPT 6
-# define FLG 7
-# define VRB 8
 # define PP 9
 # define IND 10
 # define ARG 12
-# define QTS 13
 # define EN 14
-# define SP 15
 # define AP_F 16
 # define TR_F 17
 # define IN_F 18
