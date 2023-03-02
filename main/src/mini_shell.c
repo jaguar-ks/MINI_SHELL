@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/27 18:21:29 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/02 19:36:32 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	out(t_minishell *mini)
 	ft_lstclear(&mini->env);
 	// free(mini->prompt);
 	// system("leaks minishell");
-	exit(0);
+	ft_printf("exit\n", 1);
+	exit(mini->ext_st / 255);
 }
 
 char	*inisialise_prompt(void)
@@ -77,8 +78,6 @@ char	*print_type(int tp)
 
 void	take_cmd(t_minishell *mini)
 {
-	t_list	*tmp;
-
 	split_cmd_line_by_space(mini);
 	split_by_pp_and_rdrct(mini);
 	identify_special_charcters(mini);
@@ -88,18 +87,13 @@ void	take_cmd(t_minishell *mini)
 	remove_quotes(mini);
 	identify_flag(mini);
 	identify_arg(mini);
-	tmp = mini->cmd;
-	while (tmp)
-	{
-		printf("->[%s] [%s]\n", tmp->pt, print_type(tmp->wt));
-		tmp = tmp->next;
-	}
-	// tmp = mini->env;
-	// while (tmp)
-	// {
-	// 	printf("->[%s]\n", tmp->pt);
-	// 	tmp = tmp->next;
-	// }
+}
+
+void	take_and_do_cmd(t_minishell *mini)
+{
+	take_cmd(mini);
+	do_cmd(mini);
+	// execute_cmd_line(mini);
 	ft_lstclear(&mini->cmd);
 }
 
@@ -112,19 +106,14 @@ void	mini_shell(t_minishell *mini)
 		out(mini);
 	if (!empty_line(mini->line))
 		add_history(mini->line);
-	mini->ext_st = check_syntax(mini->line);
-	if (mini->ext_st == 256)
-		printf("sysntax error afrida\n");
+	if (check_syntax(mini->line) == 258)
+	{
+		ft_printf("Mini_Shell: Syntax error\n", 2);
+		mini->ext_st = 258 * 255;
+	}
 	else if (!empty_line(mini->line))
-		take_cmd(mini);
+		take_and_do_cmd(mini);
 	free(mini->line);
-	// tmp = mini->cmd;
-	// while (mini->cmd)
-	// {
-	// 	printf("->[%s] [%s]\n", mini->cmd->pt, print_type(mini->cmd->wt));
-	// 	mini->cmd = mini->cmd->next;
-	// }
-	// ft_lstclear(&tmp);
 	// system("leaks minishell");
 }
 

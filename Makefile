@@ -6,11 +6,11 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/02/24 16:05:27 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/02 19:51:07 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAG = -Wall -Wextra -Werror 
+FLAG = -Wall -Wextra -Werror
 
 INC = main/inc/mini_shell.h
 
@@ -29,6 +29,8 @@ OBJ = $(addprefix $(O_D)/,$(S_F:.c=.o))
 SRC = $(addprefix $(S_D)/,$(S_F))
 
 PRS = parsing/parsing.a
+
+EXC = execution/execution.a
 
 LIBTOOL = libtool/libft.a
 
@@ -74,13 +76,17 @@ start:
 $(O_D):
 	mkdir $@
 
-$(NAME): $(OBJ) $(PRS) $(LIBTOOL)
+$(NAME): $(OBJ) $(LIBTOOL) $(PRS) $(EXC)
 	cc $(FLAG) -lreadline $^ -o $@
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
 $(PRS): 
 	printf "\r\033[0;33m⏳ parsing is compiling ...\033[0m"
 	make -C parsing
+
+$(EXC): 
+	printf "\r\033[0;33m⏳ execution is compiling ...\033[0m"
+	make -C execution
 
 $(LIBTOOL):
 	printf "\r\033[0;33m⏳ libtool is compiling ...\033[0m"
@@ -93,16 +99,18 @@ clean: start
 	printf "\r\033[0;33mclearing object files 🚮🗑️ ...\033[0m"
 	make -C libtool clean
 	make -C parsing clean
+	make -C execution clean
 	$(RM) $(O_D)
 
 fclean: clean
 	printf "\r\033[0;33mYOU DELETED MY MINISHELL 😱 YOU !*#^&# 😡🤬\033[0m\n"
 	make -C libtool fclean
 	make -C parsing fclean
+	make -C execution fclean
 	$(RM) $(NAME)
 
 re: fclean all
 
 .PHONY: all fclean clean re
 
-.SILENT: all clean fclean re $(NAME) $(O_D) $(PRS) $(LIBTOOL) start
+.SILENT: all clean fclean re $(NAME) $(O_D) $(PRS) $(EXC) $(LIBTOOL) start

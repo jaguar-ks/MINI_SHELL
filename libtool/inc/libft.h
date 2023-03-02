@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/23 16:23:50 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:07:29 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_list
 typedef struct s_minishell
 {
 	int		ext_st;
+	int		fd[2];
 	char	*line;
 	char	*prompt;
 	t_list	*cmd;
@@ -54,11 +55,11 @@ typedef struct s_minishell
 
 typedef struct s_cmd
 {
+	char			**en;
 	char			**cmd;
-	char			*pth;
+	char			*cmd_pth;
 	int				in_f;
 	int				out_f;
-	struct s_cmd	*nxt;
 }	t_cmd;
 
 int		ft_isalpha(int c);
@@ -97,6 +98,7 @@ int		ft_putnbr_fd(int n, int fd);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 t_list	*ft_lstnew(char *wrd, int tp);
+t_list	*dup_node(t_list *nd);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);

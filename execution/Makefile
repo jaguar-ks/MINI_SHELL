@@ -6,11 +6,15 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 18:10:27 by faksouss          #+#    #+#              #
-#    Updated: 2023/02/23 18:11:38 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/01 23:30:41 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-S_F = 
+S_F = convert_env_list_to_char.c\
+		take_cmd_by_cmd.c\
+		get_needed_info.c\
+		# convert_cmd_to_char.c\
+		# exc_cmd_lst.c\
 
 S_D = src
 
