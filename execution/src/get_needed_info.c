@@ -6,11 +6,25 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:41:33 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 04:01:24 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 06:04:10 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/execution.h"
+
+int	error(char *er)
+{
+	ft_printf("MiniShell : %s : %s\n", STDERR_FILENO, strerror(errno), er);
+	return (errno);
+}
+
+void	cmd_not_found(char **en, char **cm)
+{
+	ft_printf("Minishell : command not found : %s\n", STDERR_FILENO, cm[0]);
+	deallocate(en);
+	deallocate(cm);
+	exit(127);
+}
 
 int	how_many_pipe(t_list *cmd)
 {

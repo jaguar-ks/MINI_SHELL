@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/06 23:27:31 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 06:02:39 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,12 @@ typedef struct s_list
 typedef struct s_minishell
 {
 	int		ext_st;
+	int		fd[2];
 	char	*line;
 	char	*prompt;
 	t_list	*cmd;
 	t_list	*env;
 }	t_minishell;
-
-typedef struct s_cmd
-{
-	char			**en;
-	char			**cmd;
-	char			*cmd_pth;
-	int				in_f;
-	int				out_f;
-}	t_cmd;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
