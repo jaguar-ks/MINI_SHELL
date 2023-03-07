@@ -6,13 +6,8 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 19:02:50 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/28 19:04:22 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 07:20:45 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/signals.h"
-
-void	sig_int_handler(int sig_num)
-{
-	if (sig_num ==)
-}

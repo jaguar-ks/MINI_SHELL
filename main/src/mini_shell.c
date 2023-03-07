@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 03:00:28 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 07:15:47 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*inisialise_prompt(void)
 	int			i;
 
 	i = 0;
-	if (getcwd(cd, PATH_MAX) < 0)
+	if (!getcwd(cd, PATH_MAX))
 		return (r);
 	else
 	{

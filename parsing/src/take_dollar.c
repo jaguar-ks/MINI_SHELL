@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:28:47 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 03:57:47 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 07:16:29 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ char	*expan_variable(char *var, t_minishell *mini)
 	t_list	*tmp;
 	char	*vr;
 	int		i;
-	int		ct;
 
 	i = 1;
-	ct = 0;
 	tmp = mini->env;
 	if (var[i] == '?')
 		return (ft_itoa(mini->ext_st / 255));
@@ -52,9 +50,7 @@ int	check_expand(char *str)
 char	*take_dollar(t_minishell *mini, char *line, int *i)
 {
 	char	*exp;
-	int		j;
 
-	j = 0;
 	exp = NULL;
 	if (check_expand(&line[*i]))
 	{

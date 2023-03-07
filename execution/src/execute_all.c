@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 06:13:44 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 07:37:22 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	do_single_cmd(t_list *cmd, t_minishell *mini)
 		take_output(cmd);
 	if (check_cmd(cmd))
 	{
-		cm_pth = (en = take_char_env(mini->env), cm = take_char_cmd(cmd),
-				take_path(cm[0], mini));
+		en = take_char_env(mini->env);
+		cm = take_char_cmd(cmd);
+		cm_pth = take_path(cm[0], mini);
 		if (!cm_pth)
 			cmd_not_found(en, cm);
 		execve(cm_pth, cm, en);
 		exit(error("execve"));
 	}
-	else
-		exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
 void	execute_one(t_list *cmd, t_minishell *mini)

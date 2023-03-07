@@ -6,31 +6,96 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/02 19:51:07 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/07 07:15:22 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FLAG = -Wall -Wextra -Werror
 
-INC = main/inc/mini_shell.h
+LDFLAGS = /usr/lib/x86_64-linux-gnu/libreadline.a
+
+MN_H = main/inc/mini_shell.h
 
 RM = rm -rf
 
 NAME = minishell
 
-S_F = mini_shell.c
+M_F = mini_shell.c
+
+P_F = check_redirection.c\
+		check_syntax.c\
+		take_dollar.c\
+		take_env.c\
+		split_by_pp_and_rdrct.c\
+		split_by_space.c\
+		lexer.c\
+		remove_quotes.c\
+
+E_F =  # **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
+#    Updated: 2023/03/06 03:36:12 by faksouss         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+FLAG = -Wall -Wextra -Werror
+
+LDFLAGS = /usr/lib/x86_64-linux-gnu/libreadline.a
+
+MN_H = main/inc/mini_shell.h
+
+RM = rm -rf
+
+NAME = minishell
+
+M_F = mini_shell.c
+
+P_F = check_redirection.c\
+		check_syntax.c\
+		take_dollar.c\
+		take_env.c\
+		split_by_pp_and_rdrct.c\
+		split_by_space.c\
+		lexer.c\
+		remove_quotes.c\
+
+E_F =   convert_env_list_to_char.c\
+			execute_all.c\
+			get_needed_info.c\
+			take_cmd_and_prts.c\
+			take_cmd_by_cmd.c\
+			take_cmd_path.c\
+			take_in_rdrct.c\
+			take_out_rdrct.c\
 
 O_D = obj
 
-S_D = main/src
+M_D = main/src
 
-OBJ = $(addprefix $(O_D)/,$(S_F:.c=.o))
+P_D = parsing/src
 
-SRC = $(addprefix $(S_D)/,$(S_F))
+E_D = execution/src
 
-PRS = parsing/parsing.a
+O_M = $(addprefix $(O_D)/,$(M_F:.c=.o))
 
-EXC = execution/execution.a
+O_P = $(addprefix $(O_D)/,$(P_F:.c=.o))
+
+O_E = $(addprefix $(O_D)/,$(E_F:.c=.o))
+
+M_S = $(addprefix $(M_D)/,$(M_F))
+
+P_S = $(addprefix $(P_D)/,$(P_F))
+
+E_S = $(addprefix $(E_D)/,$(E_F))
+
+PRS_H = parsing/inc/parsing.h
+
+EXC_H = execution/inc/execution.h
 
 LIBTOOL = libtool/libft.a
 
@@ -76,41 +141,149 @@ start:
 $(O_D):
 	mkdir $@
 
-$(NAME): $(OBJ) $(LIBTOOL) $(PRS) $(EXC)
-	cc $(FLAG) -lreadline $^ -o $@
+$(NAME): $(O_M) $(O_P) $(O_E) $(LIBTOOL)
+	cc $(FLAG) $^ -lreadline -o $@
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
-$(PRS): 
-	printf "\r\033[0;33m⏳ parsing is compiling ...\033[0m"
-	make -C parsing
-
-$(EXC): 
-	printf "\r\033[0;33m⏳ execution is compiling ...\033[0m"
-	make -C execution
-
 $(LIBTOOL):
-	printf "\r\033[0;33m⏳ libtool is compiling ...\033[0m"
-	make -C libtool
+	@printf "\r\033[0;33m⏳ libtool is compiling ...\033[0m"
+	@make -C libtool
 
-$(O_D)/%.o: $(S_D)/%.c $(INC)
+$(O_D)/%.o: $(M_D)/%.c $(MN_H)
+	@printf "\r\033[0;33m⏳ main is compiling ...\033[0m"
+	@printf "\r\033[0;33m compiling\033[0m %s " $<
 	@cc $(FLAG) -c $< -o $@
 
-clean: start 
-	printf "\r\033[0;33mclearing object files 🚮🗑️ ...\033[0m"
-	make -C libtool clean
-	make -C parsing clean
-	make -C execution clean
+$(O_D)/%.o: $(P_D)/%.c $(PRS_H)
+	@printf "\r\033[0;33m⏳ parsing is compiling ...\033[0m"
+	@printf "\r\033[0;33m compiling\033[0m %s " $<
+	@cc $(FLAG) -c $< -o $@
+
+$(O_D)/%.o: $(E_D)/%.c $(EXC_H)
+	@printf "\r\033[0;33m⏳ execution is compiling ...\033[0m"
+	@printf "\r\033[0;33m compiling\033[0m %s " $<
+	@cc $(FLAG) -c $< -o $@
+
+clean: 
+	@printf "\r\033[0;33mclearing object files 🚮🗑️ ...\033[0m"
+	@make -C libtool clean
 	$(RM) $(O_D)
 
 fclean: clean
-	printf "\r\033[0;33mYOU DELETED MY MINISHELL 😱 YOU !*#^&# 😡🤬\033[0m\n"
-	make -C libtool fclean
-	make -C parsing fclean
-	make -C execution fclean
+	@printf "\r\033[0;33mYOU DELETED MY MINISHELL 😱 YOU !*#^&# 😡🤬\033[0m\n"
+	@make -C libtool fclean
 	$(RM) $(NAME)
 
 re: fclean all
 
 .PHONY: all fclean clean re
 
-.SILENT: all clean fclean re $(NAME) $(O_D) $(PRS) $(EXC) $(LIBTOOL) start
+.SILENT: all clean fclean re $(NAME) $(O_D) $(LIBTOOL) start
+
+
+O_D = obj
+
+M_D = main/src
+
+P_D = parsing/src
+
+E_D = execution/src
+
+O_M = $(addprefix $(O_D)/,$(M_F:.c=.o))
+
+O_P = $(addprefix $(O_D)/,$(P_F:.c=.o))
+
+O_E = $(addprefix $(O_D)/,$(E_F:.c=.o))
+
+M_S = $(addprefix $(M_D)/,$(M_F))
+
+P_S = $(addprefix $(P_D)/,$(P_F))
+
+E_S = $(addprefix $(E_D)/,$(E_F))
+
+PRS_H = parsing/inc/parsing.h
+
+EXC_H = execution/inc/execution.h
+
+LIBTOOL = libtool/libft.a
+
+all: start $(O_D) $(NAME)
+
+start:
+	clear
+	printf "\r\n"
+	echo "       	   :~-._                                                 _.-~:       "
+	echo "       	   : :.~^o._        ________---------________        _.o^~.:.:       "
+	echo "       	   : ::.'?88booo~~~.::::::::...::::::::::::..~~oood88P'.::.:         "
+	echo "       	   :  ::: '?88P .:::....         ........:::::. ?88P' :::. :         "
+	echo "       	    :  :::. '? .::.            . ...........:::. P' .:::. :          "
+	echo "       	     :  :::   ... ..  ...       .. .::::......::.   :::. :           "
+	echo "       	     '  :' .... ..  .:::::.     . ..:::::::....:::.  ': .'           "
+	echo "       	       :..    ____:::::::::.  . . ....:::::::::____  ... :           "
+	echo "       	      :... ':~    ^~-:::::..  .........:::::-~^    ~::.::::          "
+	echo "       	      '.::. '\   \033[0;31m(8)\033[0m  \b:::..::.:.:::::::d/  \033[0;31m(8)\033[0m     /'.::::'          "
+	echo "       	       ::::.  ~-._v  |b.::::::::::::::d|      v_.-~..:::::             "
+	echo "       	       '.:::::... ~~^?888b..:::::::::::d888P^~...::::::::'           "
+	echo "       	        '.::::::::::....~~~ .:::::::::~~~:::::::::::::::'            "
+	echo "       	         '..:::::::::::   .   ....::::    ::::::::::::,'             "
+	echo "       	           '. .:::::::    .     .::::.    ::::::::::'.                "
+	echo "       	             '._ .:::    .  |     :::::.    :::::_.'                 "
+	echo "       	                '-. :    .        :::::      :,-'                    "
+	echo "       	                   :.   :___\    .:::___   .::                       "
+	echo "       	         \033[0;33m..--~~~~--:\033[0m+::. ~~^?b..:::dP^~~.::++\033[0;33m:--~~~~--..\033[0m             "
+	echo "       	           \033[0;33m___....--'\033[0m+:::.   \'~8~'/   .:::+\033[0;33m'--....___\033[0m               "
+	echo "       	         \033[0;33m~~   __..---'\033[0m_=:: ___gd8bg___ :==_\033[0;33m'---..__   ~~\033[0m             "
+	echo "       	          \033[0;33m-~~~  _.--~~'\033[0m-.~~~~~~~~~~~~~~~,-\033[0;33m' ~~--._ ~~~-\033[0m              "
+	echo "       	              \033[0;33m-~~\033[0m        \ |~~~~~~~~~~~| /           \033[0;33m~~-\033[0m                "
+	echo "       	                          \|  ~~~~~~~  |/                              \n"
+	echo "\033[0;31m               ▄▄▄██▀▀▀▄▄▄        ▄████  █    ██  ▄▄▄       ██▀███     \033[0m" 
+	echo "\033[0;31m                ▒██  ▒████▄     ██▒ ▀█▒ ██  ▓██▒▒████▄    ▓██ ▒ ██▒    \033[0m"
+	echo "\033[0;31m                ░██  ▒██  ▀█▄  ▒██░▄▄▄░▓██  ▒██░▒██  ▀█▄  ▓██ ░▄█ ▒    \033[0m"
+	echo "\033[0;31m             ▓██▄██▓ ░██▄▄▄▄██ ░▓█  ██▓▓▓█  ░██░░██▄▄▄▄██ ▒██▀▀█▄      \033[0m"
+	echo "\033[0;31m              ▓███▒   ▓█   ▓██▒░▒▓███▀▒▒▒█████▓  ▓█   ▓██▒░██▓ ▒██▒    \033[0m"
+	echo "\033[0;31m              ▒▓▒▒0   ▒▒   ▓▒█1 0▒   ▒ v▒▓▒ ▒ ▒  ▒▒   ▓▒█░░ ▒▓ ░▒▓░    \033[0m"
+	echo "\033[0;31m              1 0▒1    ▒   ▒▒ 2  ?   1 h░▒░ T :   ▒   1▒ 0  0▒ d ▒r    \033[0m"
+	echo "\033[0;31m              0 J ;    K   ▒   X !   &  1!1 ; |   3   L     10   Q     \033[0m"
+	echo "\033[0;31m                  1        1  0      /    0           ^  Z   1         \033[0m\n"                                             
+
+$(O_D):
+	mkdir $@
+
+$(NAME): $(O_M) $(O_P) $(O_E) $(LIBTOOL)
+	cc $(FLAG) $^ -lreadline -o $@
+	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
+
+$(LIBTOOL):
+	@printf "\r\033[0;33m⏳ libtool is compiling ...\033[0m"
+	@make -C libtool
+
+$(O_D)/%.o: $(M_D)/%.c $(MN_H)
+	@printf "\r\033[0;33m⏳ main is compiling ...\033[0m"
+	@printf "\r\033[0;33m compiling\033[0m %s " $<
+	@cc $(FLAG) -c $< -o $@
+
+$(O_D)/%.o: $(P_D)/%.c $(PRS_H)
+	@printf "\r\033[0;33m⏳ parsing is compiling ...\033[0m"
+	@printf "\r\033[0;33m compiling\033[0m %s " $<
+	@cc $(FLAG) -c $< -o $@
+
+$(O_D)/%.o: $(E_D)/%.c $(EXC_H)
+	@printf "\r\033[0;33m⏳ execution is compiling ...\033[0m"
+	@printf "\r\033[0;33m compiling\033[0m %s " $<
+	@cc $(FLAG) -c $< -o $@
+
+clean: 
+	@printf "\r\033[0;33mclearing object files 🚮🗑️ ...\033[0m"
+	@make -C libtool clean
+	$(RM) $(O_D)
+
+fclean: clean
+	@printf "\r\033[0;33mYOU DELETED MY MINISHELL 😱 YOU !*#^&# 😡🤬\033[0m\n"
+	@make -C libtool fclean
+	$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all fclean clean re
+
+.SILENT: all clean fclean re $(NAME) $(O_D) $(LIBTOOL) start

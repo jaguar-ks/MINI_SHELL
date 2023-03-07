@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 00:28:28 by faksouss          #+#    #+#              #
-#    Updated: 2023/02/16 23:37:23 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/07 07:31:28 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,17 +41,21 @@ all : $(OBJ_DIR) ${NAME}
 
 ${NAME} : ${OBJS_MD}
 	ar -rc $@ ${OBJS_MD}
+	printf "\r%s \033[0;33m is ready to lunch enjoy 😉\033[0m" $@
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c ${HEADER}
+	@printf "\r\033[0;33m⚒️ Compiling \033[0m %s" $<
 	@${CC} ${FLAGS} $< -o $@
 
 $(OBJ_DIR) :
 	mkdir $@
 
 clean :
+	printf "\r\033[0;33m🗑️🚮 Deleting object files...\033[0m"
 	@${RM} $(OBJ_DIR)
 
 fclean : clean
+	printf "\r\033[0;33m🗑️🚮 Deleting \033[0m%s..." $(NAME)
 	@${RM} ${NAME}
 
 re : fclean all
