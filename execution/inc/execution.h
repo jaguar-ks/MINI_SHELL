@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:18:23 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 03:17:32 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 06:10:04 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ int		error(char *er);
 /*this function is used to in case of the command not found it print the error 
 and deallocate the envirenment and the command and exit the process*/
 void	cmd_not_found(char **en, char **cm);
+/*execute command line with multipel pipes*/
+void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini);
 
 #endif
