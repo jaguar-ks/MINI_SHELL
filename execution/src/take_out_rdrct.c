@@ -1,59 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_cmd_to_char.c                              :+:      :+:    :+:   */
+/*   take_out_rdrct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 21:44:52 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/28 21:56:46 by faksouss         ###   ########.fr       */
+/*   Created: 2023/03/07 01:39:26 by faksouss          #+#    #+#             */
+/*   Updated: 2023/03/07 03:16:13 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/execution.h"
 
-int	cmd_len(t_list *cmd)
+int	check_out_rdrct(t_list *cmd)
 {
 	t_list	*tmp;
-	int		ct;
 
-	ct = 0;
 	tmp = cmd;
 	while (tmp)
 	{
-		if (tmp->wt == PP)
-			break ;
-		if (tmp->wt == CMD || tmp->wt == ARG || tmp->wt == FLG)
-			ct++;
+		if (tmp->wt == TRNC || tmp->wt == APND)
+			return (1);
 		tmp = tmp->next;
 	}
-	return (ct);
+	return (0);
 }
 
-char	**take_char_cmd(t_list *cmd)
+void	open_output(t_list *fl, int *fd)
 {
-	t_list	*tmp;
-	char	**cmd;
-	int		i;
+	if (fl->wt == TR_F)
+		*fd = open(fl->pt, (O_CREAT | O_TRUNC | O_WRONLY), 0777);
+	else if (fl->wt == AP_F)
+		*fd = open(fl->pt, (O_CREAT | O_APPEND | O_WRONLY), 0777);
+	if (*fd < 0)
+		exit(error(fl->pt));
+}
 
-	cmd = (char **)malloc(sizeof(char *) * (cmd_len(cmd) + 1));
-	if (!cmd)
-		return (NULL);
-	i = 0;
+void	take_output(t_list *cmd)
+{
+	int		fd;
+	t_list	*tmp;
+
 	tmp = cmd;
 	while (tmp)
 	{
-		if (tmp->wt == PP)
-			break ;
-		if (tmp->wt == CMD || tmp->wt == ARG || tmp->wt == FLG)
-		{
-			cmd[i] = ft_strdup(tmp->pt);
-			i++;
-		}
-		if (i == cmd_len(cmd))
-			break ;
+		if (tmp->wt == APND || tmp->wt == TRNC)
+			open_output(tmp->next, &fd);
 		tmp = tmp->next;
 	}
-	cmd[i] = NULL;
-	return (cmd);
+	dup2(fd, STDOUT_FILENO);
 }

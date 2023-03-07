@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:28:47 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/02 19:38:27 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 03:57:47 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*expan_variable(char *var, t_minishell *mini)
 	ct = 0;
 	tmp = mini->env;
 	if (var[i] == '?')
-		return (ft_itoa(mini->ext_st % 255));
+		return (ft_itoa(mini->ext_st / 255));
 	while (var[i])
 	{
 		if (!ft_isalnum(var[i]) && var[i] != '_')
