@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:41:33 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 06:04:10 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 18:59:55 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,4 @@ void	split_and_execute_cmd(t_minishell *mini)
 	while (++j <= i)
 		cmd[j] = single_cmd(mini);
 	execute_all(cmd, i, mini);
-	j = -1;
-	while (++j < i)
-		ft_lstclear(&cmd[j]);
-	free(cmd);
 }

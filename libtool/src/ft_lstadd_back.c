@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 22:37:02 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/01 15:30:25 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:51:31 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		if (*lst)
 		{
 			cr = ft_lstlast(*lst);
-			if (!cr)
-				return ;
 			cr->next = new;
 		}
 		else

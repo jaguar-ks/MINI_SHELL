@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 20:21:30 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/26 17:46:18 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:53:05 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	add_to_new_list(t_list **new, char *str)
 	{
 		s = i;
 		i = jst_for_norminnet(str, i);
+		prt = NULL;
 		if (i > s)
 		{
 			prt = ft_substr(str, s, i - s);

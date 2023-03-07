@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 07:37:22 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:56:52 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini)
 void	execute_all(t_list **cmd, int ct, t_minishell *mini)
 {
 	int	pid;
+	int	i;
 
 	if (ct == 1)
 		execute_one(cmd[0], mini);
@@ -92,4 +93,8 @@ void	execute_all(t_list **cmd, int ct, t_minishell *mini)
 		else
 			waitpid(pid, &mini->ext_st, 0);
 	}
+	i = -1;
+	while (cmd[++i])
+		ft_lstclear(&cmd[i]);
+	free(cmd);
 }

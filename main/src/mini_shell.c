@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 07:15:47 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:30:58 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	take_and_do_cmd(t_minishell *mini)
 {
 	take_cmd(mini);
 	split_and_execute_cmd(mini);
-	// execute_cmd_line(mini);
 	ft_lstclear(&mini->cmd);
 }
 
