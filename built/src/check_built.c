@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 03:18:12 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 04:40:57 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ int	should_not_fork(t_list *cmd)
 	while (tmp)
 	{
 		if (tmp->wt == CMD)
-			if (!ft_strncmp(tmp->pt, "cd", 3) || !ft_strncmp(tmp->pt, "unset", 6)
-				||	!ft_strncmp(tmp->pt, "export", 3) || !ft_strncmp(tmp->pt, "exit", 5))
+			if (!ft_strncmp(tmp->pt, "cd", 3)
+				|| !ft_strncmp(tmp->pt, "unset", 6)
+				|| !ft_strncmp(tmp->pt, "export", 3)
+				|| !ft_strncmp(tmp->pt, "exit", 5))
 				return (1);
 		tmp = tmp->next;
 	}

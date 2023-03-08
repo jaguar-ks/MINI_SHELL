@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/08 01:30:31 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/08 04:00:12 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,8 @@ E_F =   convert_env_list_to_char.c\
 			take_out_rdrct.c\
 
 B_F = my_echo.c\
+		my_cd.c\
+		check_built.c
 
 O_D = obj
 
