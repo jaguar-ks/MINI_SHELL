@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 01:39:26 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 03:16:13 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 01:01:13 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ void	take_output(t_list *cmd)
 	t_list	*tmp;
 
 	tmp = cmd;
+	fd = -1;
 	while (tmp)
 	{
 		if (tmp->wt == APND || tmp->wt == TRNC)
 			open_output(tmp->next, &fd);
 		tmp = tmp->next;
 	}
-	dup2(fd, STDOUT_FILENO);
+	if (fd > 0)
+		dup2(fd, STDOUT_FILENO);
 }

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 01:40:44 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 04:04:49 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 01:00:46 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	take_input(t_list *cmd, t_minishell *mini)
 	t_list	*tmp;
 
 	tmp = cmd;
+	fd = -1;
 	while (tmp)
 	{
 		if (tmp->wt == INPT)
@@ -75,5 +76,6 @@ void	take_input(t_list *cmd, t_minishell *mini)
 			open_heredoc(tmp->next, mini, &fd);
 		tmp = tmp->next;
 	}
-	dup2(fd, STDIN_FILENO);
+	if (fd > 0)
+		dup2(fd, STDIN_FILENO);
 }

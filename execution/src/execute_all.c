@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 19:56:52 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 03:38:19 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	do_single_cmd(t_list *cmd, t_minishell *mini)
 {
-	char	**en;
 	char	**cm;
 	char	*cm_pth;
 
-	en = NULL;
 	cm = NULL;
 	cm_pth = NULL;
 	if (check_in_rdrct(cmd))
@@ -27,12 +25,16 @@ void	do_single_cmd(t_list *cmd, t_minishell *mini)
 		take_output(cmd);
 	if (check_cmd(cmd))
 	{
-		en = take_char_env(mini->env);
+		if (is_builtin(cmd))
+		{
+			do_builtin(cmd, mini);
+			exit(EXIT_SUCCESS);
+		}
 		cm = take_char_cmd(cmd);
 		cm_pth = take_path(cm[0], mini);
 		if (!cm_pth)
-			cmd_not_found(en, cm);
-		execve(cm_pth, cm, en);
+			cmd_not_found(cm);
+		execve(cm_pth, cm, take_char_env(mini->env));
 		exit(error("execve"));
 	}
 	exit(EXIT_SUCCESS);
@@ -42,11 +44,16 @@ void	execute_one(t_list *cmd, t_minishell *mini)
 {
 	int		pid;
 
-	pid = fork();
-	if (!pid)
-		do_single_cmd(cmd, mini);
+	if (is_builtin(cmd) && should_not_fork(cmd))
+		do_builtin(cmd, mini);
 	else
-		waitpid(pid, &mini->ext_st, 0);
+	{
+		pid = fork();
+		if (!pid)
+			do_single_cmd(cmd, mini);
+		else
+			waitpid(pid, &mini->ext_st, 0);
+	}
 }
 
 void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini)

@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/07 19:53:53 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/08 01:30:31 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ E_F =   convert_env_list_to_char.c\
 			take_in_rdrct.c\
 			take_out_rdrct.c\
 
+B_F = my_echo.c\
+
 O_D = obj
 
 M_D = main/src
@@ -48,11 +50,15 @@ P_D = parsing/src
 
 E_D = execution/src
 
+B_D = built/src
+
 O_M = $(addprefix $(O_D)/,$(M_F:.c=.o))
 
 O_P = $(addprefix $(O_D)/,$(P_F:.c=.o))
 
 O_E = $(addprefix $(O_D)/,$(E_F:.c=.o))
+
+O_B = $(addprefix $(O_D)/,$(B_F:.c=.o))
 
 M_S = $(addprefix $(M_D)/,$(M_F))
 
@@ -60,9 +66,13 @@ P_S = $(addprefix $(P_D)/,$(P_F))
 
 E_S = $(addprefix $(E_D)/,$(E_F))
 
+B_S = $(addprefix $(B_D)/,$(B_F))
+
 PRS_H = parsing/inc/parsing.h
 
 EXC_H = execution/inc/execution.h
+
+BLT_H = built/inc/built.h
 
 LIBTOOL = libtool/libft.a
 
@@ -108,7 +118,7 @@ start:
 $(O_D):
 	mkdir $@
 
-$(NAME): $(O_M) $(O_P) $(O_E) $(LIBTOOL)
+$(NAME): $(O_M) $(O_P) $(O_E) $(O_B) $(LIBTOOL)
 	cc $(FLAG) $^ -lreadline -o $@
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
@@ -128,6 +138,11 @@ $(O_D)/%.o: $(P_D)/%.c $(PRS_H)
 
 $(O_D)/%.o: $(E_D)/%.c $(EXC_H)
 	@printf "\r\033[0;33m⏳ execution is compiling ...\033[0m"
+	@printf "\r\033[0;33m compiling\033[0m %s " $<
+	@cc $(FLAG) -c $< -o $@
+
+$(O_D)/%.o: $(B_D)/%.c $(BLT_H)
+	@printf "\r\033[0;33m⏳ builtin is compiling ...\033[0m"
 	@printf "\r\033[0;33m compiling\033[0m %s " $<
 	@cc $(FLAG) -c $< -o $@
 

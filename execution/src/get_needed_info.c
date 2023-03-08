@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:41:33 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 18:59:55 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 03:19:26 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ int	error(char *er)
 	return (errno);
 }
 
-void	cmd_not_found(char **en, char **cm)
+void	cmd_not_found(char **cm)
 {
 	ft_printf("Minishell : command not found : %s\n", STDERR_FILENO, cm[0]);
-	deallocate(en);
 	deallocate(cm);
 	exit(127);
 }
