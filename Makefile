@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/08 05:04:11 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/08 05:35:14 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ B_F = check_built.c\
 		my_cd.c\
 		my_pwd.c\
 		my_env.c\
+		my_exit.c\
 
 O_D = obj
 

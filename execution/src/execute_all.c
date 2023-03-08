@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 03:38:19 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 05:42:42 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	do_single_cmd(t_list *cmd, t_minishell *mini)
 		if (is_builtin(cmd))
 		{
 			do_builtin(cmd, mini);
-			exit(EXIT_SUCCESS);
+			exit(mini->ext_st);
 		}
 		cm = take_char_cmd(cmd);
 		cm_pth = take_path(cm[0], mini);
