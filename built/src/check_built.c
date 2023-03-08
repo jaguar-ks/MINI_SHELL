@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 04:40:57 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 05:00:48 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,13 @@ int	is_builtin(t_list *cmd)
 void	do_builtin(t_list *cmd, t_minishell *mini)
 {
 	if (is_echo(cmd))
-		my_echo(cmd, mini);
+		my_echo(cmd);
 	else if (is_cd(cmd))
 		my_cd(cmd, mini);
+	else if (is_pwd(cmd))
+		my_pwd(mini->env);
+	else if (is_env(cmd))
+		my_env(mini->env);
 }
 
 int	should_not_fork(t_list *cmd)

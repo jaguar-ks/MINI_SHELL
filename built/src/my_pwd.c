@@ -6,18 +6,39 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:32:59 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/14 18:02:16 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 05:00:25 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/built.h"
 
-int	main(void)
+int	is_pwd(t_list *cmd)
 {
-	char	cd[PATH_MAX];
+	t_list	*tmp;
 
-	if (getcwd(cd, sizeof(cd)))
-		printf("%s\n", cd);
-	else
-		return (ft_printf("PWD: %s\n", 2, strerror(errno)), errno);
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp->wt == CMD)
+			if (!ft_strncmp(tmp->pt, "pwd", 4))
+				return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	my_pwd(t_list *env)
+{
+	t_list	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->pt, "PWD=", 4))
+		{
+			ft_printf("%s\n", STDOUT_FILENO, tmp->pt + 4);
+			break ;
+		}
+		tmp = tmp->next;
+	}
 }

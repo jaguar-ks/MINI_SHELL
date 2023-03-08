@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:44:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 03:14:51 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/08 04:48:41 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ int	check_echo_flg(char *flg)
 		return (0);
 }
 
-void	my_echo(t_list *cmd, t_minishell *mini)
+void	my_echo(t_list *cmd)
 {
 	char	**cm;
 	int		i;
 
-	take_input(cmd, mini);
-	take_output(cmd);
 	cm = take_char_cmd(cmd);
 	if (cm[1] && check_echo_flg(cm[1]))
 		i = 1;
