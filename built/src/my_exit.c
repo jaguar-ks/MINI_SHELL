@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 05:12:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 05:47:16 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/09 02:01:32 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	my_exit(t_list *cmd, t_minishell *mini)
 	{
 		deallocate(cm);
 		mini->ext_st = (ft_printf("exit\nMinishell : %s : exit\n",
-					STDERR_FILENO, "too many arguments"), 1);
+					STDERR_FILENO, "too many arguments"), 1 * 256);
 		return ;
 	}
 	ft_printf("exit\n", STDERR_FILENO);

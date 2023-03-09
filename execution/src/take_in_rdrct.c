@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 01:40:44 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 01:00:46 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:17:45 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	open_input(char *file, int *fd)
 {
 	*fd = open(file, O_RDONLY, 0777);
 	if (*fd < 0)
-		exit(error(file));
+		exit(error(file, 1));
 }
 
 void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
@@ -41,7 +41,7 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
 
 	r = NULL;
 	if (pipe(fd) < 0)
-		exit(error("pipe"));
+		exit(error("pipe", errno));
 	pid = fork();
 	if (!pid)
 	{

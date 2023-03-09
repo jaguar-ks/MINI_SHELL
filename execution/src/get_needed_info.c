@@ -6,23 +6,33 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:41:33 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 03:19:26 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:46:07 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/execution.h"
 
-int	error(char *er)
+int	error(char *er, int ext_er)
 {
-	ft_printf("MiniShell : %s : %s\n", STDERR_FILENO, strerror(errno), er);
-	return (errno);
+	if (ext_er == 127)
+		ft_printf("Minishell : command not found : %s\n", STDERR_FILENO, er);
+	else if (ext_er == 1)
+		ft_printf("Minishell : No such file or directory : %s\n",
+			STDERR_FILENO, er);
+	else if (ext_er == 258)
+		ft_printf("Minishell : Syntax error\n", STDERR_FILENO);
+	else
+		ft_printf("Minishell : %s : %s\n", STDERR_FILENO, strerror(errno), er);
+	return (ext_er);
 }
 
 void	cmd_not_found(char **cm)
 {
-	ft_printf("Minishell : command not found : %s\n", STDERR_FILENO, cm[0]);
+	int	ext;
+
+	ext = error(cm[0], 127);
 	deallocate(cm);
-	exit(127);
+	exit(ext);
 }
 
 int	how_many_pipe(t_list *cmd)

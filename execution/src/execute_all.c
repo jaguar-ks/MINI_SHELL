@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 05:42:42 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:19:21 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	do_single_cmd(t_list *cmd, t_minishell *mini)
 		if (!cm_pth)
 			cmd_not_found(cm);
 		execve(cm_pth, cm, take_char_env(mini->env));
-		exit(error("execve"));
+		exit(error("execve", errno));
 	}
 	exit(EXIT_SUCCESS);
 }
@@ -65,7 +65,7 @@ void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini)
 	while (cmd[++i])
 	{
 		if (pipe(mini->fd) < 0)
-			exit(error("pipe"));
+			exit(error("pipe", errno));
 		pid = fork();
 		if (!pid)
 		{

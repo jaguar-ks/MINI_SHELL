@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 04:07:10 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:48:42 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,7 @@ void	mini_shell(t_minishell *mini)
 	if (!empty_line(mini->line))
 		add_history(mini->line);
 	if (check_syntax(mini->line) == 258)
-	{
-		ft_printf("Mini_Shell: Syntax error\n", 2);
-		mini->ext_st = 258 * 255;
-	}
+		mini->ext_st = error(NULL, 258) * 256;
 	else if (!empty_line(mini->line))
 		take_and_do_cmd(mini);
 	free(mini->line);

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:18:23 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 03:19:52 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/09 01:46:03 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ t_list	*single_cmd(t_minishell *mini);
 int		how_many_pipe(t_list *cmd);
 /*split the command line by pipe*/
 void	split_and_execute_cmd(t_minishell *mini);
-/*print error and return the errno value to the exit status*/
-int		error(char *er);
 /*check if there is a input rederction*/
 int		check_in_rdrct(t_list *cmd);
 /*take the input rederction and make it the stander input*/
@@ -70,8 +68,9 @@ void	execute_all(t_list **cmd, int ct, t_minishell *mini);
 void	execute_one(t_list *cmd, t_minishell *mini);
 /*this function is called by the child process to execute the command*/
 void	do_single_cmd(t_list *cmd, t_minishell *mini);
-/*print the error and return the errno macro this function is used inside exit*/
-int		error(char *er);
+/*print the error and return the ext_er this function is used inside
+exit mosrtly*/
+int		error(char *er, int ext_er);
 /*this function is used to in case of the command not found it print the error 
 and deallocate the command and exit the process*/
 void	cmd_not_found(char **cm);

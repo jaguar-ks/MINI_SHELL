@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 05:43:45 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/09 00:58:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	do_builtin(t_list *cmd, t_minishell *mini)
 		my_env(mini->env);
 	else if (is_exit(cmd))
 		my_exit(cmd, mini);
+	else if (is_unset(cmd))
+		my_unset(cmd, mini);
 }
 
 int	should_not_fork(t_list *cmd)

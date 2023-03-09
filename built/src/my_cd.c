@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:56:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 04:45:45 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/09 02:05:54 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,34 @@ void	go_home(t_minishell *mini)
 	if (tmp)
 	{
 		if (chdir(tmp->pt + 5) < 0)
-		{
-			mini->ext_st = 1;
-			error("cd");
-		}
+			mini->ext_st = error("cd", 1) * 256;
 	}
 	else
-		mini->ext_st = (ft_printf("Minishell : HOME not set : cd\n", 2), 1);
+		mini->ext_st = (ft_printf("Minishell : HOME not set : cd\n", 2),
+				1 * 256);
 }
 
-void	go_to_path(t_minishell *mini, char *pth)
+void	update_oldpwd(t_minishell *mini)
 {
-	if (chdir(pth) < 0)
+	t_list	*tmp;
+	char	*oldpwd;
+
+	tmp = mini->env;
+	while (tmp)
 	{
-		error(pth);
-		mini->ext_st = 1;
+		if (!ft_strncmp(tmp->pt, "PWD=", 4))
+			oldpwd = ft_strjoin(ft_strdup("OLDPWD="), ft_strdup(tmp->pt + 4));
+		tmp = tmp->next;
+	}
+	tmp = mini->env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->pt, "OLDPWD=", 7))
+		{
+			free(tmp->pt);
+			tmp->pt = oldpwd;
+		}
+		tmp = tmp->next;
 	}
 }
 
@@ -67,23 +80,20 @@ void	update_env(t_minishell *mini)
 
 	if (!getcwd(cw, PATH_MAX))
 	{
-		error("getcwd");
+		mini->ext_st = error("getcwd", 1) * 256;
 		ft_printf("can not retrive the current directory path\n", 2);
-		mini->ext_st = 1;
 		return ;
 	}
-	else
+	update_oldpwd(mini);
+	tmp = mini->env;
+	while (tmp)
 	{
-		tmp = mini->env;
-		while (tmp)
+		if (!ft_strncmp(tmp->pt, "PWD=", 4))
 		{
-			if (!ft_strncmp(tmp->pt, "PWD=", 4))
-			{
-				free(tmp->pt);
-				tmp->pt = ft_strjoin(ft_strdup("PWD="), ft_strdup(cw));
-			}
-			tmp = tmp->next;
+			free(tmp->pt);
+			tmp->pt = ft_strjoin(ft_strdup("PWD="), ft_strdup(cw));
 		}
+		tmp = tmp->next;
 	}
 }
 
@@ -94,7 +104,8 @@ void	my_cd(t_list *cmd, t_minishell *mini)
 	cm = take_char_cmd(cmd);
 	if (!cm[1])
 		go_home(mini);
-	else
-		go_to_path(mini, cm[1]);
+	else if (chdir(cm[1]) < 0)
+		mini->ext_st = error(cm[1], 1) * 256;
+	deallocate(cm);
 	update_env(mini);
 }
