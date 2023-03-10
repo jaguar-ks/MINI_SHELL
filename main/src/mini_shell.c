@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/09 01:48:42 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 03:12:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,21 @@ char	*inisialise_prompt(void)
 {
 	char		cd[PATH_MAX];
 	char		*ttl;
-	static char	*r;
 	int			i;
 
 	i = 0;
 	if (!getcwd(cd, PATH_MAX))
-		return (r);
+		return (ft_strdup("(deleted directory)~> "));
 	else
 	{
 		while (cd[i])
 			i++;
 		while (cd[i] != '/')
 			i--;
-		ttl = ft_strjoin(ft_strdup("("), ft_strdup(cd + i + 1));
-		r = ft_strjoin(ttl, ft_strdup(")~> "));
+		ttl = ft_strjoin(ft_strdup("("), ft_strjoin(ft_strdup(cd + i + 1),
+				ft_strdup(")~> ")));
 	}
-	return (r);
+	return (ttl);
 }
 
 char	*print_type(int tp)
@@ -102,6 +101,7 @@ void	mini_shell(t_minishell *mini)
 	mini->line = readline(mini->prompt);
 	if (!mini->line)
 		out(mini);
+	free(mini->prompt);
 	if (!empty_line(mini->line))
 		add_history(mini->line);
 	if (check_syntax(mini->line) == 258)
@@ -109,7 +109,7 @@ void	mini_shell(t_minishell *mini)
 	else if (!empty_line(mini->line))
 		take_and_do_cmd(mini);
 	free(mini->line);
-	// system("leaks minishell");
+	system("leaks minishell");
 }
 
 int	main(int ac, char **av, char **en)

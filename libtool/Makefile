@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 00:28:28 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/07 07:31:28 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/10 03:02:45 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS_MD = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c\
 		ft_strdup.c ft_striteri.c ft_strjoin.c  ft_strlcat.c ft_strlcpy.c ft_strlen.c\
 		ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c\
 		ft_toupper.c ft_printf.c print_functions.c ft_lstnew.c ft_lstadd_back.c ft_lstadd_front.c ft_lstlast.c ft_lstsize.c ft_lstdelone.c\
-		ft_lstclear.c ft_lstmap.c ft_lstiter.c get_next_line.c ft_isspace.c\
+		ft_lstclear.c ft_lstmap.c ft_lstiter.c get_next_line.c ft_isspace.c ft_strcmp.c\
 
 FLAGS = -Wall -Wextra -Werror -c
 
