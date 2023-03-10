@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 03:05:17 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 09:03:16 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,15 @@ void	do_builtin(t_list *cmd, t_minishell *mini)
 
 int	should_not_fork(t_list *cmd)
 {
-	t_list	*tmp;
+	char	**cm;
 
-	tmp = cmd;
-	while (tmp)
+	if (!is_cd(cmd) && !is_exit(cmd) && !is_unset(cmd) && !is_export(cmd))
+		return (0);
+	if (is_export(cmd))
 	{
-		if (tmp->wt == CMD)
-			if (!ft_strncmp(tmp->pt, "cd", 3)
-				|| !ft_strncmp(tmp->pt, "unset", 6)
-				|| !ft_strncmp(tmp->pt, "export", 3)
-				|| !ft_strncmp(tmp->pt, "exit", 5))
-				return (1);
-		tmp = tmp->next;
+		cm = take_char_cmd(cmd);
+		if (!cm[1])
+			return (deallocate(cm), 0);
 	}
-	return (0);
+	return (1);
 }

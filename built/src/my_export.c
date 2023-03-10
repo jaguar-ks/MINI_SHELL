@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 01:06:38 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 08:19:26 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 09:07:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_export(t_list *exp)
 {
 	t_list	*tmp;
 
-	sort_env(exp);
+	sort_list(exp);
 	tmp = exp;
 	while (tmp)
 	{

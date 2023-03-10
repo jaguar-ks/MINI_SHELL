@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 06:00:29 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 08:25:37 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 08:37:11 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	is_the_target(char *str, char *env)
 		i++;
 	}
 	if ((env[i] == '=' || env[i] == '\0') && (str[i] == '\0'))
-			return (1);
+		return (1);
 	return (0);
 }
 

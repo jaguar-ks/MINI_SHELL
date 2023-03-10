@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:58:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 03:01:35 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 09:07:37 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,17 @@ it if it find it*/
 void	unset_from_env(char *str, t_minishell *mini);
 /*repreduce the unset bihavior*/
 void	my_unset(t_list *cmd, t_minishell *mini);
+/*repreduce the export bihavior*/
 void	my_export(t_list *cmd, t_minishell *mini);
+/*check if the command is export*/
 int		is_export(t_list *cmd);
+/*sort a list*/
+void	sort_list(t_list *env);
+/*check the export syntax*/
+int		check_export_syntax(char *str, int *ext_st);
+/*take export list form the envirement list*/
+void	take_export(t_list **exp, t_list *en);
+/*print the export in order*/
+void	print_export(t_list *exp);
 
 #endif

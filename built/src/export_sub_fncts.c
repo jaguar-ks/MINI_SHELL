@@ -12,7 +12,7 @@
 
 #include"../inc/built.h"
 
-void	sort_env(t_list *env)
+void	sort_list(t_list *env)
 {
 	t_list	*tmp;
 	t_list	*tmp1;

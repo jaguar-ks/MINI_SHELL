@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 07:29:14 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 09:10:51 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,35 +40,6 @@ char	*inisialise_prompt(void)
 				ft_strdup(")~> ")));
 	}
 	return (ttl);
-}
-
-char	*print_type(int tp)
-{
-	if (tp == PP)
-		return ("pipe");
-	else if (tp == CMD)
-		return ("command");
-	else if (tp == ARG)
-		return ("argument");
-	else if (tp == INPT)
-		return ("input");
-	else if (tp == HEREDOC)
-		return ("herdoc");
-	else if (tp == APND)
-		return ("apand");
-	else if (tp == TRNC)
-		return ("trunc");
-	else if (tp == FLG)
-		return ("flag");
-	else if (tp == IN_F)
-		return ("input file");
-	else if (tp == AP_F)
-		return ("appand file");
-	else if (tp == TR_F)
-		return ("trunc file");
-	else if (tp == LMTR)
-		return ("heredoc limtier");
-	return ("indefind");
 }
 
 /*************TESTING*************/
