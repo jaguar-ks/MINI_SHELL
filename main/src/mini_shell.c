@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 03:12:50 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 07:29:14 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	mini_shell(t_minishell *mini)
 	else if (!empty_line(mini->line))
 		take_and_do_cmd(mini);
 	free(mini->line);
-	system("leaks minishell");
+	// system("leaks minishell");
 }
 
 int	main(int ac, char **av, char **en)

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:50:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/08 05:02:55 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 08:20:42 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	my_env(t_list *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (tmp->acs)
+		if (tmp->acs && ft_strchr(tmp->pt, '='))
 			ft_printf("%s\n", STDOUT_FILENO, tmp->pt);
 		tmp = tmp->next;
 	}

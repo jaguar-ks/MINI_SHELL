@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 20:33:49 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/28 20:45:03 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 08:27:43 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**take_char_env(t_list *en)
 	tmp = en;
 	while (tmp)
 	{
-		if (tmp->acs)
+		if (tmp->acs && ft_strchr(tmp->pt, '='))
 		{
 			env[i] = ft_strdup(tmp->pt);
 			i++;

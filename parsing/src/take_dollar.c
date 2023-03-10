@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:28:47 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/09 01:47:18 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/10 07:28:44 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,28 @@ int	check_expand(char *str)
 char	*take_dollar(t_minishell *mini, char *line, int *i)
 {
 	char	*exp;
+	int		j;
 
 	exp = NULL;
-	if (check_expand(&line[*i]))
+	j = *i;
+	while (line[++j])
+		if (line[j] != '$')
+			break ;
+	if ((j - *i) % 2 != 0)
 	{
-		exp = expan_variable(&line[*i], mini);
-		while (line[++(*i)])
-			if (!ft_isalnum(line[*i]) && line[*i] != '_'
-				&& line[*i] != '?')
-				break ;
+		if (check_expand(&line[j - 1]))
+		{
+			exp = expan_variable(&line[j - 1], mini);
+			while (line[j])
+			{
+				if (!ft_isalnum(line[j]) && line[j] != '_'
+					&& line[j] != '?')
+					break ;
+				j++;
+			}
+			return (*i = j, exp);
+		}
+		return (*i = j, ft_strdup("$"));
 	}
-	else
-	{
-		if (line[*i + 1] == '$')
-			exp = ft_strdup("$");
-		else
-			exp = ft_strdup("");
-		*i += 2;
-		return (exp);
-	}
-	return (exp);
+	return (*i = j, ft_strdup(""));
 }
