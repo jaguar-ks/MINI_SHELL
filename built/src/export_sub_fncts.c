@@ -47,8 +47,7 @@ int	check_export_syntax(char *str, int *ext_st)
 	while (str[++i])
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			break ;
-	if ((str[i] == '+' && str[i + 1] != '=') || str[i] != '='
-		|| str[i] != '\0')
+	if (str[i] != '=' && str[i] != '\0' && (str[i] == '+' && str[i + 1] != '='))
 		return (ft_printf("Minishell : not a valid identifier : %s\n", 2, str),
 			*ext_st = 256, 0);
 	return (1);
@@ -62,7 +61,8 @@ void	take_export(t_list **exp, t_list *en)
 	tmp = en;
 	while (tmp)
 	{
-		ft_lstadd_back(exp, dup_node(tmp));
+		if (tmp->acs)
+			ft_lstadd_back(exp, dup_node(tmp));
 		if (ft_strchr(ft_lstlast(*exp)->pt, '='))
 		{
 			prt = ft_strjoin(ft_strjoin(ft_substr(ft_lstlast(*exp)->pt, 0,
@@ -78,4 +78,40 @@ void	take_export(t_list **exp, t_list *en)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	take_key_and_val(char *str, char **key, char **val, int *tp)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (str[i] == '+' || str[i] == '=')
+			break ;
+	*key = ft_substr(str, 0, i);
+	if (str[i] == '+' || str[i] == '=')
+	{
+		if (str[i] == '+')
+			*tp = 2;
+		else
+			*tp = 1;
+		*val = ft_substr(str, (i + 1) + (str[i] == '+'),
+				ft_strlen(&str[(i + 1) + (str[i] == '+')]));
+	}
+}
+
+int	already_exists(t_list *env, char *key, int *acs)
+{
+	t_list	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->pt, key, ft_strlen(key) - 1)
+			&& (tmp->pt[ft_strlen(key)] == '='
+				|| tmp->pt[ft_strlen(key)] == '\0'))
+			return (*acs = tmp->acs, 1);
+		tmp = tmp->next;
+	}
+	return (0);
 }

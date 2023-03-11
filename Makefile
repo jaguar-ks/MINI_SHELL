@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/10 09:08:13 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/11 03:09:30 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ B_F = check_built.c\
 		my_unset.c\
 		my_export.c\
 		export_sub_fncts.c\
+		export_sub_fncts_2.c\
 
 O_D = obj
 

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 01:06:38 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 09:07:50 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/11 03:04:13 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,42 +27,62 @@ int	is_export(t_list *cmd)
 	return (0);
 }
 
-void	print_export(t_list *exp)
+void	print_export(t_minishell *mini)
 {
 	t_list	*tmp;
+	t_list	*exprt;
 
-	sort_list(exp);
-	tmp = exp;
+	exprt = NULL;
+	take_export(&exprt, mini->env);
+	sort_list(exprt);
+	tmp = exprt;
 	while (tmp)
 	{
-		if (tmp->acs && ft_strchr(tmp->pt, '='))
+		if (tmp->acs)
 			ft_printf("declare - x %s\n", STDOUT_FILENO, tmp->pt);
 		tmp = tmp->next;
 	}
+	ft_lstclear(&exprt);
 }
 
-void	export_var(char *str, t_list **exp, t_minishell *mini)
+void	export_var(char *str, t_minishell *mini)
 {
-	(void)exp;
+	char	*key;
+	char	*val;
+	int		tp;
+	int		acs;
+
 	if (!check_export_syntax(str, &mini->ext_st))
 		return ;
+	key = NULL;
+	val = NULL;
+	tp = 0;
+	take_key_and_val(str, &key, &val, &tp);
+	if (already_exists(mini->env, key, &acs))
+	{
+		if (acs && tp)
+			change_env_prt(mini, key, val, tp);
+		else if (!acs)
+			bring_back_env_prt(mini, key, val, tp);
+	}
+	else
+		add_new_env_prt(mini, key, val, tp);
+	free(key);
+	if (val)
+		free(val);
 }
 
 void	my_export(t_list *cmd, t_minishell *mini)
 {
 	char	**cm;
-	t_list	*exp;
 	int		i;
 
 	cm = take_char_cmd(cmd);
-	exp = NULL;
-	take_export(&exp, mini->env);
 	i = 0;
 	if (!cm[1])
-		print_export(exp);
+		print_export(mini);
 	else
 		while (cm[++i])
-			export_var(cm[i], &exp, mini);
-	ft_lstclear(&exp);
+			export_var(cm[i], mini);
 	deallocate(cm);
 }

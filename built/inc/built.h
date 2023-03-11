@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:58:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 09:07:37 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/11 03:11:21 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,20 @@ int		check_export_syntax(char *str, int *ext_st);
 /*take export list form the envirement list*/
 void	take_export(t_list **exp, t_list *en);
 /*print the export in order*/
-void	print_export(t_list *exp);
+void	print_export(t_minishell *mini);
+/*take key and valeur and the type*/
+void	take_key_and_val(char *str, char **key, char **val, int *tp);
+/*check if the key already exists in the envirement*/
+int		already_exists(t_list *env, char *key, int *acs);
+/*if the key to be exported already exists and have access change 
+its valeur*/
+void	change_env_prt(t_minishell *mini, char *key, char *val, int tp);
+/*if the key to be exported already exists and don't have access it give it 
+back access and change it valeur or remove it valeur if exported 
+without valeur*/
+void	bring_back_env_prt(t_minishell *mini, char *key, char *val, int tp);
+/*if the key don't already exists in the envirement add it to the 
+envirenment list*/
+void	add_new_env_prt(t_minishell *mini, char *key, char *val, int tp);
 
 #endif
