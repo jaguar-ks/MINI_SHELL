@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 00:28:28 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/10 03:02:45 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/11 03:31:09 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ ${NAME} : ${OBJS_MD}
 	printf "\r%s \033[0;33m is ready to lunch enjoy 😉\033[0m" $@
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c ${HEADER}
-	@printf "\r\033[0;33m⚒️ Compiling \033[0m %s" $<
 	@${CC} ${FLAGS} $< -o $@
 
 $(OBJ_DIR) :
@@ -55,7 +54,7 @@ clean :
 	@${RM} $(OBJ_DIR)
 
 fclean : clean
-	printf "\r\033[0;33m🗑️🚮 Deleting \033[0m%s..." $(NAME)
+	printf "\r\033[0;33m🗑️🚮 Deleting \033[0m%s" $(NAME)
 	@${RM} ${NAME}
 
 re : fclean all

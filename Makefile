@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/11 03:09:30 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/11 03:30:17 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,22 +137,18 @@ $(LIBTOOL):
 
 $(O_D)/%.o: $(M_D)/%.c $(MN_H)
 	@printf "\r\033[0;33m⏳ main is compiling ...\033[0m"
-	@printf "\r\033[0;33m compiling\033[0m %s " $<
 	@cc $(FLAG) -c $< -o $@
 
 $(O_D)/%.o: $(P_D)/%.c $(PRS_H)
 	@printf "\r\033[0;33m⏳ parsing is compiling ...\033[0m"
-	@printf "\r\033[0;33m compiling\033[0m %s " $<
 	@cc $(FLAG) -c $< -o $@
 
 $(O_D)/%.o: $(E_D)/%.c $(EXC_H)
 	@printf "\r\033[0;33m⏳ execution is compiling ...\033[0m"
-	@printf "\r\033[0;33m compiling\033[0m %s " $<
 	@cc $(FLAG) -c $< -o $@
 
 $(O_D)/%.o: $(B_D)/%.c $(BLT_H)
 	@printf "\r\033[0;33m⏳ builtin is compiling ...\033[0m"
-	@printf "\r\033[0;33m compiling\033[0m %s " $<
 	@cc $(FLAG) -c $< -o $@
 
 clean: 
