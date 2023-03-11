@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 09:03:16 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/11 06:16:18 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,31 @@ int	is_builtin(t_list *cmd)
 	return (0);
 }
 
-void	do_builtin(t_list *cmd, t_minishell *mini)
+int	rdrct_outside_fork(t_list *cmd, t_minishell *mini)
 {
+	int	pid;
+
+	pid = fork();
+	if (!pid)
+	{
+		if (check_in_rdrct(cmd))
+			take_input(cmd, mini);
+		if (check_out_rdrct(cmd))
+			take_output(cmd);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		waitpid(pid, &mini->ext_st, 0);
+	if (mini->ext_st != 0)
+		return (0);
+	return (1);
+}
+
+void	do_builtin(t_list *cmd, t_minishell *mini, int f)
+{
+	if (!f)
+		if (!rdrct_outside_fork(cmd, mini))
+			return ;
 	if (is_echo(cmd))
 		my_echo(cmd);
 	else if (is_cd(cmd))

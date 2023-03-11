@@ -6,11 +6,21 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 05:12:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/09 02:01:32 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/11 06:12:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/built.h"
+
+int	mtx_len(char **mx)
+{
+	int	i;
+
+	i = 0;
+	while (mx[i])
+		i++;
+	return (i);
+}
 
 int	is_exit(t_list *cmd)
 {
@@ -45,7 +55,7 @@ void	my_exit(t_list *cmd, t_minishell *mini)
 
 	cm = take_char_cmd(cmd);
 	ext = 0;
-	if (cm[0] && cm[1] && cm[2])
+	if (mtx_len(cm) > 2)
 	{
 		deallocate(cm);
 		mini->ext_st = (ft_printf("exit\nMinishell : %s : exit\n",

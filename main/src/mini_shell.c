@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 09:10:51 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/11 06:06:30 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	out(t_minishell *mini)
 {
 	ft_lstclear(&mini->env);
 	free(mini->prompt);
+	free(mini->line);
 	// system("leaks minishell");
 	ft_printf("exit\n", 1);
 	exit(mini->ext_st / 255);

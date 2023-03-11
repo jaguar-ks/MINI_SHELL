@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:58:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/11 03:11:21 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/11 03:35:07 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		is_builtin(t_list *cmd);
 /*if there is a single command check if should not fork for the command*/
 int		should_not_fork(t_list *cmd);
 /*execute a builting command*/
-void	do_builtin(t_list *cmd, t_minishell *mini);
+void	do_builtin(t_list *cmd, t_minishell *mini, int f);
 /*check if the flag -n chould work*/
 int		check_echo_flg(char *flg);
 /*repreduce the echo bihavior*/

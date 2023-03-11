@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/09 01:19:21 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/11 03:33:27 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	do_single_cmd(t_list *cmd, t_minishell *mini)
 	{
 		if (is_builtin(cmd))
 		{
-			do_builtin(cmd, mini);
+			do_builtin(cmd, mini, 1);
 			exit(mini->ext_st);
 		}
 		cm = take_char_cmd(cmd);
@@ -45,7 +45,7 @@ void	execute_one(t_list *cmd, t_minishell *mini)
 	int		pid;
 
 	if (is_builtin(cmd) && should_not_fork(cmd))
-		do_builtin(cmd, mini);
+		do_builtin(cmd, mini, 0);
 	else
 	{
 		pid = fork();
