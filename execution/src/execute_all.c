@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/11 03:33:27 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/13 02:49:33 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ void	execute_one(t_list *cmd, t_minishell *mini)
 	}
 }
 
+void	wait_for_childs(t_minishell *mini)
+{
+	while (1)
+		if (waitpid(0, &mini->ext_st, 0) == -1)
+			break ;
+	exit(mini->ext_st);
+}
+
 void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini)
 {
 	int	i;
@@ -72,17 +80,17 @@ void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini)
 			close(mini->fd[0]);
 			if (cmd[i + 1])
 				dup2(mini->fd[1], STDOUT_FILENO);
+			close(mini->fd[1]);
 			do_single_cmd(cmd[i], mini);
 		}
 		else
 		{
 			close(mini->fd[1]);
-			if (cmd[i + 1])
-				dup2(mini->fd[0], STDIN_FILENO);
-			waitpid(pid, &mini->ext_st, 0);
+			dup2(mini->fd[0], STDIN_FILENO);
+			close(mini->fd[0]);
 		}
 	}
-	exit(mini->ext_st);
+	wait_for_childs(mini);
 }
 
 void	execute_all(t_list **cmd, int ct, t_minishell *mini)
