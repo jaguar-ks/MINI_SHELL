@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/11 06:16:18 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/13 08:55:14 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	should_not_fork(t_list *cmd)
 		cm = take_char_cmd(cmd);
 		if (!cm[1])
 			return (deallocate(cm), 0);
+		deallocate(cm);
 	}
 	return (1);
 }

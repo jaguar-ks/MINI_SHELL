@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/11 06:06:30 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/13 08:58:56 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*inisialise_prompt(void)
 
 void	take_cmd(t_minishell *mini)
 {
+	mini->cmd = NULL;
 	split_cmd_line_by_space(mini);
 	split_by_pp_and_rdrct(mini);
 	identify_special_charcters(mini);

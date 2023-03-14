@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 01:06:38 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/11 03:04:13 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/13 09:02:33 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ void	my_export(t_list *cmd, t_minishell *mini)
 	if (!cm[1])
 		print_export(mini);
 	else
+	{
 		while (cm[++i])
 			export_var(cm[i], mini);
+	}
 	deallocate(cm);
 }

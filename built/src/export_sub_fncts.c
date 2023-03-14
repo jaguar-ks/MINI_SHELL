@@ -107,7 +107,7 @@ int	already_exists(t_list *env, char *key, int *acs)
 	tmp = env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->pt, key, ft_strlen(key) - 1)
+		if (!ft_strncmp(tmp->pt, key, ft_strlen(key))
 			&& (tmp->pt[ft_strlen(key)] == '='
 				|| tmp->pt[ft_strlen(key)] == '\0'))
 			return (*acs = tmp->acs, 1);
