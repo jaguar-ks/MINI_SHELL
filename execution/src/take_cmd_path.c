@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 02:39:28 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/07 03:31:24 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:52:28 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char	*find_path(char	*cm, t_list *en)
 	char	*cm_pth;
 	char	**env_pths;
 
+	if (!cm || !ft_strlen(cm))
+		return (NULL);
 	env_pths = NULL;
 	cm_pth = NULL;
 	env_pths = take_env_pths(en);
