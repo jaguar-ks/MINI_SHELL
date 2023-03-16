@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/11 03:30:17 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/16 11:01:33 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ RM = rm -rf
 
 NAME = minishell
 
-M_F = mini_shell.c
+M_F = mini_shell.c\
+		sub_main_fncts.c\
 
 P_F = check_redirection.c\
 		check_syntax.c\
