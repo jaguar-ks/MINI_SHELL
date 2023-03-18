@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 06:00:29 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 08:37:11 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:57:24 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	unset_from_env(char *str, t_minishell *mini)
 		ft_printf("Minishell : not a valid identifier : %s\n", 2, str);
 		return ;
 	}
+	else if (!ft_strcmp(str, "_") || !ft_strcmp(str, "PWD"))
+		return ;
 	tmp = mini->env;
 	while (tmp)
 	{

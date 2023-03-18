@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 01:06:38 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/13 09:02:33 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:36:56 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	export_var(char *str, t_minishell *mini)
 	val = NULL;
 	tp = 0;
 	take_key_and_val(str, &key, &val, &tp);
+	if (!ft_strcmp(key, "_"))
+		return ;
 	if (already_exists(mini->env, key, &acs))
 	{
 		if (acs && tp)
