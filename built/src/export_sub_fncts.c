@@ -24,7 +24,8 @@ void	sort_list(t_list *env)
 		tmp1 = tmp->next;
 		while (tmp1)
 		{
-			if (tmp1 && ft_strcmp(tmp->pt, tmp1->pt) > 0)
+			if ((tmp1 && ft_strcmp(tmp->pt, tmp1->pt) > 0) && (tmp->acs
+					&& tmp1->acs))
 			{
 				swp = tmp->pt;
 				tmp->pt = tmp1->pt;
@@ -61,8 +62,7 @@ void	take_export(t_list **exp, t_list *en)
 	tmp = en;
 	while (tmp)
 	{
-		if (tmp->acs)
-			ft_lstadd_back(exp, dup_node(tmp));
+		ft_lstadd_back(exp, dup_node(tmp));
 		if (ft_strchr(ft_lstlast(*exp)->pt, '='))
 		{
 			prt = ft_strjoin(ft_strjoin(ft_substr(ft_lstlast(*exp)->pt, 0,
