@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/14 19:13:48 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/19 02:28:58 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	do_single_cmd(t_list *cmd, t_minishell *mini)
 
 	cm = NULL;
 	cm_pth = NULL;
-	if (check_in_rdrct(cmd))
+	if (check_in_rdct(cmd))
 		take_input(cmd, mini);
 	if (check_out_rdrct(cmd))
 		take_output(cmd);
