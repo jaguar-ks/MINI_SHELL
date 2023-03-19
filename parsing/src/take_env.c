@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:52:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/01 15:32:03 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/19 22:59:17 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,23 @@ void	incriment_shell_lvl(t_list **env)
 {
 	t_list	*tmp;
 	char	*lvl;
+	int		shlvl;
 
 	tmp = *env;
 	while (tmp)
 	{
 		if (ft_strnstr(tmp->pt, "SHLVL=", ft_strlen(tmp->pt)))
 		{
-			lvl = ft_strjoin(ft_strdup("SHLVL="),
-					ft_itoa(ft_atoi(tmp->pt + 6) + 1));
+			shlvl = ft_atoi(tmp->pt + 6) + 1;
+			if (shlvl > 9999)
+				shlvl = (ft_printf("Minishell : %s%d%s\n", 2,
+							"warning: shell level (", shlvl,
+							") too high, resetting to 1"), 1);
+			else if (shlvl < 0)
+				shlvl = 0;
+			lvl = ft_strjoin(ft_strdup("SHLVL="), ft_itoa(shlvl));
 			free(tmp->pt);
-			tmp->pt = ft_strdup(lvl);
-			free(lvl);
+			tmp->pt = lvl;
 			return ;
 		}
 		tmp = tmp->next;
