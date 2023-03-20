@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 05:12:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/11 06:12:50 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 03:46:14 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	valid_arg(char *arg)
 {
 	int	i;
 
-	i = -1;
+	i = -1 + (arg[0] == '-');
 	while (arg[++i])
 		if (!ft_isdigit(arg[i]))
 			return (0);
