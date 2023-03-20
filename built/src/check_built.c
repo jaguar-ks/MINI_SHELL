@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/13 08:55:14 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 02:26:19 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ int	rdrct_outside_fork(t_list *cmd, t_minishell *mini)
 	pid = fork();
 	if (!pid)
 	{
-		if (check_in_rdrct(cmd))
-			take_input(cmd, mini);
-		if (check_out_rdrct(cmd))
-			take_output(cmd);
+		if (check_in_rdrct(cmd) || check_out_rdrct(cmd))
+			open_rdrct(cmd, mini);
 		exit(EXIT_SUCCESS);
 	}
 	else

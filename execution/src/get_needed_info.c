@@ -6,11 +6,25 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:41:33 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/09 01:46:07 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 02:22:42 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/execution.h"
+
+int	check_out_rdrct(t_list *cmd)
+{
+	t_list	*tmp;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp->wt == TRNC || tmp->wt == APND)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 int	error(char *er, int ext_er)
 {

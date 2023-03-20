@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:18:23 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/09 01:46:03 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 02:24:49 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int		how_many_pipe(t_list *cmd);
 void	split_and_execute_cmd(t_minishell *mini);
 /*check if there is a input rederction*/
 int		check_in_rdrct(t_list *cmd);
-/*take the input rederction and make it the stander input*/
-void	take_input(t_list *cmd, t_minishell *mini);
 /*open the input file*/
 void	open_input(char *file, int *fd);
 /*open the heredoc*/
@@ -40,8 +38,6 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fd);
 int		check_out_rdrct(t_list *cmd);
 /*open the output file*/
 void	open_output(t_list *fl, int *fd);
-/*take the output rederction and make it the stander output*/
-void	take_output(t_list *cmd);
 /*check if there is a command to execute*/
 int		check_cmd(t_list *cmd);
 /*count how many element of the command (command, arguments, flags)*/
@@ -76,5 +72,7 @@ and deallocate the command and exit the process*/
 void	cmd_not_found(char **cm);
 /*execute command line with multipel pipes*/
 void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini);
+/*open all rederection*/
+void	open_rdrct(t_list *cmd, t_minishell *mini);
 
 #endif

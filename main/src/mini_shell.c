@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/18 14:31:41 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 02:30:12 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int	main(int ac, char **av, char **en)
 
 	(void)ac;
 	(void)av;
-	// if (!en[0])
-	// {
-	// 	ft_printf("Minishell : there is no envirenment\n", 2);
-	// 	exit(1);
-	// }
+	if (!en[0])
+	{
+		ft_printf("Minishell : there is no envirenment !*#^&# 😡🤬\n", 2);
+		exit(1);
+	}
 	mini.env = take_env(en);
 	while (1)
 		mini_shell(&mini);

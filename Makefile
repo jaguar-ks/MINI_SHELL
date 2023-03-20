@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/16 11:01:33 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/20 02:25:08 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,7 @@ E_F =   convert_env_list_to_char.c\
 			take_cmd_and_prts.c\
 			take_cmd_by_cmd.c\
 			take_cmd_path.c\
-			take_in_rdrct.c\
-			take_out_rdrct.c\
+			take_rdrct.c\
 
 B_F = check_built.c\
 		my_echo.c\

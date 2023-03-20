@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   take_in_rdrct.c                                    :+:      :+:    :+:   */
+/*   take_rdrct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 01:40:44 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/19 02:14:30 by faksouss         ###   ########.fr       */
+/*   Created: 2023/03/20 02:14:56 by faksouss          #+#    #+#             */
+/*   Updated: 2023/03/20 02:28:21 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
 	if (pipe(fd) < 0)
 		exit(error("pipe", errno));
 	pid = fork();
-	printf("-> %s\n", lim->pt);
 	if (!pid)
 	{
 		close(fd[0]);
@@ -62,21 +61,37 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
 		*fl = (close(fd[1]), waitpid(pid, NULL, 0), fd[0]);
 }
 
-void	take_input(t_list *cmd, t_minishell *mini)
+void	open_output(t_list *fl, int *fd)
 {
-	int		fd;
+	if (fl->wt == TR_F)
+		*fd = open(fl->pt, (O_CREAT | O_TRUNC | O_WRONLY), 0777);
+	else if (fl->wt == AP_F)
+		*fd = open(fl->pt, (O_CREAT | O_APPEND | O_WRONLY), 0777);
+	if (*fd < 0)
+		exit(error(fl->pt, 1));
+}
+
+void	open_rdrct(t_list *cmd, t_minishell *mini)
+{
+	int		in;
+	int		out;
 	t_list	*tmp;
 
 	tmp = cmd;
-	fd = -1;
+	in = -1;
+	out = -1;
 	while (tmp)
 	{
+		if (tmp->wt == APND || tmp->wt == TRNC)
+			open_output(tmp->next, &out);
 		if (tmp->wt == INPT)
-			open_input(tmp->next->pt, &fd);
+			open_input(tmp->next->pt, &in);
 		else if (tmp->wt == HEREDOC)
-			open_heredoc(tmp->next, mini, &fd);
+			open_heredoc(tmp->next, mini, &in);
 		tmp = tmp->next;
 	}
-	if (fd > 0)
-		dup2(fd, STDIN_FILENO);
+	if (in > 0)
+		dup2(in, STDIN_FILENO);
+	if (out > 0)
+		dup2(out, STDOUT_FILENO);
 }
