@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 02:30:12 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 20:54:37 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	main(int ac, char **av, char **en)
 		exit(1);
 	}
 	mini.env = take_env(en);
+	mini.ext_st = 0;
 	while (1)
 		mini_shell(&mini);
 }

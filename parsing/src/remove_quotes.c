@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:55:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 16:52:24 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 20:46:21 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ char	*take_and_expand(t_minishell *mini, char *str, int *i)
 		if (str[j] == str[*i])
 			break ;
 	}
-	return (*i = j, ft_strjoin(r, ft_strdup("")));
+	if (!r)
+		r = ft_strjoin(r, ft_strdup(""));
+	return (*i = j, r);
 }
 
 char	*take_wthout_expand(char *str, int *i)
