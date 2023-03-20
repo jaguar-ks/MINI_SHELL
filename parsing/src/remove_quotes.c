@@ -6,11 +6,12 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:55:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 03:57:04 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:52:24 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/parsing.h"
+#include<limits.h>
 
 char	*take_and_expand(t_minishell *mini, char *str, int *i)
 {
@@ -19,13 +20,16 @@ char	*take_and_expand(t_minishell *mini, char *str, int *i)
 	int		s;
 
 	r = NULL;
-	j = *i;
+	j = *i + 1;
 	while (1)
 	{
-		s = j + (j == *i);
-		while (str[++j] != str[*i])
+		s = j;
+		while (str[j] != str[*i])
+		{
 			if (str[j] == '$')
 				break ;
+			j++;
+		}
 		if (j > s)
 			r = ft_strjoin(r, ft_substr(str, s, j - s));
 		if (str[j] == '$')

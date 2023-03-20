@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:28:47 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 04:12:31 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:53:14 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*take_dollar(t_minishell *mini, char *line, int *i)
 					break ;
 				j++;
 			}
-			return (*i = j, printf("-> %s\n", exp),exp);
+			return (*i = j, exp);
 		}
 		return (*i = j, ft_strdup("$"));
 	}
