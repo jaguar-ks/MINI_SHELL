@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:28:47 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 20:55:11 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:16:09 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,12 @@ char	*take_dollar(t_minishell *mini, char *line, int *i)
 		if (check_expand(&line[j - 1]))
 		{
 			exp = expan_variable(&line[j - 1], mini);
-			while (line[j])
-			{
-				if (!((ft_isalnum(line[j]) && line[j] == '_')
-						|| line[j] == '?'))
-					break ;
+			if (line[j] == '?')
 				j++;
-			}
+			else if (ft_isalnum(line[j]) || line[j] == '_')
+				while (line[++j])
+					if (!ft_isalnum(line[j]) && line[j] != '_')
+					break ;
 			return (*i = j, exp);
 		}
 		return (*i = j, ft_strdup("$"));
