@@ -54,4 +54,5 @@ void	take_cmd(t_minishell *mini)
 	remove_quotes(mini);
 	identify_flag(mini);
 	identify_arg(mini);
+	extract_wild_card(mini);
 }

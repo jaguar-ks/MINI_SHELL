@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/03/20 02:25:08 by faksouss         ###   ########.fr        #
+#    Updated: 2023/03/21 17:48:33 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ P_F = check_redirection.c\
 		split_by_space.c\
 		lexer.c\
 		remove_quotes.c\
+		wild_card.c\
 
 E_F =   convert_env_list_to_char.c\
 			execute_all.c\

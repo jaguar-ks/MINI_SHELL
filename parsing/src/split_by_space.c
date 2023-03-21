@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:20:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/21 16:02:54 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:18:40 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*expand_var(t_minishell *mini, char *old_str)
 			new_str = ft_strjoin(new_str, take_dollar(mini, old_str, &i));
 		if (old_str[i] == '\0')
 			break ;
-		// printf("-> %s\n-> %d", &old_str[i], i);
 	}
 	return (free(old_str), new_str);
 }
