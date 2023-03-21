@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/21 19:21:33 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:00:21 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ void	extract_wild_card(t_minishell *mini);
 void	extract_and_add_to_list(t_list **new_lst, char *ex);
 /*check if the file match the wildcard*/
 int		is_a_match(char *name, char *pattren);
+/* merge stras*/
+char	*merge_star(char *str);
 
 #endif
