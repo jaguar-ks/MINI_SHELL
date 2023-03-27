@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 02:23:58 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:23:21 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,16 @@ void	execute_one(t_list *cmd, t_minishell *mini)
 void	wait_for_childs(t_minishell *mini, int i)
 {
 	while (--i >= 0)
-		waitpid(0, &mini->ext_st, 0);
-	exit(mini->ext_st % 256);
+		wait(NULL);
+	if (WIFEXITED(mini->ext_st))
+		mini->ext_st = WEXITSTATUS(mini->ext_st);
+	exit(mini->ext_st);
 }
 
-void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini)
+void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini, int i)
 {
-	int	i;
 	int	pid;
 
-	i = -1;
 	while (cmd[++i])
 	{
 		if (pipe(mini->fd) < 0)
@@ -77,7 +77,6 @@ void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini)
 			close(mini->fd[0]);
 			if (cmd[i + 1])
 				dup2(mini->fd[1], STDOUT_FILENO);
-			close(mini->fd[1]);
 			do_single_cmd(cmd[i], mini);
 		}
 		else
@@ -86,6 +85,8 @@ void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini)
 			dup2(mini->fd[0], STDIN_FILENO);
 			close(mini->fd[0]);
 		}
+		if (!cmd[i + 1])
+			wait(&mini->ext_st);
 	}
 	wait_for_childs(mini, i);
 }
@@ -101,7 +102,7 @@ void	execute_all(t_list **cmd, int ct, t_minishell *mini)
 	{
 		pid = fork();
 		if (!pid)
-			execute_mltpl_cmd(cmd, mini);
+			execute_mltpl_cmd(cmd, mini, -1);
 		else
 			waitpid(pid, &mini->ext_st, 0);
 	}
