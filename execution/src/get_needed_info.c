@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_needed_info.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:41:33 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 02:22:42 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:21:40 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ int	check_out_rdrct(t_list *cmd)
 int	error(char *er, int ext_er)
 {
 	if (ext_er == 127)
-		ft_printf("Minishell : command not found : %s\n", STDERR_FILENO, er);
-	else if (ext_er == 1)
-		ft_printf("Minishell : No such file or directory : %s\n",
-			STDERR_FILENO, er);
+		ft_printf("Minishell : Command not found : %s\n", STDERR_FILENO, er);
+	else if (ext_er == 126)
+		ft_printf("Minishell : Is a directory : %s\n", STDERR_FILENO, er);
 	else if (ext_er == 258)
 		ft_printf("Minishell : Syntax error\n", STDERR_FILENO);
 	else
@@ -43,8 +42,16 @@ int	error(char *er, int ext_er)
 void	cmd_not_found(char **cm)
 {
 	int	ext;
+	DIR	*dir;
 
-	ext = error(cm[0], 127);
+	dir = opendir(cm[0]);
+	if (dir)
+	{
+		closedir(dir);
+		ext = error(cm[0], 126);
+	}
+	else
+		ext = error(cm[0], 127);
 	deallocate(cm);
 	exit(ext);
 }
