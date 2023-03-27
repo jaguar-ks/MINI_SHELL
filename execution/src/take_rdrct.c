@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   take_rdrct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 02:14:56 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 02:28:21 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:04:11 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
 		close(fd[0]);
 		while (1)
 		{
-			r = readline("Heredoc > ");
+			ft_putstr_fd("Heredoc > ", 2);
+			r = gnl(0);
 			if (!r || !ft_strcmp(r, lim->pt))
 				exit(EXIT_SUCCESS);
 			if (lim->acs)

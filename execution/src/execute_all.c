@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/27 11:40:17 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:06:55 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini, int i)
 		else
 		{
 			close(mini->fd[1]);
-			dup2(mini->fd[0], STDIN_FILENO);
+			if (cmd[i + 1] && !check_in_rdrct(cmd[i + 1]))
+				dup2(mini->fd[0], STDIN_FILENO);
 			close(mini->fd[0]);
 		}
 		if (!cmd[i + 1])
