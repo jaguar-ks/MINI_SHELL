@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/27 10:23:21 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:40:17 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,16 @@ void	wait_for_childs(t_minishell *mini, int i)
 
 void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini, int i)
 {
-	int	pid;
-
 	while (cmd[++i])
 	{
 		if (pipe(mini->fd) < 0)
 			exit(error("pipe", errno));
-		pid = fork();
-		if (!pid)
+		if (!fork())
 		{
 			close(mini->fd[0]);
 			if (cmd[i + 1])
 				dup2(mini->fd[1], STDOUT_FILENO);
+			close(mini->fd[1]);
 			do_single_cmd(cmd[i], mini);
 		}
 		else
