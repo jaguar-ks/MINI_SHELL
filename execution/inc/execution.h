@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:18:23 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 02:24:49 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:14:15 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		error(char *er, int ext_er);
 and deallocate the command and exit the process*/
 void	cmd_not_found(char **cm);
 /*execute command line with multipel pipes*/
-void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini);
+void	execute_mltpl_cmd(t_list **cmd, t_minishell *mini, int i);
 /*open all rederection*/
 void	open_rdrct(t_list *cmd, t_minishell *mini);
 
