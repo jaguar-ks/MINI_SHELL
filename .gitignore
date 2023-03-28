@@ -1,1 +1,6 @@
 .vscode
+.DS_Store
+obj
+libtool/obj
+libtool/libft.a
+minishell
