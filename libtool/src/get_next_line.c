@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 14:10:03 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/27 12:32:00 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/28 02:11:28 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*take_rest(char *r)
 	if (!ft_strchr(r, '\n'))
 		return (free(r), NULL);
 	else
-		i = (ft_strchr(r, '\n') - r) + 1;
+		i = (ft_strchr(r, '\n') - r);
 	rst = ft_substr(r, i, ft_strlen(r) - i - 1);
 	return (free(r), rst);
 }

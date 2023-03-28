@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 02:14:56 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/27 21:03:57 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/28 02:10:09 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
 		close(fd[0]);
 		while (1)
 		{
-			ft_putstr_fd("Heredoc > ", 2);
-			r = gnl(0);
+			dup2(STDIN_FILENO, STDOUT_FILENO);
+			r = readline("Heredoc > ");
 			if (!r || !ft_strcmp(r, lim->pt))
 				exit(EXIT_SUCCESS);
 			if (lim->acs)
