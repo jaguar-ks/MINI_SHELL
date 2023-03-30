@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:15:18 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 22:32:02 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/31 02:37:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include"../../execution/inc/execution.h"
 # include"../../libtool/inc/libft.h"
 # include<signal.h>
-# include"../../signals/inc/signals.h"
 
 int		g_ext_st;
 
@@ -27,6 +26,6 @@ char	*inisialise_prompt(void);
 void	take_cmd(t_minishell *mini);
 void	take_and_do_cmd(t_minishell *mini);
 void	handl_segint(int segnum);
-void	handl_segint_heredoc(int segnum);
+void	handl_segint_child(int segnum);
 
 #endif

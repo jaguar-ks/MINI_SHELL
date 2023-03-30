@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 02:14:56 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 22:27:02 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/31 02:38:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
 	r = NULL;
 	if (pipe(fd) < 0)
 		exit(error("pipe", errno));
-	signal(SIGINT, handl_segint_heredoc);
+	signal(SIGINT, handl_segint_child);
 	if (!fork())
 	{
 		close(fd[0]);

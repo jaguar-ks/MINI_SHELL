@@ -6,21 +6,18 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 22:32:48 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/31 02:53:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/mini_shell.h"
 
-void	handl_segint_heredoc(int segnum)
+void	handl_segint_child(int segnum)
 {
 	if (segnum == SIGINT)
 	{
 		g_ext_st = 130;
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		exit(EXT_ST);
+		exit(g_ext_st);
 	}
 }
 
@@ -32,7 +29,8 @@ void	handl_segint(int segnum)
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		rl_redisplay();
+		if (wait(NULL) == -1)
+			rl_redisplay();
 	}
 }
 

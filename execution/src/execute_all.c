@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 22:05:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/31 02:48:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	execute_all(t_list **cmd, int ct, t_minishell *mini)
 		pid = fork();
 		if (!pid)
 		{
-			signal(SIGINT, handl_segint_heredoc);
+			signal(SIGINT, handl_segint_child);
 			execute_mltpl_cmd(cmd, mini, -1);
 		}
 		else
