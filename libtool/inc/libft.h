@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/27 12:27:24 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:13:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_list
 
 typedef struct s_minishell
 {
-	int		ext_st;
+	int		*ext_st;
 	int		fd[2];
 	char	*line;
 	char	*prompt;

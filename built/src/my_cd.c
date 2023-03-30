@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:56:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/09 02:05:54 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:16:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	go_home(t_minishell *mini)
 	if (tmp)
 	{
 		if (chdir(tmp->pt + 5) < 0)
-			mini->ext_st = error("cd", 1) * 256;
+			*mini->ext_st = error("cd", 1) * 256;
 	}
 	else
-		mini->ext_st = (ft_printf("Minishell : HOME not set : cd\n", 2),
+		*mini->ext_st = (ft_printf("Minishell : HOME not set : cd\n", 2),
 				1 * 256);
 }
 
@@ -80,7 +80,7 @@ void	update_env(t_minishell *mini)
 
 	if (!getcwd(cw, PATH_MAX))
 	{
-		mini->ext_st = error("getcwd", 1) * 256;
+		*mini->ext_st = error("getcwd", 1) * 256;
 		ft_printf("can not retrive the current directory path\n", 2);
 		return ;
 	}
@@ -105,7 +105,7 @@ void	my_cd(t_list *cmd, t_minishell *mini)
 	if (!cm[1])
 		go_home(mini);
 	else if (chdir(cm[1]) < 0)
-		mini->ext_st = error(cm[1], 1) * 256;
+		*mini->ext_st = error(cm[1], 1) * 256;
 	deallocate(cm);
 	update_env(mini);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:18:23 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/27 10:14:15 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:31:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include"../../libtool/inc/libft.h"
 # include"../../parsing/inc/parsing.h"
 # include"../../built/inc/built.h"
+# include"../../main/inc/mini_shell.h"
 
 /*calculate the len of the accessable parts of envirement*/
 int		env_len(t_list *en);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 01:06:38 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/18 14:36:56 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:16:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	export_var(char *str, t_minishell *mini)
 	int		tp;
 	int		acs;
 
-	if (!check_export_syntax(str, &mini->ext_st))
+	if (!check_export_syntax(str, mini->ext_st))
 		return ;
 	key = NULL;
 	val = NULL;

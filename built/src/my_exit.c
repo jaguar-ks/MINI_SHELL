@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 05:12:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 03:46:14 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:16:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	my_exit(t_list *cmd, t_minishell *mini)
 	if (mtx_len(cm) > 2)
 	{
 		deallocate(cm);
-		mini->ext_st = (ft_printf("exit\nMinishell : %s : exit\n",
+		*mini->ext_st = (ft_printf("exit\nMinishell : %s : exit\n",
 					STDERR_FILENO, "too many arguments"), 1 * 256);
 		return ;
 	}

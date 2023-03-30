@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 06:00:29 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/18 14:57:24 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:16:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	unset_from_env(char *str, t_minishell *mini)
 {
 	t_list	*tmp;
 
-	if (!check_unset_syntax(str, &mini->ext_st))
+	if (!check_unset_syntax(str, mini->ext_st))
 	{
 		ft_printf("Minishell : not a valid identifier : %s\n", 2, str);
 		return ;

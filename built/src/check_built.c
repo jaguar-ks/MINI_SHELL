@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_built.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/20 02:26:19 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:15:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	rdrct_outside_fork(t_list *cmd, t_minishell *mini)
 		exit(EXIT_SUCCESS);
 	}
 	else
-		waitpid(pid, &mini->ext_st, 0);
-	if (mini->ext_st != 0)
+		waitpid(pid, mini->ext_st, 0);
+	if (*mini->ext_st != 0)
 		return (0);
 	return (1);
 }

@@ -18,7 +18,7 @@ void	out(t_minishell *mini)
 	free(mini->prompt);
 	free(mini->line);
 	ft_printf("exit\n", 1);
-	exit(mini->ext_st / 255);
+	exit(*mini->ext_st / 255);
 }
 
 char	*inisialise_prompt(void)

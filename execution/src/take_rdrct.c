@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   take_rdrct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 02:14:56 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/28 02:10:09 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 22:27:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,14 @@ void	open_input(char *file, int *fd)
 
 void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
 {
-	int		pid;
 	int		fd[2];
 	char	*r;
 
 	r = NULL;
 	if (pipe(fd) < 0)
 		exit(error("pipe", errno));
-	pid = fork();
-	if (!pid)
+	signal(SIGINT, handl_segint_heredoc);
+	if (!fork())
 	{
 		close(fd[0]);
 		while (1)
@@ -61,7 +60,7 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fl)
 		}
 	}
 	else
-		*fl = (close(fd[1]), waitpid(pid, NULL, 0), fd[0]);
+		*fl = (close(fd[1]), wait(mini->ext_st), fd[0]);
 }
 
 void	open_output(t_list *fl, int *fd)

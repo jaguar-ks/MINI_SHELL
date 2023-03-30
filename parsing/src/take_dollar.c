@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   take_dollar.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 02:28:47 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/21 16:19:33 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:18:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*expan_variable(char *var, t_minishell *mini)
 	i = 1;
 	tmp = mini->env;
 	if (var[i] == '?')
-		return (ft_itoa(mini->ext_st / 256));
+		return (ft_itoa(*mini->ext_st / 256));
 	while (var[i])
 	{
 		if (!ft_isalnum(var[i]) && var[i] != '_')
