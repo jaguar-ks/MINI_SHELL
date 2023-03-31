@@ -29,15 +29,15 @@ char	*inisialise_prompt(void)
 
 	i = 0;
 	if (!getcwd(cd, PATH_MAX))
-		return (ft_strdup("(deleted directory)~> "));
+		return (ft_strdup("[deleted directory] > "));
 	else
 	{
 		while (cd[i])
 			i++;
 		while (cd[i] != '/')
 			i--;
-		ttl = ft_strjoin(ft_strdup("("), ft_strjoin(ft_strdup(cd + i + 1),
-					ft_strdup(")~> ")));
+		ttl = ft_strjoin(ft_strdup("["), ft_strjoin(ft_strdup(cd + i + 1),
+					ft_strdup("] >> ")));
 	}
 	return (ttl);
 }
