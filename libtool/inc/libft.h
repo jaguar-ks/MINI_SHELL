@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 21:13:19 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/02 05:57:44 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 # include <termcap.h>
 # include <errno.h>
 # include <stddef.h>
+# include <signal.h>
+
+# define WHITE "\001\e[0m\002"
+# define RED "\001\e[31;1m\002"
+# define YELLOW "\001\e[33;1;3m\002"
+# define GREEN "\001\e[32;3;1m\002"
 
 typedef struct s_list
 {

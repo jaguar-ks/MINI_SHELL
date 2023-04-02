@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/31 05:09:51 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/02 07:07:11 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	take_and_do_cmd(t_minishell *mini)
 
 void	mini_shell(t_minishell *mini)
 {
-	mini->prompt = inisialise_prompt();
+	mini->prompt = inisialise_prompt_2();
 	mini->line = readline(mini->prompt);
 	if (!mini->line)
 		out(mini);

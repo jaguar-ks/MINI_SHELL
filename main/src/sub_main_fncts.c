@@ -21,6 +21,32 @@ void	out(t_minishell *mini)
 	exit(*mini->ext_st / 255);
 }
 
+char	*inisialise_prompt_2(void)
+{
+	char		cd[PATH_MAX];
+	char		*ttl;
+	int			i;
+
+	i = 0;
+	if (!getcwd(cd, PATH_MAX))
+		return (ft_strjoin(ft_strdup("\001\e[31;1m\002❮\001\e[33;1;3m\002deleted "),
+				ft_strdup("directory\001\e[31;1m\002❯ $➣\001\e[0m\002 ")));
+	else
+	{
+		while (cd[i])
+			i++;
+		while (cd[i] != '/')
+			i--;
+		ttl = ft_strjoin(ft_strdup("\001\e[31;1m\002❮\001\e[33;1;3m\002"),
+				ft_strjoin(ft_strdup(cd + i + 1),
+					ft_strjoin(ft_strdup("\001\e[31;1m\002❯"),
+						ft_strjoin(ft_strdup("❨\001\e[32;3;1m\002"),
+							ft_strjoin(ft_itoa(g_ext_st / 256),
+								ft_strdup("\001\e[31;1m\002❩ $➣ \001\e[0m\002 "))))));
+	}
+	return (ttl);
+}
+
 char	*inisialise_prompt(void)
 {
 	char		cd[PATH_MAX];
@@ -29,15 +55,19 @@ char	*inisialise_prompt(void)
 
 	i = 0;
 	if (!getcwd(cd, PATH_MAX))
-		return (ft_strdup("[deleted directory] > "));
+		return (ft_strdup("❮deleted directory❯ $➣ "));
 	else
 	{
 		while (cd[i])
 			i++;
 		while (cd[i] != '/')
 			i--;
-		ttl = ft_strjoin(ft_strdup("["), ft_strjoin(ft_strdup(cd + i + 1),
-					ft_strdup("] >> ")));
+		ttl = ft_strjoin(ft_strdup("❮"),
+				ft_strjoin(ft_strdup(cd + i + 1),
+					ft_strjoin(ft_strdup("❯"),
+						ft_strjoin(ft_strdup("❨"),
+							ft_strjoin(ft_itoa(g_ext_st / 256),
+								ft_strdup("❩ $➣ "))))));
 	}
 	return (ttl);
 }
