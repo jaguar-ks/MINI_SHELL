@@ -41,7 +41,7 @@ char	*inisialise_prompt_2(void)
 				ft_strjoin(ft_strdup(cd + i + 1),
 					ft_strjoin(ft_strdup("\001\e[31;1m\002❯"),
 						ft_strjoin(ft_strdup("❨\001\e[32;3;1m\002"),
-							ft_strjoin(ft_itoa(g_ext_st / 256),
+							ft_strjoin(ft_itoa(g_ext_st),
 								ft_strdup("\001\e[31;1m\002❩ $➣ \001\e[0m\002 "))))));
 	}
 	return (ttl);

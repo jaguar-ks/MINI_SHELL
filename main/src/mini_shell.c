@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/02 07:07:11 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/03 21:47:45 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	handl_segint_child(int segnum)
 {
 	if (segnum == SIGINT)
 	{
+		write(1,"\n",1);
 		g_ext_st = 130;
 		exit(g_ext_st);
 	}
@@ -25,12 +26,12 @@ void	handl_segint(int segnum)
 {
 	if (segnum == SIGINT)
 	{
-		g_ext_st = 130 * 256;
-		write(1, "\n", 1);
+		write(1,"\n",1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		if (wait(NULL) == -1)
 			rl_redisplay();
+		g_ext_st = 130;
 	}
 }
 
@@ -51,7 +52,7 @@ void	mini_shell(t_minishell *mini)
 	if (!empty_line(mini->line))
 		add_history(mini->line);
 	if (check_syntax(mini->line) == 258)
-		*mini->ext_st = error(NULL, 258) * 256;
+		*mini->ext_st = error(NULL, 258);
 	else if (!empty_line(mini->line))
 		take_and_do_cmd(mini);
 	free(mini->line);

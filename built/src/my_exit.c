@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 05:12:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 21:16:31 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/03 21:30:49 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	my_exit(t_list *cmd, t_minishell *mini)
 	{
 		deallocate(cm);
 		*mini->ext_st = (ft_printf("exit\nMinishell : %s : exit\n",
-					STDERR_FILENO, "too many arguments"), 1 * 256);
+					STDERR_FILENO, "too many arguments"), 1);
 		return ;
 	}
 	ft_printf("exit\n", STDERR_FILENO);
@@ -70,7 +70,7 @@ void	my_exit(t_list *cmd, t_minishell *mini)
 		else
 			ext = (ft_printf("Minishell : %s : %s\n",
 						STDERR_FILENO, "numeric arguments is required",
-						cm[1]), 255);
+						cm[1]), 2);
 	}
 	deallocate(cm);
 	exit(ext);

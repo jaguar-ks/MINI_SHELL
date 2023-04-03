@@ -50,7 +50,7 @@ int	check_export_syntax(char *str, int *ext_st)
 			break ;
 	if (str[i] != '=' && str[i] != '\0' && (str[i] == '+' && str[i + 1] != '='))
 		return (ft_printf("Minishell : not a valid identifier : %s\n", 2, str),
-			*ext_st = 256, 0);
+			*ext_st = 1, 0);
 	return (1);
 }
 

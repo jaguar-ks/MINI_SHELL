@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 06:00:29 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 21:16:59 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/03 21:28:32 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	check_unset_syntax(char *str, int *ext_st)
 
 	i = 0;
 	if (!ft_isalpha(str[i]) && str[i] != '_')
-		return (*ext_st = 256, 0);
+		return (*ext_st = 1, 0);
 	while (str[++i])
 		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (*ext_st = 256, 0);
+			return (*ext_st = 1, 0);
 	return (1);
 }
 

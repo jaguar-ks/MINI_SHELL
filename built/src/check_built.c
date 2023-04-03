@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_built.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 21:15:42 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/03 21:26:16 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	rdrct_outside_fork(t_list *cmd, t_minishell *mini)
 
 void	do_builtin(t_list *cmd, t_minishell *mini, int f)
 {
+	*mini->ext_st = 0;
 	if (!f)
 		if (!rdrct_outside_fork(cmd, mini))
 			return ;

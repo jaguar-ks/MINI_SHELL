@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:32:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/31 02:48:10 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/03 21:45:15 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,16 @@ void	execute_one(t_list *cmd, t_minishell *mini)
 		if (!pid)
 			do_single_cmd(cmd, mini);
 		else
+		{
 			waitpid(pid, mini->ext_st, 0);
+			if (WIFEXITED(*mini->ext_st))
+				*mini->ext_st = WEXITSTATUS(*mini->ext_st);
+			if (*mini->ext_st == 11)
+			{
+				ft_printf("%sMiniShell : %sSegmentation fault\n", 2, RED, WHITE);
+				*mini->ext_st = 139;
+			}
+		}
 	}
 }
 
