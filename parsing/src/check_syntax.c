@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 01:05:52 by faksouss          #+#    #+#             */
-/*   Updated: 2023/02/27 16:58:36 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:19:26 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,22 @@ int	empty_line(char *line)
 int	in_quotes(char *line, int i)
 {
 	int	j;
-	int	in;
+	int	in_s;
+	int	in_d;
 
 	j = -1;
-	in = 0;
+	in_s = 0;
+	in_d = 0;
 	while (line[++j])
 	{
-		if (line[j] == '\'' || line[j] == '"')
-		{
-			if (!in)
-				in = 1;
-			else
-				in = 0;
-		}
+		if (line[j] == '\'')
+			in_s = (in_s == 0);
+		if (line[j] == '"')
+			in_d = (in_d == 0);
 		if (j == i)
 			break ;
 	}
-	return (in);
+	return (in_s || in_d);
 }
 
 int	valid_ct(char *cl)

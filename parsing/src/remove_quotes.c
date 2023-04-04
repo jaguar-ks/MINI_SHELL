@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:55:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/03 21:19:32 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:16:02 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*take_and_expand(t_minishell *mini, char *str, int *i)
 			j++;
 		}
 		if (j > s)
-			r = ft_strjoin(r, ft_substr(str, s, j - s));
+			r = ft_strjoin(r, ft_substr(str, s, (j - s) - (str[j] == str[*i])));
 		if (str[j] == '$')
 			r = ft_strjoin(r, take_dollar(mini, str, &j));
 		if (str[j] == str[*i])
@@ -42,19 +42,18 @@ char	*take_and_expand(t_minishell *mini, char *str, int *i)
 	return (*i = j, r);
 }
 
-char	*take_wthout_expand(char *str, int *i)
+char	*take_wthout_expand(char *str, int *i, int c)
 {
 	int		j;
-	int		s;
 	char	*r;
 
-	j = *i + 1;
+	j = 0;
 	r = NULL;
-	s = j;
-	while (str[j] != str[*i])
-		j++;
-	r = ft_strjoin(r, ft_substr(str, s, j - s));
-	return (*i = j, r);
+	while (str[++j])
+		if (str[j] == c)
+			break ;
+	r = ft_substr(str, 1, j - 1);
+	return (*i += j, r);
 }
 
 char	*take_new_str(t_minishell *mini, t_list *prt)
@@ -63,22 +62,20 @@ char	*take_new_str(t_minishell *mini, t_list *prt)
 	int		s;
 	char	*r;
 
-	i = -1;
+	i = 0;
 	r = NULL;
-	while (1)
+	while (prt->pt[i])
 	{
-		s = i + (i == -1 || (prt->pt[i] == '\'' || prt->pt[i] == '"'));
-		while (prt->pt[++i])
-			if (prt->pt[i] == '"' || prt->pt[i] == '\'')
-				break ;
+		s = i;
+		while (prt->pt[i] != '"' && prt->pt[i] != '\'')
+			i++;
 		if (i > s)
 			r = ft_strjoin(r, ft_substr(prt->pt, s, i - s));
 		if (prt->pt[i] == '"' && prt->wt != LMTR)
 			r = ft_strjoin(r, take_and_expand(mini, prt->pt, &i));
-		if (prt->pt[i] == '\'' || (prt->pt[i] == '"' && prt->wt == LMTR))
-			r = ft_strjoin(r, take_wthout_expand(prt->pt, &i));
-		if (prt->pt[i] == '\0')
-			break ;
+		else if (prt->pt[i] == '\'' || (prt->pt[i] == '"' && prt->wt == LMTR))
+			r = ft_strjoin(r, take_wthout_expand(&prt->pt[i], &i, prt->pt[i]));
+		i++;
 	}
 	return (free(prt->pt), r);
 }

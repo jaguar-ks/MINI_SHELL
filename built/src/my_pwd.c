@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:32:59 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/04 03:58:46 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:17:36 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	my_pwd(t_list *env)
 
 	if (getcwd(cd, PATH_MAX))
 	{
-		ft_printf("%s\n", STDOUT_FILENO,cd);
+		ft_printf("%s\n", STDOUT_FILENO, cd);
 		return ;
 	}
 	tmp = env;
