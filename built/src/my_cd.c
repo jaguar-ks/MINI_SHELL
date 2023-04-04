@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:56:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/03 21:46:08 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/04 03:43:07 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	update_env(t_minishell *mini)
 	if (!getcwd(cw, PATH_MAX))
 	{
 		*mini->ext_st = error("getcwd", 1);
-		ft_printf("can not retrive the current directory path\n", 2);
+		ft_printf("\tcan not retrive the current directory path\n", 2);
 		return ;
 	}
 	update_oldpwd(mini);

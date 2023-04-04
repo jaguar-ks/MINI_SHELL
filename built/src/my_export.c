@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 01:06:38 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 21:16:52 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/04 03:53:41 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	print_export(t_minishell *mini)
 	while (tmp)
 	{
 		if (tmp->acs)
-			ft_printf("declare - x %s\n", STDOUT_FILENO, tmp->pt);
+			ft_printf("%sdeclare - x %s%s\n", STDOUT_FILENO, GREEN,
+				WHITE, tmp->pt);
 		tmp = tmp->next;
 	}
 	ft_lstclear(&exprt);

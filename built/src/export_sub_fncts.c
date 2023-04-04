@@ -43,13 +43,15 @@ int	check_export_syntax(char *str, int *ext_st)
 
 	i = 0;
 	if (!ft_isalpha(str[i]) && str[i] != '_')
-		return (ft_printf("Minishell : not a valid identifier : %s\n", 2, str),
-			*ext_st = 256, 0);
+		return (ft_printf("%sMinishell : %s%s%s : %s%s\n", 2, RED, WHITE,
+				"not a valid identifier", RED, str, WHITE),
+			*ext_st = 1, 0);
 	while (str[++i])
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			break ;
 	if (str[i] != '=' && str[i] != '\0' && (str[i] == '+' && str[i + 1] != '='))
-		return (ft_printf("Minishell : not a valid identifier : %s\n", 2, str),
+		return (ft_printf("%sMinishell : %s%s%s : %s%s\n", 2, RED, WHITE,
+				"not a valid identifier", RED, str, WHITE),
 			*ext_st = 1, 0);
 	return (1);
 }

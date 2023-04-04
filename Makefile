@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+         #
+#    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/01 21:32:56 by faksouss         ###   ########.fr        #
+#    Updated: 2023/04/04 03:37:11 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,7 +129,7 @@ $(O_D):
 	mkdir $@
 
 $(NAME): $(O_M) $(O_P) $(O_E) $(O_B) $(LIBTOOL)
-	cc $(FLAG) $^ -lreadline -o $@
+	cc $(FLAG) $^ -lreadline -L /Users/faksouss/.brew/opt/readline/lib -o $@
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
 $(LIBTOOL):
@@ -138,7 +138,7 @@ $(LIBTOOL):
 
 $(O_D)/%.o: $(M_D)/%.c $(MN_H)
 	@printf "\r\033[0;33m⏳ main is compiling ...\033[0m"
-	@cc $(FLAG) -c $< -o $@
+	@cc $(FLAG) -c -I /Users/faksouss/.brew/opt/readline/include $< -o $@
 
 $(O_D)/%.o: $(P_D)/%.c $(PRS_H)
 	@printf "\r\033[0;33m⏳ parsing is compiling ...\033[0m"

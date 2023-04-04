@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 05:12:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/03 21:30:49 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/04 03:51:57 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ void	my_exit(t_list *cmd, t_minishell *mini)
 	if (mtx_len(cm) > 2)
 	{
 		deallocate(cm);
-		*mini->ext_st = (ft_printf("exit\nMinishell : %s : exit\n",
-					STDERR_FILENO, "too many arguments"), 1);
+		*mini->ext_st = (ft_printf("exit\n%sMinishell : %s%s : %sexit%s\n",
+					STDERR_FILENO, RED, WHITE, "too many arguments",
+					RED, WHITE), 1);
 		return ;
 	}
 	ft_printf("exit\n", STDERR_FILENO);
@@ -68,9 +69,9 @@ void	my_exit(t_list *cmd, t_minishell *mini)
 		if (valid_arg(cm[1]))
 			ext = ft_atoi(cm[1]);
 		else
-			ext = (ft_printf("Minishell : %s : %s\n",
-						STDERR_FILENO, "numeric arguments is required",
-						cm[1]), 2);
+			ext = (ft_printf("%sMinishell : %s%s : %s%s%s\n", STDERR_FILENO,
+						RED, WHITE, "numeric arguments is required", RED, cm[1],
+						WHITE), 2);
 	}
 	deallocate(cm);
 	exit(ext);
