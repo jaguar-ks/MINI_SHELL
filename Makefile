@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
+#    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/04 03:37:11 by faksouss         ###   ########.fr        #
+#    Updated: 2023/04/08 06:00:12 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,24 +33,24 @@ P_F = check_redirection.c\
 		remove_quotes.c\
 		wild_card.c\
 
-E_F =   convert_env_list_to_char.c\
-			execute_all.c\
-			get_needed_info.c\
-			take_cmd_and_prts.c\
-			take_cmd_by_cmd.c\
-			take_cmd_path.c\
-			take_rdrct.c\
+# E_F =   convert_env_list_to_char.c\
+# 			execute_all.c\
+# 			get_needed_info.c\
+# 			take_cmd_and_prts.c\
+# 			take_cmd_by_cmd.c\
+# 			take_cmd_path.c\
+# 			take_rdrct.c\
 
-B_F = check_built.c\
-		my_echo.c\
-		my_cd.c\
-		my_pwd.c\
-		my_env.c\
-		my_exit.c\
-		my_unset.c\
-		my_export.c\
-		export_sub_fncts.c\
-		export_sub_fncts_2.c\
+# B_F = check_built.c\
+# 		my_echo.c\
+# 		my_cd.c\
+# 		my_pwd.c\
+# 		my_env.c\
+# 		my_exit.c\
+# 		my_unset.c\
+# 		my_export.c\
+# 		export_sub_fncts.c\
+# 		export_sub_fncts_2.c\
 
 O_D = obj
 
@@ -58,7 +58,7 @@ M_D = main/src
 
 P_D = parsing/src
 
-E_D = execution/src
+# E_D = execution/src
 
 B_D = built/src
 
@@ -74,7 +74,7 @@ M_S = $(addprefix $(M_D)/,$(M_F))
 
 P_S = $(addprefix $(P_D)/,$(P_F))
 
-E_S = $(addprefix $(E_D)/,$(E_F))
+# E_S = $(addprefix $(E_D)/,$(E_F))
 
 B_S = $(addprefix $(B_D)/,$(B_F))
 
@@ -86,7 +86,7 @@ BLT_H = built/inc/built.h
 
 LIBTOOL = libtool/libft.a
 
-all: start $(O_D) $(NAME)
+all: $(O_D) $(NAME)
 
 start:
 	clear
@@ -128,7 +128,7 @@ start:
 $(O_D):
 	mkdir $@
 
-$(NAME): $(O_M) $(O_P) $(O_E) $(O_B) $(LIBTOOL)
+$(NAME): $(O_M) $(O_P) $(LIBTOOL)
 	cc $(FLAG) $^ -lreadline -L /Users/faksouss/.brew/opt/readline/lib -o $@
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
