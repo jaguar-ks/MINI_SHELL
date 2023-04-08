@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:55:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/04 21:16:02 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/08 23:25:39 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*take_new_str(t_minishell *mini, t_list *prt)
 	while (prt->pt[i])
 	{
 		s = i;
-		while (prt->pt[i] != '"' && prt->pt[i] != '\'')
+		while (prt->pt[i] != '"' && prt->pt[i] != '\'' && prt->pt[i])
 			i++;
 		if (i > s)
 			r = ft_strjoin(r, ft_substr(prt->pt, s, i - s));
@@ -75,6 +75,8 @@ char	*take_new_str(t_minishell *mini, t_list *prt)
 			r = ft_strjoin(r, take_and_expand(mini, prt->pt, &i));
 		else if (prt->pt[i] == '\'' || (prt->pt[i] == '"' && prt->wt == LMTR))
 			r = ft_strjoin(r, take_wthout_expand(&prt->pt[i], &i, prt->pt[i]));
+		if (!prt->pt[i])
+			break ;
 		i++;
 	}
 	return (free(prt->pt), r);
