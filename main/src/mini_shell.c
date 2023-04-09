@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/08 06:06:26 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/09 01:47:09 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	take_and_do_cmd(t_minishell *mini)
 	// tokenization of input
 	take_cmd(mini);
 	// execution
+	execute_cmds(mini);
 	// exec_input(mini);
 	ft_lstclear(&mini->cmd);
 }
