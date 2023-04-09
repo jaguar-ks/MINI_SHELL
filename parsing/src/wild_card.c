@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:22:04 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/21 19:55:19 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/09 01:22:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	extract_and_add_to_list(t_list **new_lst, char *ex)
 	DIR				*dir;
 	struct dirent	*entry;
 	char			*ptrn;
-	int				ch;
 
 	dir = opendir(".");
 	if (!dir)
@@ -65,8 +64,13 @@ void	extract_and_add_to_list(t_list **new_lst, char *ex)
 		return ((void)perror("Readdir : "));
 	while (entry)
 	{
-		ch = is_a_match(entry->d_name, ptrn);
-		if ((ptrn[0] == '*' && ptrn[1] == '\0') || ch)
+		if (!ft_strcmp(entry->d_name, ".") || !ft_strcmp(entry->d_name, ".."))
+		{
+			entry = readdir(dir);
+			continue ;
+		}
+		if ((ptrn[0] == '*' && ptrn[1] == '\0')
+			|| is_a_match(entry->d_name, ptrn))
 			ft_lstadd_back(new_lst, ft_lstnew(entry->d_name, ARG));
 		entry = readdir(dir);
 	}
