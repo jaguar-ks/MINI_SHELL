@@ -6,13 +6,13 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/09 02:35:12 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/04/10 17:54:35 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
 
-CFLAGS := -Wall -Wextra -Werror 
+CFLAGS := -Wall -Wextra -Werror -fsanitize=address
 
 READ_LIB := /usr/lib/x86_64-linux-gnu/libreadline.a
 
@@ -31,7 +31,9 @@ PARSE := 	parsing/src/check_redirection.c \
 			parsing/src/take_env.c \
 			parsing/src/wild_card.c \
 
-EXEC :=  	execution/src/execution.c
+EXEC :=  	execution/src/execution.c \
+			execution/src/utils.c
+			
 
 SRC := $(MAIN) $(PARSE) $(EXEC)
 
@@ -49,11 +51,11 @@ LIBTOOL := libtool/libft.a
 all : $(NAME)
 
 $(NAME): $(LIBTOOL) $(OBJ)
-	cc $(CFLAG) $^ -lreadline -L /Users/faksouss/.brew/opt/readline/lib -o $@
+	cc $(CFLAGS) $^ -lreadline -L /Users/faksouss/.brew/opt/readline/lib -o $@
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
 $(OBJDIR)/%.o : %.c $(HEADERS)
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -Iexecution/inc/execution.h -c $< -o $@
 
 $(LIBTOOL) :
