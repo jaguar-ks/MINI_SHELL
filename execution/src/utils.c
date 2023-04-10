@@ -6,11 +6,11 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:48:38 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/10 18:15:16 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/10 23:41:34 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/execution.h"
+#include "execution.h"
 
 char *find_cmd(char **path, char *cmd)
 {
@@ -38,7 +38,7 @@ char *find_cmd(char **path, char *cmd)
 	return (NULL);
 }
 
-char	**get_path(t_minishell *mini)
+char	*get_cmd_path(t_minishell *mini, char *cmd)
 {
 	char **path;
 	t_list *tmp;
@@ -57,9 +57,9 @@ char	**get_path(t_minishell *mini)
 	}
 	if (!path)
 	{
-		perror("minishell:"); exit(127);
+		perror("minishell:"); *mini->ext_st = 127; exit(127);
 	}
-	return (path);
+	return (find_cmd(path, cmd));
 }
 
 char	**convert_env(t_list *env)

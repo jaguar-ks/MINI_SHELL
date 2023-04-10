@@ -6,15 +6,15 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/10 17:54:35 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/04/10 23:45:50 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
 
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror #-fsanitize=address
 
-READ_LIB := /usr/lib/x86_64-linux-gnu/libreadline.a
+READLINE_LIB :=  -lreadline -L/Users/mfouadi/.brew/opt/readline/lib
 
 RM := rm -rf
 
@@ -41,22 +41,38 @@ OBJDIR := obj
 
 OBJ := $(patsubst %, $(OBJDIR)/%, $(SRC:.c=.o))
 
-HEADERS :=	built/inc/built.h \
-			execution/inc/execution.h \
-			parsing/inc/parsing.h \
-			main/inc/mini_shell.h \
+HEADERS 	:=	built/inc/built.h \
+				execution/inc/execution.h \
+				parsing/inc/parsing.h \
+				main/inc/mini_shell.h
+
+INC_HEADERS :=	-Ibuilt/inc \
+				-Iexecution/inc \
+				-Iparsing/inc \
+				-Imain/inc \
+				-Ilibtool/inc \
+				-I/Users/mfouadi/.brew/opt/readline/include
+
 
 LIBTOOL := libtool/libft.a
 
 all : $(NAME)
 
+
+# readline is keg-only, which means it was not symlinked into /Users/mfouadi/.brew,
+# because macOS provides BSD libedit.
+
+# For compilers to find readline you may need to set:
+#   export LDFLAGS="-L/Users/mfouadi/.brew/opt/readline/lib"
+#   export CPPFLAGS="-I/Users/mfouadi/.brew/opt/readline/include"
+
 $(NAME): $(LIBTOOL) $(OBJ)
-	cc $(CFLAGS) $^ -lreadline -L /Users/faksouss/.brew/opt/readline/lib -o $@
+	cc $(CFLAGS) $^ -o $@ $(READLINE_LIB)
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
 $(OBJDIR)/%.o : %.c $(HEADERS)
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -Iexecution/inc/execution.h -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INC_HEADERS)
 
 $(LIBTOOL) :
 	@printf "\r\033[0;33m⏳ libtool is compiling ...\033[0m"
@@ -65,7 +81,7 @@ $(LIBTOOL) :
 clean : 
 	@printf "\r\033[0;33mclearing object files 🚮🗑️ ...\033[0m"
 	@make -C libtool clean
-	$(RM) $(OBJ)
+	$(RM) $(OBJDIR)
 
 fclean : clean
 	@printf "\r\033[0;33mYOU DELETED MY MINISHELL 😱 YOU !*#^&# 😡🤬\033[0m\n"

@@ -6,11 +6,11 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/10 20:26:03 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/10 23:44:04 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/execution.h"
+#include "execution.h"
 
 /*
 Implement redirections:
@@ -74,14 +74,28 @@ PIPE_IN and PIPE_OUT are file descriptors saying where input comes
    from and where it goes.  They can have the value of NO_PIPE, which means
    I/O is stdin/stdout.
 */
+
+
+/*
+
+*/
 void	execute_cmds(t_minishell *mini)
 {
 	// char **en;
 	// char	**path;
 	// char	*cmd_path;
+	(void)mini;
 	// cmds_to_exec(mini->cmd)
-	printf("%s\n", mini->cmd->pt);
-	printf("%s\n", mini->cmd->next->pt);
+	t_list *tmp;
+
+	tmp = mini->cmd;
+	while(tmp)
+	{
+		printf("%s | %d\n", tmp->pt , tmp->wt);
+		tmp = tmp->next;
+	}
+	// printf("%s\n", mini->cmd->next->pt);
+	// printf("%s\n", mini->cmd->next->next->pt);
 	// path = get_path(mini); 
 	// cmd_path = find_cmd(path, cmd);
 	// en = convert_env(mini->env);
