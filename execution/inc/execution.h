@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 17:18:23 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/30 21:31:56 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/11 03:21:44 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,6 @@
 # include"../../built/inc/built.h"
 # include"../../main/inc/mini_shell.h"
 
-/*calculate the len of the accessable parts of envirement*/
-int		env_len(t_list *en);
-/*take the accessable parts of the enviremants and store them in
-2 demantional array of type char*/
-char	**take_char_env(t_list *en);
-/*take single command at the time*/
-t_list	*single_cmd(t_minishell *mini);
-/*calculate how many pipe in the command*/
-int		how_many_pipe(t_list *cmd);
-/*split the command line by pipe*/
-void	split_and_execute_cmd(t_minishell *mini);
 /*check if there is a input rederction*/
 int		check_in_rdrct(t_list *cmd);
 /*open the input file*/
@@ -39,13 +28,6 @@ void	open_heredoc(t_list *lim, t_minishell *mini, int *fd);
 int		check_out_rdrct(t_list *cmd);
 /*open the output file*/
 void	open_output(t_list *fl, int *fd);
-/*check if there is a command to execute*/
-int		check_cmd(t_list *cmd);
-/*count how many element of the command (command, arguments, flags)*/
-int		count_cmd_prt(t_list *cmd);
-/*take the command and there flags and arguments if they exisset and
-stor them in a 2 demantional array*/
-char	**take_char_cmd(t_list *cmd);
 /*take the command path or return NULL if there is no executable file 
 found*/
 char	*take_path(char *cm, t_minishell *mini);

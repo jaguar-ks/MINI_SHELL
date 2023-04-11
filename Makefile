@@ -6,7 +6,7 @@
 #    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/04 03:37:11 by faksouss         ###   ########.fr        #
+#    Updated: 2023/04/11 03:24:01 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,9 @@ P_F = check_redirection.c\
 		lexer.c\
 		remove_quotes.c\
 		wild_card.c\
+		init_exc.c\
+		split_cmd_list.c\
+		take_char_cmd.c\
 
 E_F =   convert_env_list_to_char.c\
 			execute_all.c\
@@ -128,7 +131,7 @@ start:
 $(O_D):
 	mkdir $@
 
-$(NAME): $(O_M) $(O_P) $(O_E) $(O_B) $(LIBTOOL)
+$(NAME): $(O_M) $(O_P) $(LIBTOOL)
 	cc $(FLAG) $^ -lreadline -L /Users/faksouss/.brew/opt/readline/lib -o $@
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 02:45:15 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/11 03:28:41 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/11 04:34:18 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	take_exc_prt(t_minishell *mini, t_list *cmd)
 	new = (t_exec *)malloc(sizeof(t_exec));
 	if (!new)
 		return ;
+	new->next = NULL;
 	new->cmd_exec = NULL;
 	if (check_cmd(cmd))
 		new->cmd_exec = take_char_cmd(cmd);

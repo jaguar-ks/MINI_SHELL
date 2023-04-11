@@ -75,6 +75,7 @@ char	*inisialise_prompt(void)
 void	take_cmd(t_minishell *mini)
 {
 	mini->cmd = NULL;
+	mini->exc = NULL;
 	split_cmd_line_by_space(mini);
 	split_by_pp_and_rdrct(mini);
 	identify_special_charcters(mini);
@@ -85,4 +86,5 @@ void	take_cmd(t_minishell *mini)
 	identify_flag(mini);
 	identify_arg(mini);
 	extract_wild_card(mini);
+	init_exc(mini);
 }
