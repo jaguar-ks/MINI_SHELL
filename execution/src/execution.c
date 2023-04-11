@@ -6,43 +6,11 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/11 02:34:52 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/11 20:45:12 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-
-/*
-Implement redirections:
-	◦< should redirect input.
-	◦> should redirect output.
-	◦<< should be given a delimiter, then read the input until a line containing the
-	delimiter is seen. However, it doesn't have to update the history!
-	◦>> should redirect output in append mode.
-	•Implement pipes (| character). The output of each command in the pipeline is
-	connected to the input of the next command via a pipe.
-	•Handle environment variables ($ followed by a sequence of characters) which
-	should expand to their values.
-	•Handle $? which should expand to the exit status of the most recently executed
-	foreground pipeline.
-
-•Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
-	•In interactive mode:
-	◦ctrl-C displays a new prompt on a new line.
-	◦ctrl-D exits the shell.
-	◦ctrl-\ does nothing.
-	•Your shell must implement the following builtins:
-	◦echo with option -n
-	◦cd with only a relative or absolute path
-	◦pwd with no options
-	◦export with no options
-	◦unset with no options
-	◦env with no options or arguments
-	◦exit with no options
-The readline() function can cause memory leaks. You don't have to fix them. But
-that doesn't mean your own code, yes the code you wrote, can have memory
-leaks.
-*/
 
 //   <<     EOF  cat  -e   |  cat   >  outfile  |  echo "More"  >>  outfile  |  echo  $PATH
 // HEREDOC LMTR  CMD  FLG  PP CMD TRNC   TR_F   PP  CMD   ARG  APND  AP_F    PP CMD  ARG
@@ -70,38 +38,113 @@ leaks.
 	// Section 3.7.5 [Exit Status], page 44).
 
 /*
-PIPE_IN and PIPE_OUT are file descriptors saying where input comes
+	PIPE_IN and PIPE_OUT are file descriptors saying where input comes
    from and where it goes.  They can have the value of NO_PIPE, which means
    I/O is stdin/stdout.
 */
 
-// void	printx(t_minishell *mini)
-// {
-// 	t_list *tmp;
+/*
+# define HEREDOC 1
+# define LMTR 2
+# define APND 3
+# define TRNC 4
+# define INPT 5
+# define PP 6
+# define IND 7
+# define ARG 8
+# define EN 9
+# define AP_F 10
+# define TR_F 11
+# define IN_F 12
+# define CMD 13
+# define FLG 14
+*/
 
-// 	tmp = mini->cmd;
-// 	while(tmp)
-// 	{
-// 		printf("%s | %d\n", tmp->pt , tmp->wt);
-// 		tmp = tmp->next;
-// 	}
-// }
+void	handle_redrc_and_heredoc(t_minishell *mini)
+{
+	int		fd;
+	t_list	*tmp;
 
+	fd = 0;
+	tmp = mini->exc->redrc;
+	while (tmp)
+	{
+		if (tmp->wt == IN_F)
+		{
+			fd = open(tmp->pt, O_RDONLY);
+			if (fd < 0)
+				{*mini->ext_st = errno; perror("Minishell_redrc:"); exit(errno);}
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		else if (tmp->wt == AP_F || tmp->wt == TR_F)
+		{
+			if (tmp->wt == TR_F)
+				fd = open(tmp->pt, O_CREAT | O_TRUNC | O_RDWR, 0644);
+			else
+				fd = open(tmp->pt, O_CREAT | O_APPEND | O_RDWR, 0644);
+			if (fd < 0)
+				{*mini->ext_st = errno; perror("Minishell_redrc:"); exit(errno);}
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		// else if (tmp->wt == HEREDOC)
+		// {
+			// 	if (tmp->acs == 0)
+		// }
+		tmp = tmp->next;
+	}
+	return ;
+}
+
+void	execute_one_command(t_minishell *mini)
+{
+	char	*path;
+	if (mini->exc->redrc != NULL)
+		handle_redrc_and_heredoc(mini);
+	path = get_cmd_path(mini, mini->exc->cmd_exec[0]);
+	execve(path, mini->exc->cmd_exec, take_char_env(mini->env));
+	error("minishell_exec_one:", 127);
+	return ;
+}
+
+// Execute command and handle redirections, if there is no pipe
+void	execute_command_with_nopipe(t_minishell *mini)
+{
+	t_exec	*tmp;
+	int	pid;
+
+	tmp = mini->exc;
+	pid = fork();
+	if (pid == 0)
+	{
+		// if (tmp->redrc != NULL)
+			// handle_redrc_and_heredoc(mini);
+		execute_one_command(mini);
+	}
+	wait(mini->ext_st);
+	if (WIFEXITED(mini->ext_st))
+	{
+		*mini->ext_st = WEXITSTATUS(mini->ext_st);
+		if (*mini->ext_st != 0)
+			exit(*mini->ext_st);
+	}
+	return ;
+}
+
+// **************** COMMENTS **************** //
+
+// Exit Status is 32512, in case you enter a bunch of letters, exited from minishell_find_cmd: No such file or directory
 void	execute_cmds(t_minishell *mini)
 {
-	(void)mini;
-	// t_exec	*tmp;
-	// int		pid;
+	// int		old_fd[2];
+	t_exec	*tmp;
 	
-	// tmp = mini->exec;
-	// pid = 0;
-	// if (tmp && tmp->next == NULL)
-	// {
-	// 	if (tmp->redrc != NULL)
-	// 		handle_redrc_and_heredoc(tmp);
-	// 	execute_one_command(tmp->cmd_exec);
-	// 	return (0);
-	// }
+	tmp = mini->exc;
+	if (tmp && tmp->next == NULL)
+		return (execute_command_with_nopipe(mini));
+	// old_in[0] = dup(STDIN_FILENO);
+	// old_out[1] = dup(STDOUT_FILENO);
 	// while (tmp)
 	// {
 	// 	pipe(mini->fd);
@@ -110,10 +153,11 @@ void	execute_cmds(t_minishell *mini)
 	// 	{
 	// 		if (tmp->redrc != NULL)
 	// 			handle_redrc_and_heredoc(tmp);
-			
+
 	// 	}
-		
-		
+
 	// }
-	return ;
+	// dup2(old_in[0], STDIN_FILENO);
+	// dup2(old_out[1], STDOUT_FILENO);
+	return;
 }

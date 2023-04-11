@@ -59,3 +59,8 @@ dkms.conf
 # VS code
 .vscode
 .DS_Store
+
+# local files
+outfile
+test
+*.txt

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:20:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/03 21:19:03 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/05 05:02:27 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	check_for_expander(t_list *prt)
 	{
 		while (prt->pt[++i])
 		{
-			if (prt->pt[i] == '$' && (!ft_strchr(prt->pt, '\'')
-					&& !ft_strchr(prt->pt, '"')))
+			if (prt->pt[i] == '$' && !in_quotes(prt->pt, i))
 				return (1);
 		}
 	}

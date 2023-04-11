@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/21 20:00:21 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/11 03:29:29 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,29 @@ void	extract_and_add_to_list(t_list **new_lst, char *ex);
 int		is_a_match(char *name, char *pattren);
 /* merge stras*/
 char	*merge_star(char *str);
+/*calculate the len of the accessable parts of envirement*/
+int		env_len(t_list *en);
+/*take the accessable parts of the enviremants and store them in
+2 demantional array of type char*/
+char	**take_char_env(t_list *en);
+/*take single command at the time*/
+t_list	*single_cmd(t_minishell *mini);
+/*calculate how many pipe in the command*/
+int		how_many_pipe(t_list *cmd);
+/*split the command line by pipe*/
+t_list	**split_cmd_list(t_minishell *mini);
+/*check if there is a command to execute*/
+int		check_cmd(t_list *cmd);
+/*count how many element of the command (command, arguments, flags)*/
+int		count_cmd_prt(t_list *cmd);
+/*take the command and there flags and arguments if they exisset and
+stor them in a 2 demantional array*/
+char	**take_char_cmd(t_list *cmd);
+/*initialise the linked list for execution*/
+void	init_exc(t_minishell *mini);
+/*command not found*/
+void	cmd_not_found(char **cm);
+/*error printing*/
+int	    error(char *er, int ext_er);
 
 #endif

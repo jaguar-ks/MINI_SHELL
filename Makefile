@@ -6,13 +6,13 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/10 23:45:50 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/04/11 20:55:25 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
 
-CFLAGS := -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS := -Wall -Wextra -Werror -fsanitize=address
 
 READLINE_LIB :=  -lreadline -L/Users/mfouadi/.brew/opt/readline/lib
 
@@ -23,13 +23,16 @@ MAIN :=		main/src/mini_shell.c \
 
 PARSE := 	parsing/src/check_redirection.c \
 			parsing/src/check_syntax.c \
+			parsing/src/init_exc.c \
 			parsing/src/lexer.c \
 			parsing/src/remove_quotes.c \
 			parsing/src/split_by_pp_and_rdrct.c \
 			parsing/src/split_by_space.c \
+			parsing/src/split_cmd_list.c \
+			parsing/src/take_char_cmd.c \
 			parsing/src/take_dollar.c \
 			parsing/src/take_env.c \
-			parsing/src/wild_card.c \
+			parsing/src/wild_card.c
 
 EXEC :=  	execution/src/execution.c \
 			execution/src/utils.c

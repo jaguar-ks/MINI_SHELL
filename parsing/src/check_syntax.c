@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 01:05:52 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/04 21:19:26 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/06 21:45:01 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	in_quotes(char *line, int i)
 		if (j == i)
 			break ;
 	}
-	return (in_s || in_d);
+	return ((in_s || in_d));
 }
 
 int	valid_ct(char *cl)
