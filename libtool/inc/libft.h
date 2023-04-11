@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/04 03:37:24 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/11 03:16:05 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,20 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+typedef struct s_exec
+{
+	char			**cmd_exec;
+	t_list			*redrc;
+	struct s_exec	*next;
+}	t_exec;
+
 typedef struct s_minishell
 {
 	int		*ext_st;
 	int		fd[2];
 	char	*line;
 	char	*prompt;
+	t_exec	*exc;
 	t_list	*cmd;
 	t_list	*env;
 }	t_minishell;
