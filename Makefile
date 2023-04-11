@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
+#    By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/11 05:05:45 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/04/11 21:45:54 by faksouss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,17 @@ PARSE := 	parsing/src/check_redirection.c\
 
 EXEC :=  	execution/src/execution.c \
 			execution/src/utils.c
-			
+
+BUILT :=	built/src/check_built.c\
+			built/src/my_exit.c\
+			built/src/my_echo.c\
+			built/src/my_cd.c\
+			built/src/export_sub_fncts.c\
+			built/src/my_unset.c\
+			built/src/my_env.c\
+			built/src/export_sub_fncts_2.c\
+			built/src/my_export.c\
+			built/src/my_pwd.c
 
 SRC := $(MAIN) $(PARSE) $(EXEC)
 
