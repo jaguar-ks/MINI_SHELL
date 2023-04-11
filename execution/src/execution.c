@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/10 23:44:04 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/11 02:34:52 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,30 +75,45 @@ PIPE_IN and PIPE_OUT are file descriptors saying where input comes
    I/O is stdin/stdout.
 */
 
+// void	printx(t_minishell *mini)
+// {
+// 	t_list *tmp;
 
-/*
+// 	tmp = mini->cmd;
+// 	while(tmp)
+// 	{
+// 		printf("%s | %d\n", tmp->pt , tmp->wt);
+// 		tmp = tmp->next;
+// 	}
+// }
 
-*/
 void	execute_cmds(t_minishell *mini)
 {
-	// char **en;
-	// char	**path;
-	// char	*cmd_path;
 	(void)mini;
-	// cmds_to_exec(mini->cmd)
-	t_list *tmp;
-
-	tmp = mini->cmd;
-	while(tmp)
-	{
-		printf("%s | %d\n", tmp->pt , tmp->wt);
-		tmp = tmp->next;
-	}
-	// printf("%s\n", mini->cmd->next->pt);
-	// printf("%s\n", mini->cmd->next->next->pt);
-	// path = get_path(mini); 
-	// cmd_path = find_cmd(path, cmd);
-	// en = convert_env(mini->env);
-
+	// t_exec	*tmp;
+	// int		pid;
+	
+	// tmp = mini->exec;
+	// pid = 0;
+	// if (tmp && tmp->next == NULL)
+	// {
+	// 	if (tmp->redrc != NULL)
+	// 		handle_redrc_and_heredoc(tmp);
+	// 	execute_one_command(tmp->cmd_exec);
+	// 	return (0);
+	// }
+	// while (tmp)
+	// {
+	// 	pipe(mini->fd);
+	// 	pid = fork();
+	// 	if (pid == 0)
+	// 	{
+	// 		if (tmp->redrc != NULL)
+	// 			handle_redrc_and_heredoc(tmp);
+			
+	// 	}
+		
+		
+	// }
 	return ;
 }

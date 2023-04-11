@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/10 20:55:45 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/11 02:17:05 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,21 @@
 # define YELLOW "\001\e[33;1;3m\002"
 # define GREEN "\001\e[32;3;1m\002"
 
+
 typedef struct s_list
 {
 	char			*pt;
 	int				wt;
-	int				acs;
+	int				acs; // if acs= 0 Noexpand, else expand (t_list *redrc)
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_exec // Node 1 :[** cat | -e || ]
+{
+	char			**cmd_exec; //ls -al 
+	t_list			*redrc; // NULL
+	struct s_exec	*next; // if (next == 1) {means there is a pipe}
+}	t_exec;
 
 typedef struct s_minishell
 {
@@ -56,6 +64,7 @@ typedef struct s_minishell
 	int		fd[2];
 	char	*line;
 	char	*prompt;
+	t_exec	*exec;
 	t_list	*cmd;
 	t_list	*env;
 }	t_minishell;
