@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/11 20:45:12 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/12 02:05:32 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,11 @@ void	execute_command_with_nopipe(t_minishell *mini)
 		execute_one_command(mini);
 	}
 	wait(mini->ext_st);
-	if (WIFEXITED(mini->ext_st))
+	if (WIFEXITED(*mini->ext_st))
 	{
-		*mini->ext_st = WEXITSTATUS(mini->ext_st);
-		if (*mini->ext_st != 0)
-			exit(*mini->ext_st);
+		*mini->ext_st = WEXITSTATUS(*mini->ext_st);
+		// if (*mini->ext_st != 0)
+		// 	exit(*mini->ext_st);
 	}
 	return ;
 }
