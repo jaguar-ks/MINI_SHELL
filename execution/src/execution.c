@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/12 02:05:32 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/12 03:28:51 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,17 @@ void	handle_redrc_and_heredoc(t_minishell *mini)
 void	execute_one_command(t_minishell *mini)
 {
 	char	*path;
-	if (mini->exc->redrc != NULL)
-		handle_redrc_and_heredoc(mini);
-	path = get_cmd_path(mini, mini->exc->cmd_exec[0]);
+
+	path = NULL;
+	if (mini->exc && mini->exc->cmd_exec)
+	{
+		if (mini->exc->redrc != NULL)
+			handle_redrc_and_heredoc(mini);
+		path = get_cmd_path(mini, mini->exc->cmd_exec[0]);
+	}
 	execve(path, mini->exc->cmd_exec, take_char_env(mini->env));
-	error("minishell_exec_one:", 127);
+	*mini->ext_st = 127;
+	perror("minishell_exec_one");
 	return ;
 }
 
