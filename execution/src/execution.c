@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/12 03:28:51 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/12 06:38:19 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	handle_redrc_and_heredoc(t_minishell *mini)
 		{
 			fd = open(tmp->pt, O_RDONLY);
 			if (fd < 0)
-				{*mini->ext_st = errno; perror("Minishell_redrc:"); exit(errno);}
+				{*mini->ext_st = errno; perror("Minishell_redrc"); exit(1);}
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
@@ -84,14 +84,16 @@ void	handle_redrc_and_heredoc(t_minishell *mini)
 			else
 				fd = open(tmp->pt, O_CREAT | O_APPEND | O_RDWR, 0644);
 			if (fd < 0)
-				{*mini->ext_st = errno; perror("Minishell_redrc:"); exit(errno);}
+				{*mini->ext_st = errno; perror("Minishell_redrc"); exit(1);}
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
-		// else if (tmp->wt == HEREDOC)
-		// {
-			// 	if (tmp->acs == 0)
-		// }
+		else if (tmp->wt == LMTR)
+		{
+			open_here_doc(mini, &fd);
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
 		tmp = tmp->next;
 	}
 	return ;
@@ -102,13 +104,15 @@ void	execute_one_command(t_minishell *mini)
 	char	*path;
 
 	path = NULL;
-	if (mini->exc && mini->exc->cmd_exec)
+	if (mini->exc->redrc != NULL)
+		handle_redrc_and_heredoc(mini);
+	if (mini->exc && mini->exc->cmd_exec && mini->exc->cmd_exec[0][0] != '\0')
 	{
-		if (mini->exc->redrc != NULL)
-			handle_redrc_and_heredoc(mini);
 		path = get_cmd_path(mini, mini->exc->cmd_exec[0]);
+		execve(path, mini->exc->cmd_exec, take_char_env(mini->env));
 	}
-	execve(path, mini->exc->cmd_exec, take_char_env(mini->env));
+	if (access((const char *)mini->filename, F_OK) == 0)
+		unlink((const char *)mini->filename);
 	*mini->ext_st = 127;
 	perror("minishell_exec_one");
 	return ;
@@ -124,31 +128,32 @@ void	execute_command_with_nopipe(t_minishell *mini)
 	pid = fork();
 	if (pid == 0)
 	{
-		// if (tmp->redrc != NULL)
-			// handle_redrc_and_heredoc(mini);
 		execute_one_command(mini);
+		exit(*mini->ext_st);
 	}
 	wait(mini->ext_st);
 	if (WIFEXITED(*mini->ext_st))
-	{
 		*mini->ext_st = WEXITSTATUS(*mini->ext_st);
-		// if (*mini->ext_st != 0)
-		// 	exit(*mini->ext_st);
-	}
+	if (access((const char *)mini->filename, F_OK) == 0)
+		unlink((const char *)mini->filename);
 	return ;
 }
 
 // **************** COMMENTS **************** //
 
-// Exit Status is 32512, in case you enter a bunch of letters, exited from minishell_find_cmd: No such file or directory
+// ***************************************** //
 void	execute_cmds(t_minishell *mini)
 {
 	// int		old_fd[2];
 	t_exec	*tmp;
 	
 	tmp = mini->exc;
+	// *mini->ext_st = 0;
 	if (tmp && tmp->next == NULL)
-		return (execute_command_with_nopipe(mini));
+		{
+			execute_command_with_nopipe(mini);
+		return;
+		}
 	// old_in[0] = dup(STDIN_FILENO);
 	// old_out[1] = dup(STDOUT_FILENO);
 	// while (tmp)

@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/11 20:55:25 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/04/12 06:22:57 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ PARSE := 	parsing/src/check_redirection.c \
 			parsing/src/wild_card.c
 
 EXEC :=  	execution/src/execution.c \
-			execution/src/utils.c
+			execution/src/utils.c \
+			execution/src/heredocument.c
 			
 
 SRC := $(MAIN) $(PARSE) $(EXEC)
