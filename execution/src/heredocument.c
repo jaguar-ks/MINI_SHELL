@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/12 06:59:02 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/13 02:16:27 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	heredoc_filename(t_minishell **mini)
 	{
 		tmp = ft_itoa(i);
 		name = ft_strjoin(ft_strdup("/tmp/heredoc_"), tmp);
-		ft_strlcpy((*mini)->filename, name, ft_strlen(name) + 4);
+		ft_strlcpy((*mini)->filename, name, ft_strlen(name)+1);
 		free(name);
 		if (access((*mini)->filename, F_OK) != 0)
 			return ;
@@ -31,36 +31,38 @@ void	heredoc_filename(t_minishell **mini)
 	return ;
 }
 
-void	open_here_doc(t_minishell *mini, int *fd)
+void	open_here_doc(t_minishell *mini, t_list *node, int *fd, int dupp)
 {
 	char	*line;
 
-	heredoc_filename(&mini);
-	printf("%s\n", mini->filename);
+	if (mini && mini->exc)
+	{heredoc_filename(&mini);
 	*fd = open(mini->filename, O_CREAT | O_RDWR, 0644);
 	if (*fd < 0)
 		{perror("Minishell_open_here_doc");return;}
+	dup2(dupp, STDIN_FILENO);
+	int du = dup(STDOUT_FILENO);
+	// printf("%s\n", mini->filename);
 	while (1)
 	{
-		line = gnl(0);
+		dup2(STDIN_FILENO, STDOUT_FILENO);
+		line = readline("Minishell> ");
 		if (!line)
 			break;
-		if (ft_strncmp(line, mini->exc->redrc->pt, ft_strlen(mini->exc->redrc->pt)) == 0)
+		if (ft_strncmp(line, node->pt, ft_strlen(node->pt) + 1) == 0)
 			break ;
-		if (mini->exc->redrc->acs == 1)
+		if (node->acs == 1)
 			line = expand_var(mini, line);
-		if (line)
-			ft_putendl_fd(line, *fd);
-		else if (!line)
-			write(*fd, "\n", 1);	
+		ft_putendl_fd(line, *fd);
 		free(line);
 	}
+	dup2(du, STDOUT_FILENO);
 	close(*fd);
 	*fd = open(mini->filename, O_CREAT | O_RDWR, 0644);
 	if (*fd < 0)
 	{
 		perror("Minishell_open_here_doc");
 		return ;
-	}
+	}}
 	return ;
 }

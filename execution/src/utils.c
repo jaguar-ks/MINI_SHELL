@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:48:38 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/11 20:42:32 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/13 01:57:28 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char *find_cmd(char **path, char *cmd, t_minishell *mini)
 {
+	(void)mini;
 	char *tmp;
 	char *tmp1;
 
@@ -21,8 +22,7 @@ char *find_cmd(char **path, char *cmd, t_minishell *mini)
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
 			return (cmd);
-		perror("minishell");
-		exit(127);
+		return(NULL);
 	}
 	while (path && *path)
 	{
@@ -33,9 +33,6 @@ char *find_cmd(char **path, char *cmd, t_minishell *mini)
 		free(tmp1);
 		path++;
 	}
-	*mini->ext_st = 127;
-	perror("minishell_find_cmd");
-	exit(127);
 	return (NULL);
 }
 

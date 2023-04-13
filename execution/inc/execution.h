@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:31:17 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/12 06:03:58 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/13 00:13:43 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ char	**convert_env(t_list *env);
 // **	Returns path variable splitted
 char 	*get_cmd_path(t_minishell *mini, char *cmd);
 
-void	open_here_doc(t_minishell *mini, int *in_fd);
+void	open_here_doc(t_minishell *mini, t_list *node, int *in_fd, int dup);
 
 #endif
