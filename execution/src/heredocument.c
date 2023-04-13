@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/13 06:00:52 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/13 16:55:12 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	open_here_doc(t_minishell *mini, t_list *node, int *fd, int dupp)
 		line = readline("Minishell> ");
 		if (!line)
 			break;
-		printf("HEY\n");
 		if (ft_strncmp(line, node->pt, ft_strlen(node->pt) + 1) == 0)
 			break ;
 		if (node->acs == 1)

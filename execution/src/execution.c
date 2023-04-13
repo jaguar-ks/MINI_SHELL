@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/13 05:58:31 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:25:22 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	handle_redrc_and_heredoc(t_minishell *mini, t_exec *exec_cmd)
 		{
 			fd = open(tmp->pt, O_RDONLY);
 			if (fd < 0)
-				{*mini->ext_st = errno; perror("Minishell_redrc"); exit(1);}
+				{*mini->ext_st = 1; perror("Minishell_redrc1"); exit(1);}
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
@@ -87,7 +87,7 @@ void	handle_redrc_and_heredoc(t_minishell *mini, t_exec *exec_cmd)
 			else
 				fd = open(tmp->pt, O_CREAT | O_APPEND | O_RDWR, 0644);
 			if (fd < 0)
-				{*mini->ext_st = errno; perror("Minishell_redrc"); exit(1);}
+				{*mini->ext_st = 1; perror("Minishell_redrc2"); exit(1);}
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
@@ -109,13 +109,14 @@ void	execute_one_command(t_minishell *mini, t_exec *exec_cmd)
 	path = NULL;
 	if (exec_cmd->redrc != NULL)
 		handle_redrc_and_heredoc(mini, exec_cmd);
-	if (exec_cmd && exec_cmd->cmd_exec && exec_cmd->cmd_exec[0][0] != '\0')
+	if (exec_cmd && exec_cmd->cmd_exec)
 	{
 		path = get_cmd_path(mini, exec_cmd->cmd_exec[0]);
-		if (!path)
+		if (!path || exec_cmd->cmd_exec[0][0] == '\0')
 			cmd_not_found(exec_cmd->cmd_exec);
 		execve(path, exec_cmd->cmd_exec, take_char_env(mini->env));
 	}
+	exit(0);
 	return ;
 }
 
@@ -137,6 +138,10 @@ void	execute_command_with_nopipe(t_minishell *mini, t_exec *exec_cmd)
 }
 
 // **************** COMMENTS **************** //
+
+// Should not wait in while, for each command 
+//	cat | cat | cat | ls doesnt behave as bash
+// still have to handle (. && ..) when they are given as command
 
 // ***************************************** //
 void	execute_cmds(t_minishell *mini)
@@ -166,6 +171,8 @@ void	execute_cmds(t_minishell *mini)
 				dup2(mini->fd[1], STDOUT_FILENO);
 			close(mini->fd[0]);
 			close(mini->fd[1]);
+			close(old_fd[0]);
+			close(old_fd[1]);
 			execute_one_command(mini, tmp);
 			return ;
 		}
@@ -174,7 +181,10 @@ void	execute_cmds(t_minishell *mini)
 			wait(mini->ext_st);
 			if (WIFEXITED(*mini->ext_st))
 				*mini->ext_st = WEXITSTATUS(*mini->ext_st);
-			dup2(mini->fd[0], STDIN_FILENO);
+			if (tmp->next && !tmp->next->redrc)
+				dup2(mini->fd[0], STDIN_FILENO);
+			else if (tmp->next && tmp->next->redrc && (tmp->next->redrc->wt == IN_F || tmp->next->redrc->wt == LMTR))
+				dup2(-1, STDIN_FILENO);
 			close(mini->fd[0]);
 			close(mini->fd[1]);
 			tmp = tmp->next;
@@ -182,5 +192,7 @@ void	execute_cmds(t_minishell *mini)
 	}
 	dup2(old_fd[0], STDIN_FILENO);
 	dup2(old_fd[1], STDOUT_FILENO);
+	close(old_fd[0]);
+	close(old_fd[1]);
 	return;
 }
