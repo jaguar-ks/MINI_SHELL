@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/13 02:16:27 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/13 06:00:52 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	open_here_doc(t_minishell *mini, t_list *node, int *fd, int dupp)
 	if (*fd < 0)
 		{perror("Minishell_open_here_doc");return;}
 	dup2(dupp, STDIN_FILENO);
-	int du = dup(STDOUT_FILENO);
+	int dup_out = dup(STDOUT_FILENO);
 	// printf("%s\n", mini->filename);
 	while (1)
 	{
@@ -49,6 +49,7 @@ void	open_here_doc(t_minishell *mini, t_list *node, int *fd, int dupp)
 		line = readline("Minishell> ");
 		if (!line)
 			break;
+		printf("HEY\n");
 		if (ft_strncmp(line, node->pt, ft_strlen(node->pt) + 1) == 0)
 			break ;
 		if (node->acs == 1)
@@ -56,7 +57,7 @@ void	open_here_doc(t_minishell *mini, t_list *node, int *fd, int dupp)
 		ft_putendl_fd(line, *fd);
 		free(line);
 	}
-	dup2(du, STDOUT_FILENO);
+	dup2(dup_out, STDOUT_FILENO);
 	close(*fd);
 	*fd = open(mini->filename, O_CREAT | O_RDWR, 0644);
 	if (*fd < 0)

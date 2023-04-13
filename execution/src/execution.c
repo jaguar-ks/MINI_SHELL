@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/13 02:15:47 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/13 05:58:31 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@
 # define FLG 14
 */
 
-void	handle_redrc_and_heredoc(t_minishell *mini)
+void	handle_redrc_and_heredoc(t_minishell *mini, t_exec *exec_cmd)
 {
 	int		fd;
-	int		dup_fd;
+	int		dup_in;
 	t_list	*tmp;
 
 	fd = 0;
-	dup_fd = dup(STDIN_FILENO);
-	tmp = mini->exc->redrc;
+	dup_in = dup(STDIN_FILENO);
+	tmp = exec_cmd->redrc;
 	signal(SIGINT, handl_segint_child);
 	while (tmp)
 	{
@@ -93,44 +93,41 @@ void	handle_redrc_and_heredoc(t_minishell *mini)
 		}
 		else if (tmp->wt == LMTR)
 		{
-			open_here_doc(mini, tmp, &fd, dup_fd);
+			open_here_doc(mini, tmp, &fd, dup_in);
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
 		tmp = tmp->next;
 	}
-	// if (tmp->wt == LMTR || )
 	return;
 }
 
-void	execute_one_command(t_minishell *mini)
+void	execute_one_command(t_minishell *mini, t_exec *exec_cmd)
 {
 	char	*path;
 
 	path = NULL;
-	if (mini->exc->redrc != NULL)
-		handle_redrc_and_heredoc(mini);
-	if (mini->exc && mini->exc->cmd_exec && mini->exc->cmd_exec[0][0] != '\0')
+	if (exec_cmd->redrc != NULL)
+		handle_redrc_and_heredoc(mini, exec_cmd);
+	if (exec_cmd && exec_cmd->cmd_exec && exec_cmd->cmd_exec[0][0] != '\0')
 	{
-		path = get_cmd_path(mini, mini->exc->cmd_exec[0]);
+		path = get_cmd_path(mini, exec_cmd->cmd_exec[0]);
 		if (!path)
-			cmd_not_found(mini->exc->cmd_exec);
-		execve(path, mini->exc->cmd_exec, take_char_env(mini->env));
+			cmd_not_found(exec_cmd->cmd_exec);
+		execve(path, exec_cmd->cmd_exec, take_char_env(mini->env));
 	}
 	return ;
 }
 
 // Execute command and handle redirections, if there is no pipe
-void	execute_command_with_nopipe(t_minishell *mini)
+void	execute_command_with_nopipe(t_minishell *mini, t_exec *exec_cmd)
 {
-	t_exec	*tmp;
 	int	pid;
 
-	tmp = mini->exc;
 	pid = fork();
 	if (pid == 0)
 	{
-		execute_one_command(mini);
+		execute_one_command(mini, exec_cmd);
 		exit(*mini->ext_st);
 	}
 	wait(mini->ext_st);
@@ -144,33 +141,46 @@ void	execute_command_with_nopipe(t_minishell *mini)
 // ***************************************** //
 void	execute_cmds(t_minishell *mini)
 {
-	// int		old_fd[2];
+	int		old_fd[2];
+	pid_t	pid;
 	t_exec	*tmp;
 	
+	pid = 0;
 	tmp = mini->exc;
-	// *mini->ext_st = 0;
-	if (tmp && tmp->next == NULL)
+	if (tmp && tmp->cmd_exec && tmp->next == NULL)
 	{
-		execute_command_with_nopipe(mini);
+		execute_command_with_nopipe(mini, tmp);
 		if (access((const char *)mini->filename, F_OK) == 0)
 			unlink((const char *)mini->filename);
 		return;
 	}
-	// old_in[0] = dup(STDIN_FILENO);
-	// old_out[1] = dup(STDOUT_FILENO);
-	// while (tmp)
-	// {
-	// 	pipe(mini->fd);
-	// 	pid = fork();
-	// 	if (pid == 0)
-	// 	{
-	// 		if (tmp->redrc != NULL)
-	// 			handle_redrc_and_heredoc(tmp);
-
-	// 	}
-
-	// }
-	// dup2(old_in[0], STDIN_FILENO);
-	// dup2(old_out[1], STDOUT_FILENO);
+	old_fd[0] = dup(STDIN_FILENO);
+	old_fd[1] = dup(STDOUT_FILENO);
+	while (tmp)
+	{
+		pipe(mini->fd);
+		pid = fork();
+		if (pid == 0)
+		{
+			if (tmp->next != NULL)
+				dup2(mini->fd[1], STDOUT_FILENO);
+			close(mini->fd[0]);
+			close(mini->fd[1]);
+			execute_one_command(mini, tmp);
+			return ;
+		}
+		else
+		{
+			wait(mini->ext_st);
+			if (WIFEXITED(*mini->ext_st))
+				*mini->ext_st = WEXITSTATUS(*mini->ext_st);
+			dup2(mini->fd[0], STDIN_FILENO);
+			close(mini->fd[0]);
+			close(mini->fd[1]);
+			tmp = tmp->next;
+		}
+	}
+	dup2(old_fd[0], STDIN_FILENO);
+	dup2(old_fd[1], STDOUT_FILENO);
 	return;
 }
