@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/13 18:25:22 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/14 02:45:54 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ void	handle_redrc_and_heredoc(t_minishell *mini, t_exec *exec_cmd)
 		else if (tmp->wt == AP_F || tmp->wt == TR_F)
 		{
 			if (tmp->wt == TR_F)
-				fd = open(tmp->pt, O_CREAT | O_TRUNC | O_RDWR, 0644);
+				fd = open(tmp->pt, O_CREAT | O_TRUNC | O_RDONLY | O_WRONLY, 0644);
 			else
-				fd = open(tmp->pt, O_CREAT | O_APPEND | O_RDWR, 0644);
-			if (fd < 0)
-				{*mini->ext_st = 1; perror("Minishell_redrc2"); exit(1);}
+				fd = open(tmp->pt, O_CREAT | O_APPEND | O_RDONLY | O_WRONLY, 0644);
+			if (fd == -1)
+				{fprintf(stderr, "%s", tmp->pt);*mini->ext_st = 1; perror("Minishell_redrc2"); exit(1);}
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
@@ -167,32 +167,33 @@ void	execute_cmds(t_minishell *mini)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (tmp->next != NULL)
-				dup2(mini->fd[1], STDOUT_FILENO);
 			close(mini->fd[0]);
-			close(mini->fd[1]);
 			close(old_fd[0]);
 			close(old_fd[1]);
+			if (tmp->next != NULL)
+				dup2(mini->fd[1], STDOUT_FILENO);
+			close(mini->fd[1]);
 			execute_one_command(mini, tmp);
-			return ;
+			exit(1);
 		}
+		close(mini->fd[1]);
+		if (tmp->next && !tmp->next->redrc)
+			dup2(mini->fd[0], STDIN_FILENO);
 		else
-		{
+		{		
 			wait(mini->ext_st);
 			if (WIFEXITED(*mini->ext_st))
 				*mini->ext_st = WEXITSTATUS(*mini->ext_st);
-			if (tmp->next && !tmp->next->redrc)
-				dup2(mini->fd[0], STDIN_FILENO);
-			else if (tmp->next && tmp->next->redrc && (tmp->next->redrc->wt == IN_F || tmp->next->redrc->wt == LMTR))
-				dup2(-1, STDIN_FILENO);
-			close(mini->fd[0]);
-			close(mini->fd[1]);
-			tmp = tmp->next;
 		}
+		close(mini->fd[0]);
+		tmp = tmp->next;
 	}
 	dup2(old_fd[0], STDIN_FILENO);
 	dup2(old_fd[1], STDOUT_FILENO);
 	close(old_fd[0]);
 	close(old_fd[1]);
+	while (waitpid(-1, mini->ext_st, 0) != -1)
+		if (WIFEXITED(*mini->ext_st))
+			*mini->ext_st = WEXITSTATUS(*mini->ext_st);
 	return;
-}
+	}

@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/13 02:18:47 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/14 02:06:27 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	take_and_do_cmd(t_minishell *mini)
 
 void	mini_shell(t_minishell *mini)
 {
-	mini->prompt = inisialise_prompt_2();
+	mini->prompt = inisialise_prompt();
+	rl_catch_signals = 0;
 	mini->line = readline(mini->prompt);
 	if (!mini->line)
 		out(mini);
