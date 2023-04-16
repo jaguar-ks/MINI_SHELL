@@ -6,63 +6,56 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/14 02:25:13 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/16 00:15:47 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	heredoc_filename(t_minishell **mini)
+void	heredoc_filename(t_exec **mini, int *heredoc_fd)
 {
 	char	*tmp;
 	char	*name;
 	int		i;
 
 	i = -1;
-	while (++i < 1000)
+	while (++i < INT_MAX)
 	{
 		tmp = ft_itoa(i);
 		name = ft_strjoin(ft_strdup("/tmp/heredoc_"), tmp);
-		ft_strlcpy((*mini)->filename, name, ft_strlen(name)+1);
+		ft_strlcpy((*mini)->heredoc_filename, name, ft_strlen(name) + 1);
 		free(name);
-		if (access((*mini)->filename, F_OK) != 0)
-			return ;
+		if (access((*mini)->heredoc_filename, F_OK) != 0)
+			break ;
 	}
+	*heredoc_fd = open((*mini)->heredoc_filename, O_CREAT | O_WRONLY, 0644);
+	if (*heredoc_fd < 0)
+		error((*mini)->heredoc_filename, 1);
 	return ;
 }
 
-void	open_here_doc(t_minishell *mini, t_list *node, int *fd, int dupp)
+void	open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
 {
+	(void)mini;
 	char	*line;
 
-	if (mini && mini->exc)
-	{heredoc_filename(&mini);
-	*fd = open(mini->filename, O_CREAT | O_RDWR, 0644);
-	if (*fd < 0)
-		{perror("Minishell_open_here_doc");return;}
-	dup2(dupp, STDIN_FILENO);
-	int dup_out = dup(STDOUT_FILENO);
-	// printf("%s\n", mini->filename);
-	while (1)
+	line = NULL;
+	if (fork() == 0)
 	{
-		dup2(STDIN_FILENO, STDOUT_FILENO);
-		line = readline("Minishell> ");
-		if (!line)
-			break;
-		if (ft_strncmp(line, node->pt, ft_strlen(node->pt) + 1) == 0)
-			break ;
-		if (node->acs == 1)
-			line = expand_var(mini, line);
-		ft_putendl_fd(line, *fd);
-		free(line);
+		while (1)
+		{
+			line = readline("$> ");
+			if (!line)
+				exit(0);
+			if (ft_strncmp(line, rdrc->pt, ft_strlen(rdrc->pt) +1) == 0)
+				{free(line);close(node->in);exit(0);}
+			if (rdrc->acs)
+				line = expand_var(mini, line);
+			ft_putendl_fd(line, node->in);
+			free(line);
+		}
 	}
-	dup2(dup_out, STDOUT_FILENO);
-	close(*fd);
-	*fd = open(mini->filename, O_CREAT | O_RDWR, 0644);
-	if (*fd < 0)
-	{
-		perror("Minishell_open_here_doc");
-		return ;
-	}}
+	else
+		wait(NULL);
 	return ;
 }

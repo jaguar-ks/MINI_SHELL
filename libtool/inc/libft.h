@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/12 06:02:56 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/15 20:47:38 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ typedef struct s_exec
 {
 	char			**cmd_exec;
 	t_list			*redrc;
+	int				in;
+	int				out;
+	char			heredoc_filename[20];
 	struct s_exec	*next;
 }	t_exec;
 
@@ -64,8 +67,8 @@ typedef struct s_minishell
 	int		fd[2];
 	char	*line;
 	char	*prompt;
-	char	filename[15];
 	t_exec	*exc;
+	int		open_fds[OPEN_MAX];
 	t_list	*cmd;
 	t_list	*env;
 }	t_minishell;
