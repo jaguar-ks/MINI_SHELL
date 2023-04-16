@@ -6,13 +6,13 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/16 00:15:47 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/16 19:01:16 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	heredoc_filename(t_exec **mini, int *heredoc_fd)
+void	heredoc_filename(t_exec **command)
 {
 	char	*tmp;
 	char	*name;
@@ -23,14 +23,14 @@ void	heredoc_filename(t_exec **mini, int *heredoc_fd)
 	{
 		tmp = ft_itoa(i);
 		name = ft_strjoin(ft_strdup("/tmp/heredoc_"), tmp);
-		ft_strlcpy((*mini)->heredoc_filename, name, ft_strlen(name) + 1);
+		ft_strlcpy((*command)->heredoc_filename, name, ft_strlen(name) + 1);
 		free(name);
-		if (access((*mini)->heredoc_filename, F_OK) != 0)
+		if (access((*command)->heredoc_filename, F_OK) != 0)
 			break ;
 	}
-	*heredoc_fd = open((*mini)->heredoc_filename, O_CREAT | O_WRONLY, 0644);
-	if (*heredoc_fd < 0)
-		error((*mini)->heredoc_filename, 1);
+	(*command)->in = open((*command)->heredoc_filename, O_CREAT | O_WRONLY, 0644);
+	if ((*command)->in < 0)
+		error((*command)->heredoc_filename, 1);
 	return ;
 }
 
@@ -55,7 +55,39 @@ void	open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
 			free(line);
 		}
 	}
-	else
-		wait(NULL);
+	wait(NULL);
+	close(node->in);
+	node->in = open(node->heredoc_filename, O_RDONLY, 0644);
+	if (node->in < 0)
+		error(node->heredoc_filename, 1);
+	return ;
+}
+
+void	open_heredoc(t_minishell *mini, t_exec *cmd_list)
+{
+	t_list	*tmp2;
+
+	while (cmd_list)
+	{
+		cmd_list->in = -1;
+		cmd_list->out = -1;
+		ft_bzero(cmd_list->heredoc_filename, 20);
+		if (cmd_list->redrc)
+		{
+			tmp2 = cmd_list->redrc;
+			while (tmp2)
+			{
+				if (tmp2->wt == LMTR)
+				{
+					heredoc_filename(&cmd_list);
+					mini->open_fds[mini->fd_cnt++] = cmd_list->in;
+					open_here_doc(mini, cmd_list, tmp2);
+				}
+				
+				tmp2 = tmp2->next;
+			}
+		}
+		cmd_list = cmd_list->next;
+	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:31:17 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/15 20:51:49 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/16 18:39:15 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ char 	*get_cmd_path(t_minishell *mini, char *cmd);
 
 void	open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc);
 
-void	heredoc_filename(t_exec **mini, int *heredoc_fd);
+void	heredoc_filename(t_exec **mini);
 
+void	open_pipes(t_exec *pipeline);
+
+void	close_file_descriptors(t_minishell *mini);
+
+void	open_heredoc(t_minishell *mini, t_exec *cmd_list);
 
 #endif

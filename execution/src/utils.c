@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:48:38 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/13 18:18:56 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/16 18:27:42 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,19 @@ char	*get_cmd_path(t_minishell *mini, char *cmd)
 	if (!path)
 		{perror("minishell_get_cmd_path:"); *mini->ext_st = 127; exit(127);}
 	return (find_cmd(path, cmd, mini));
+}
+
+void	close_file_descriptors(t_minishell *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < mini->fd_cnt)
+	{
+		close(mini->open_fds[i]);
+		i++;
+	}
+	return;
 }
 
 char	**convert_env(t_list *env)

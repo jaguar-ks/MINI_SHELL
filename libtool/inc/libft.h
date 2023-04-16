@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/15 20:47:38 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/16 18:01:26 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_list
 {
 	char			*pt;
 	int				wt;
-	int				acs; // if acs= 0 Noexpand, else expand (t_list *redrc)
+	int				acs;
 	struct s_list	*next;
 }	t_list;
 
@@ -64,11 +64,11 @@ typedef struct s_exec
 typedef struct s_minishell
 {
 	int		*ext_st;
-	int		fd[2];
 	char	*line;
 	char	*prompt;
 	t_exec	*exc;
 	int		open_fds[OPEN_MAX];
+	int		fd_cnt; // fd count
 	t_list	*cmd;
 	t_list	*env;
 }	t_minishell;
