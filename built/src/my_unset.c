@@ -6,25 +6,15 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 06:00:29 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/11 21:35:15 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/17 02:58:12 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/built.h"
 
-int	is_unset(t_list *cmd)
+int	is_unset(char *cmd)
 {
-	t_list	*tmp;
-
-	tmp = cmd;
-	while (tmp)
-	{
-		if (tmp->wt == CMD)
-			if (!ft_strncmp(tmp->pt, "unset", 5))
-				return (1);
-		tmp = tmp->next;
-	}
-	return (0);
+	return (ft_strcmp(cmd, "unset"));
 }
 
 int	check_unset_syntax(char *str, int *ext_st)
@@ -78,14 +68,11 @@ void	unset_from_env(char *str, t_minishell *mini)
 	}
 }
 
-void	my_unset(t_list *cmd, t_minishell *mini)
+void	my_unset(t_exec *cmd, t_minishell *mini)
 {
-	char	**cm;
 	int		i;
 
-	cm = take_char_cmd(cmd);
 	i = 0;
-	while (cm[++i])
-		unset_from_env(cm[i], mini);
-	deallocate(cm);
+	while (cmd->cmd_exec[++i])
+		unset_from_env(cmd->cmd_exec[i], mini);
 }

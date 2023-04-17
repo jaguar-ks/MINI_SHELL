@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:58:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/11 03:35:07 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/17 03:01:44 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,39 @@ int		check_builtin(char *cmd);
 /*check if the command line if it have a builtin command*/
 int		is_builtin(t_list *cmd);
 /*if there is a single command check if should not fork for the command*/
-int		should_not_fork(t_list *cmd);
+int		should_not_fork(char **cmd);
 /*execute a builting command*/
-void	do_builtin(t_list *cmd, t_minishell *mini, int f);
+void	do_builtin(t_exec *cmd, t_minishell *mini);
 /*check if the flag -n chould work*/
 int		check_echo_flg(char *flg);
 /*repreduce the echo bihavior*/
-void	my_echo(t_list *cmd);
+void	my_echo(t_exec *cmd);
 /*check if the command is echo*/
-int		is_echo(t_list *cmd);
+int		is_echo(char *cmd);
 /*repreduce the cd bihavior*/
-void	my_cd(t_list *cmd, t_minishell *mini);
+void	my_cd(t_exec *cmd, t_minishell *mini);
 /*update the pwd in the envirenment*/
 void	update_env(t_minishell *mini);
 /*if cd is called whith out args go to home path*/
 void	go_home(t_minishell *mini);
 /*check if the command is cd*/
-int		is_cd(t_list *cmd);
+int		is_cd(char *cmd);
 /*check if the command is pwd*/
-int		is_pwd(t_list *cmd);
+int		is_pwd(char *cmd);
 /*repreduce the pwd bihavior*/
-void	my_pwd(t_list *env);
+void	my_pwd(t_exec *env);
 /*check if the command is env*/
-int		is_env(t_list *cmd);
+int		is_env(char *cmd);
 /*repreduce the env bihavior*/
-void	my_env(t_list *env);
+void	my_env(t_exec *env);
 /*check if the command is exit*/
-int		is_exit(t_list *cmd);
+int		is_exit(char *cmd);
 /*check if the argiment passed to exit is valid*/
 int		valid_arg(char *arg);
 /*repreduce the exit bihavior*/
-void	my_exit(t_list *cmd, t_minishell *mini);
+void	my_exit(t_exec *cmd, t_minishell *mini);
 /*check if the command is unset*/
-int		is_unset(t_list *cmd);
+int		is_unset(char *cmd);
 /*check the unset syntax*/
 int		check_unset_syntax(char *str, int *ext_st);
 /*check if the str is the target to unset*/
@@ -63,11 +63,11 @@ int		is_the_target(char *str, char *env);
 it if it find it*/
 void	unset_from_env(char *str, t_minishell *mini);
 /*repreduce the unset bihavior*/
-void	my_unset(t_list *cmd, t_minishell *mini);
+void	my_unset(t_exec *cmd, t_minishell *mini);
 /*repreduce the export bihavior*/
-void	my_export(t_list *cmd, t_minishell *mini);
+void	my_export(t_exec *cmd, t_minishell *mini);
 /*check if the command is export*/
-int		is_export(t_list *cmd);
+int		is_export(char *cmd);
 /*sort a list*/
 void	sort_list(t_list *env);
 /*check the export syntax*/
