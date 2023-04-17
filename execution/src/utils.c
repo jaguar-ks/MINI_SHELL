@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:48:38 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/17 07:08:43 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 20:25:21 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ void	close_file_descriptors(t_minishell *mini)
 	i = 0;
 	while (i < mini->fd_cnt)
 	{
-		if (close(mini->open_fds[i]) != 0)
-			perror("close");
+		close(mini->open_fds[i]);
 		i++;
 	}
 	return ;

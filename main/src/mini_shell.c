@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 07:16:47 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 21:34:05 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 void	handl_segint_child(int segnum)
 {
 	if (segnum == SIGINT)
-	{
-		write(1, "\n", 1);
-		g_ext_st = 130;
-		exit(g_ext_st);
-	}
+		exit(130);
 }
 
 void	handl_segint(int segnum)

@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/17 07:15:25 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 21:34:00 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	_open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
 	line = NULL;
 	if (fork() == 0)
 	{
+		signal(SIGINT, handl_segint_child);
 		while (1)
 		{
 			line = readline("$> ");
@@ -66,7 +67,7 @@ static void	_open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
 }
 
 // ** Opens redirections '<' '>' '>>'
-static inline void	_handle_redirections(t_minishell *mini, t_list *token,
+static inline int	_handle_redirections(t_minishell *mini, t_list *token,
 	int *in, int *out)
 {
 	t_list	*tmp;
@@ -76,7 +77,7 @@ static inline void	_handle_redirections(t_minishell *mini, t_list *token,
 	{
 		*in = open(tmp->pt, O_RDONLY);
 		if (*in == -1)
-			error("Minishell_redrc1", 1);
+			return (error("Minishell_redrc1", 1));
 		mini->open_fds[mini->fd_cnt++] = *in;
 	}
 	else if (tmp->wt == AP_F || tmp->wt == TR_F)
@@ -87,10 +88,10 @@ static inline void	_handle_redirections(t_minishell *mini, t_list *token,
 			*out = open(tmp->pt, O_CREAT | O_APPEND | O_RDONLY | O_WRONLY,
 					0644);
 		if (*out == -1)
-			error("Minishell_redrc2", 1);
+			return (error("Minishell_redrc2", 1));
 		mini->open_fds[mini->fd_cnt++] = *out;
 	}
-	return ;
+	return (0);
 }
 
 /*	
@@ -101,7 +102,6 @@ void	open_heredoc_and_redirections(t_minishell *mini, t_exec *pipeline)
 {
 	t_list	*tmp2;
 
-	signal(SIGINT, handl_segint_child);
 	while (pipeline)
 	{
 		if (pipeline->redrc)
@@ -115,9 +115,9 @@ void	open_heredoc_and_redirections(t_minishell *mini, t_exec *pipeline)
 					mini->open_fds[mini->fd_cnt++] = pipeline->in;
 					_open_here_doc(mini, pipeline, tmp2);
 				}
-				else
-					_handle_redirections(mini, tmp2, &pipeline->in,
-						&pipeline->out);
+				else if (!pipeline->rdrct_err)
+					pipeline->rdrct_err = _handle_redirections(mini, tmp2, 
+							&pipeline->in, &pipeline->out);
 				tmp2 = tmp2->next;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 07:17:11 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 20:44:13 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_exec
 	t_list			*redrc;
 	int				in;
 	int				out;
+	int				rdrct_err;
 	char			heredoc_filename[25];
 	struct s_exec	*next;
 }	t_exec;
