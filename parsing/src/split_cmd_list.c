@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmd_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 03:09:09 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/11 03:28:13 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/17 07:16:07 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_list	**split_cmd_list(t_minishell *mini)
 	i = how_many_pipe(mini->cmd);
 	cmd = (t_list **)malloc(sizeof(t_list *) * (i + 1));
 	if (!cmd)
-		return(NULL);
+		return (NULL);
 	j = -1;
 	while (++j <= i)
 		cmd[j] = single_cmd(mini);
@@ -104,4 +104,3 @@ int	error(char *er, int ext_er)
 			strerror(errno), RED, er, WHITE);
 	return (ext_er);
 }
-

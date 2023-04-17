@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/11 03:29:29 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/17 07:16:27 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,6 @@ void	init_exc(t_minishell *mini);
 /*command not found*/
 void	cmd_not_found(char **cm);
 /*error printing*/
-int	    error(char *er, int ext_er);
+int		error(char *er, int ext_er);
 
 #endif

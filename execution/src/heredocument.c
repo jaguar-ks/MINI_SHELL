@@ -6,13 +6,14 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/17 05:02:32 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 07:15:25 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	heredoc_filename(t_exec **command)
+// **	Returns a heredocument filename that doesn't exist yet
+static void	_heredoc_filename(t_exec **command)
 {
 	char	*tmp;
 	char	*name;
@@ -28,15 +29,16 @@ void	heredoc_filename(t_exec **command)
 		if (access((*command)->heredoc_filename, F_OK) != 0)
 			break ;
 	}
-	(*command)->in = open((*command)->heredoc_filename, O_CREAT | O_WRONLY, 0644);
+	(*command)->in = open((*command)->heredoc_filename,
+			O_CREAT | O_WRONLY, 0644);
 	if ((*command)->in < 0)
 		error((*command)->heredoc_filename, 1);
 	return ;
 }
 
-void	open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
+// **	Read from STDIN until encountring DELIMITER or NULL
+static void	_open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
 {
-	(void)mini;
 	char	*line;
 
 	line = NULL;
@@ -47,8 +49,8 @@ void	open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
 			line = readline("$> ");
 			if (!line)
 				exit(0);
-			if (ft_strncmp(line, rdrc->pt, ft_strlen(rdrc->pt) +1) == 0)
-				{free(line);close(node->in);exit(0);}
+			if (ft_strncmp(line, rdrc->pt, ft_strlen(rdrc->pt) + 1) == 0)
+				return (free(line), close(node->in), exit(0));
 			if (rdrc->acs)
 				line = expand_var(mini, line);
 			ft_putendl_fd(line, node->in);
@@ -63,28 +65,63 @@ void	open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
 	return ;
 }
 
-void	open_heredoc(t_minishell *mini, t_exec *cmd_list)
+// ** Opens redirections '<' '>' '>>'
+static inline void	_handle_redirections(t_minishell *mini, t_list *token,
+	int *in, int *out)
+{
+	t_list	*tmp;
+
+	tmp = token;
+	if (tmp->wt == IN_F)
+	{
+		*in = open(tmp->pt, O_RDONLY);
+		if (*in == -1)
+			error("Minishell_redrc1", 1);
+		mini->open_fds[mini->fd_cnt++] = *in;
+	}
+	else if (tmp->wt == AP_F || tmp->wt == TR_F)
+	{
+		if (tmp->wt == TR_F)
+			*out = open(tmp->pt, O_CREAT | O_TRUNC | O_RDONLY | O_WRONLY, 0644);
+		else
+			*out = open(tmp->pt, O_CREAT | O_APPEND | O_RDONLY | O_WRONLY,
+					0644);
+		if (*out == -1)
+			error("Minishell_redrc2", 1);
+		mini->open_fds[mini->fd_cnt++] = *out;
+	}
+	return ;
+}
+
+/*	
+	Opens redirections '<' '>' '>>', and heredoc '<<' which is stored 
+	in a tmp file for later use in execute_pipeline()
+*/
+void	open_heredoc_and_redirections(t_minishell *mini, t_exec *pipeline)
 {
 	t_list	*tmp2;
 
-	while (cmd_list)
+	signal(SIGINT, handl_segint_child);
+	while (pipeline)
 	{
-		if (cmd_list->redrc)
+		if (pipeline->redrc)
 		{
-			tmp2 = cmd_list->redrc;
+			tmp2 = pipeline->redrc;
 			while (tmp2)
 			{
 				if (tmp2->wt == LMTR)
 				{
-					heredoc_filename(&cmd_list);
-					mini->open_fds[mini->fd_cnt++] = cmd_list->in;
-					open_here_doc(mini, cmd_list, tmp2);
+					_heredoc_filename(&pipeline);
+					mini->open_fds[mini->fd_cnt++] = pipeline->in;
+					_open_here_doc(mini, pipeline, tmp2);
 				}
-				
+				else
+					_handle_redirections(mini, tmp2, &pipeline->in,
+						&pipeline->out);
 				tmp2 = tmp2->next;
 			}
 		}
-		cmd_list = cmd_list->next;
+		pipeline = pipeline->next;
 	}
 	return ;
 }

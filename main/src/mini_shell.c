@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/16 23:16:24 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 07:16:47 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ void	handl_segint(int segnum)
 
 void	take_and_do_cmd(t_minishell *mini)
 {
-	// tokenization of input
 	take_cmd(mini);
-	// execution
-	execute_cmds(mini);
-	// exec_input(mini);
+	execute_pipeline(mini);
 	ft_lstclear(&mini->cmd);
 }
 

@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/16 23:18:13 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/04/17 06:25:14 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ PARSE := 	parsing/src/check_redirection.c \
 EXEC :=  	execution/src/execution.c \
 			execution/src/utils.c \
 			execution/src/heredocument.c \
-			execution/src/redirections.c
 			
 
 SRC := $(MAIN) $(PARSE) $(EXEC)
@@ -64,12 +63,12 @@ LIBTOOL := libtool/libft.a
 all : $(NAME)
 
 
-# readline is keg-only, which means it was not symlinked into /Users/mfouadi/.brew,
+# readline is keg-only, which means it was not symlinked into /Users/$USER/.brew,
 # because macOS provides BSD libedit.
 
 # For compilers to find readline you may need to set:
-#   export LDFLAGS="-L/Users/mfouadi/.brew/opt/readline/lib"
-#   export CPPFLAGS="-I/Users/mfouadi/.brew/opt/readline/include"
+#   "-L/Users/$USER/.brew/opt/readline/lib"
+#   "-I/Users/$USER/.brew/opt/readline/include"
 
 $(NAME): $(LIBTOOL) $(OBJ)
 	cc $(CFLAGS) $^ -o $@ $(READLINE_LIB)
