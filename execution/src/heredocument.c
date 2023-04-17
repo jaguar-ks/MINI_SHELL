@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/16 19:01:16 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 05:02:32 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,6 @@ void	open_heredoc(t_minishell *mini, t_exec *cmd_list)
 
 	while (cmd_list)
 	{
-		cmd_list->in = -1;
-		cmd_list->out = -1;
-		ft_bzero(cmd_list->heredoc_filename, 20);
 		if (cmd_list->redrc)
 		{
 			tmp2 = cmd_list->redrc;

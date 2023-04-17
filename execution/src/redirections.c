@@ -6,21 +6,32 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 17:42:01 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/16 17:49:48 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 04:42:06 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	open_pipes(t_exec *pipeline)
+void	open_pipes(t_minishell *mini, t_exec *pipeline)
 {
-	
-	if (!pipeline->next)
-		return ;
-	while (pipeline->next)
+	int	fd[2];
+	int	i;
+
+	i = 0;
+	pipeline->in = -1;
+	while (pipeline)
 	{
-		pipe((int [2]){pipeline->in, pipeline->out});
-		printf("in %d | out %d", pipeline->in, pipeline->out);
+		if (pipe(fd))
+			{perror("pipe");exit(1);}
+		mini->open_fds[mini->fd_cnt++] = fd[0];
+		mini->open_fds[mini->fd_cnt++] = fd[1];
+		if (pipeline->next)
+		{
+			pipeline->next->in = fd[0];
+			pipeline->out = fd[1];
+		}
+		// printf("in %d | out %d | i = %d\n", pipeline->in, pipeline->out, i);
+		i++;
 		pipeline = pipeline->next;
 	}
 	return ;

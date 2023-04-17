@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 02:45:15 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/16 20:51:10 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/16 23:06:36 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	cmd_not_found(char **cm)
 	DIR	*dir;
 
 	if (!cm || !cm[0])
-		{printf("Minishell: command not found\n");exit(127);}
+		exit(0);
 	dir = opendir(cm[0]);
 	if (dir)
 	{

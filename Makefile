@@ -6,7 +6,7 @@
 #    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/13 18:13:04 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/04/16 23:18:13 by mfouadi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ PARSE := 	parsing/src/check_redirection.c \
 
 EXEC :=  	execution/src/execution.c \
 			execution/src/utils.c \
-			execution/src/heredocument.c
+			execution/src/heredocument.c \
+			execution/src/redirections.c
 			
 
 SRC := $(MAIN) $(PARSE) $(EXEC)
