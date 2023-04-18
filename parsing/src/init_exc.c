@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 02:45:15 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/16 23:06:36 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/18 09:48:38 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	init_exc(t_minishell *mini)
 	while (cmd[++i])
 		take_exc_prt(&mini->exc, cmd[i]);
 	free(cmd);
+	ft_lstclear(&mini->cmd);
 }
 
 void	cmd_not_found(char **cm)

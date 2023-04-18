@@ -37,9 +37,19 @@ PARSE := 	parsing/src/check_redirection.c \
 EXEC :=  	execution/src/execution.c \
 			execution/src/utils.c \
 			execution/src/heredocument.c \
-			
 
-SRC := $(MAIN) $(PARSE) $(EXEC)
+BLTIN :=	built/src/check_built.c\
+			built/src/export_sub_fncts.c\
+			built/src/export_sub_fncts_2.c\
+			built/src/my_cd.c\
+			built/src/my_echo.c\
+			built/src/my_env.c\
+			built/src/my_exit.c\
+			built/src/my_export.c\
+			built/src/my_pwd.c\
+			built/src/my_unset.c\
+
+SRC := $(MAIN) $(PARSE) $(EXEC) $(BLTIN)
 
 OBJDIR := obj
 

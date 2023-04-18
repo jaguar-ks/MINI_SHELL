@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmd_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 03:09:09 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 07:16:07 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/18 09:58:49 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,12 @@ t_list	**split_cmd_list(t_minishell *mini)
 int	error(char *er, int ext_er)
 {
 	if (ext_er == 127)
-		ft_printf("%s❌Minishell : %sCommand not found : %s%s%s\n", STDERR_FILENO,
-			RED, WHITE, RED, er, WHITE);
+		ft_printf("Minishell : Command not found : %s\n", STDERR_FILENO, er);
 	else if (ext_er == 126)
-		ft_printf("%s❌Minishell : %sIs a directory : %s%s%s\n", STDERR_FILENO,
-			RED, WHITE, RED, er, WHITE);
+		ft_printf("Minishell : Is a directory : %s\n", STDERR_FILENO, er);
 	else if (ext_er == 258)
-		ft_printf("%s❌Minishell : %sSyntax error\n", STDERR_FILENO, RED, WHITE);
+		ft_printf("Minishell : Syntax error\n", STDERR_FILENO);
 	else
-		ft_printf("%s❌Minishell : %s%s : %s%s%s\n", STDERR_FILENO, RED, WHITE,
-			strerror(errno), RED, er, WHITE);
+		ft_printf("Minishell : %s : %s\n", STDERR_FILENO, strerror(errno), er);
 	return (ext_er);
 }

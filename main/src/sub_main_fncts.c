@@ -88,3 +88,18 @@ void	take_cmd(t_minishell *mini)
 	extract_wild_card(mini);
 	init_exc(mini);
 }
+
+void	free_exc(t_exec **lst)
+{
+	t_exec	*tmp;
+
+	if (!lst || !*lst)
+		return ;
+	while (lst && *lst)
+	{
+		tmp = (*lst)->next;
+		deallocate((*lst)->cmd_exec);
+		ft_lstclear(&(*lst)->redrc);
+		*lst = tmp;
+	}
+}

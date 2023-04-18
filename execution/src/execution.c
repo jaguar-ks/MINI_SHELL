@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/18 04:14:58 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/18 09:45:23 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	_execute_command(t_minishell *mini, t_exec *cmd_to_exec)
 	char	*path;
 
 	path = NULL;
+	if (cmd_to_exec->cmd_exec && check_builtin(cmd_to_exec->cmd_exec[0]))
+		return (do_builtin(cmd_to_exec, mini));
 	if (cmd_to_exec->cmd_exec && cmd_to_exec->cmd_exec[0])
 		path = get_cmd_path(mini, cmd_to_exec->cmd_exec[0]);
 	if (!path)

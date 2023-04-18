@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredocument.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/17 23:11:54 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/18 09:50:48 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-
 
 // **	Returns a heredocument filename that doesn't exist yet
 static void	_heredoc_filename(t_exec **command)
@@ -116,7 +115,7 @@ void	open_heredoc_and_redirections(t_minishell *mini, t_exec *pipeline)
 					_open_here_doc(mini, pipeline, tmp2);
 				}
 				else if (!pipeline->rdrct_err)
-					pipeline->rdrct_err = _handle_redirections(mini, tmp2, 
+					pipeline->rdrct_err = _handle_redirections(mini, tmp2,
 							&pipeline->in, &pipeline->out);
 				tmp2 = tmp2->next;
 			}
