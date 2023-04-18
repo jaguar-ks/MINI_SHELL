@@ -6,11 +6,12 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/17 21:34:00 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/17 23:11:54 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
 
 // **	Returns a heredocument filename that doesn't exist yet
 static void	_heredoc_filename(t_exec **command)
@@ -44,7 +45,6 @@ static void	_open_here_doc(t_minishell *mini, t_exec *node, t_list *rdrc)
 	line = NULL;
 	if (fork() == 0)
 	{
-		signal(SIGINT, handl_segint_child);
 		while (1)
 		{
 			line = readline("$> ");
@@ -77,7 +77,7 @@ static inline int	_handle_redirections(t_minishell *mini, t_list *token,
 	{
 		*in = open(tmp->pt, O_RDONLY);
 		if (*in == -1)
-			return (error("Minishell_redrc1", 1));
+			return (*mini->ext_st = error("Minishell_redrc1", 1), g_ext_st);
 		mini->open_fds[mini->fd_cnt++] = *in;
 	}
 	else if (tmp->wt == AP_F || tmp->wt == TR_F)
@@ -88,7 +88,7 @@ static inline int	_handle_redirections(t_minishell *mini, t_list *token,
 			*out = open(tmp->pt, O_CREAT | O_APPEND | O_RDONLY | O_WRONLY,
 					0644);
 		if (*out == -1)
-			return (error("Minishell_redrc2", 1));
+			return (*mini->ext_st = error("Minishell_redrc2", 1), g_ext_st);
 		mini->open_fds[mini->fd_cnt++] = *out;
 	}
 	return (0);

@@ -66,7 +66,7 @@ char	*inisialise_prompt(void)
 				ft_strjoin(ft_strdup(cd + i + 1),
 					ft_strjoin(ft_strdup("❯"),
 						ft_strjoin(ft_strdup("❨"),
-							ft_strjoin(ft_itoa(g_ext_st / 256),
+							ft_strjoin(ft_itoa(g_ext_st),
 								ft_strdup("❩ $➣ "))))));
 	}
 	return (ttl);
