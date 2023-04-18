@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 05:12:41 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 02:57:28 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:09:57 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	mtx_len(char **mx)
 
 int	is_exit(char *cmd)
 {
-	return (ft_strcmp(cmd, "exit"));
+	return ((ft_strcmp(cmd, "exit") == 0));
 }
 
 int	valid_arg(char *arg)

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:50:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 02:48:18 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:09:44 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_env(char *cmd)
 {
-	return (ft_strcmp(cmd, "env"));
+	return ((ft_strcmp(cmd, "env") == 0));
 }
 
 void	my_env(t_list *env)

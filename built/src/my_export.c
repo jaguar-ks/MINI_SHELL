@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 01:06:38 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 02:58:56 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:31:19 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_export(char *cmd)
 {
-	return (ft_strcmp(cmd, "export"));
+	return ((ft_strcmp(cmd, "export") == 0));
 }
 
 void	print_export(t_minishell *mini)
@@ -29,8 +29,7 @@ void	print_export(t_minishell *mini)
 	while (tmp)
 	{
 		if (tmp->acs)
-			ft_printf("%sdeclare - x %s%s\n", STDOUT_FILENO, GREEN,
-				WHITE, tmp->pt);
+			ft_printf("declare - x %s\n", STDOUT_FILENO, tmp->pt);
 		tmp = tmp->next;
 	}
 	ft_lstclear(&exprt);

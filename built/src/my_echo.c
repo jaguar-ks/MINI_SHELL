@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:44:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/18 09:37:16 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:09:12 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_echo(char *cmd)
 {
-	return (ft_strcmp(cmd, "echo"));
+	return ((ft_strcmp(cmd, "echo") == 0));
 }
 
 int	check_echo_flg(char *flg)

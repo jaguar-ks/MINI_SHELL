@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:56:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 03:02:34 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:22:37 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_cd(char *cmd)
 {
-	return (ft_strcmp(cmd, "cd"));
+	return ((ft_strcmp(cmd, "cd") == 0));
 }
 
 void	go_home(t_minishell *mini)

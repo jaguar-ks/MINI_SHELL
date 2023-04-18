@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/18 10:11:46 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:38:17 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	handl_segint(int segnum)
 void	take_and_do_cmd(t_minishell *mini)
 {
 	take_cmd(mini);
-	if (!mini->exc->next && check_builtin(mini->exc->cmd_exec[0])
-		&& !should_not_fork(mini->exc->cmd_exec))
+	if ((check_builtin(mini->exc->cmd_exec[0])
+			&& !should_not_fork(mini->exc->cmd_exec)) && !mini->exc->next)
 	{
 		open_heredoc_and_redirections(mini, mini->exc);
 		if (!mini->exc->rdrct_err)

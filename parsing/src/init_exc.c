@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 02:45:15 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/18 09:48:38 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:27:42 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	take_exc_prt(t_exec **exc, t_list *cmd)
 	if (!new)
 		return ;
 	new->next = NULL;
+	new->rdrct_err = 0;
 	new->cmd_exec = NULL;
 	if (check_cmd(cmd))
 		new->cmd_exec = take_char_cmd(cmd);

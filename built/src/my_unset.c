@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 06:00:29 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 02:58:12 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:30:41 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_unset(char *cmd)
 {
-	return (ft_strcmp(cmd, "unset"));
+	return ((ft_strcmp(cmd, "unset") == 0));
 }
 
 int	check_unset_syntax(char *str, int *ext_st)
@@ -50,8 +50,7 @@ void	unset_from_env(char *str, t_minishell *mini)
 
 	if (!check_unset_syntax(str, mini->ext_st))
 	{
-		ft_printf("%sMinishell : %s%s%s : %s%s\n", 2, RED, WHITE,
-			"not a valid identifier", RED, str, WHITE);
+		ft_printf("Minishell : %s : %s\n", 2, "not a valid identifier", str);
 		return ;
 	}
 	else if (!ft_strcmp(str, "_") || !ft_strcmp(str, "PWD"))
@@ -60,10 +59,7 @@ void	unset_from_env(char *str, t_minishell *mini)
 	while (tmp)
 	{
 		if (is_the_target(str, tmp->pt))
-		{
-			printf("-> %s\n", tmp->pt);
 			tmp->acs = 0;
-		}
 		tmp = tmp->next;
 	}
 }
