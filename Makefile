@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+         #
+#    By: faksouss <faksouss@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 19:14:08 by faksouss          #+#    #+#              #
-#    Updated: 2023/04/17 06:25:14 by mfouadi          ###   ########.fr        #
+#    Updated: 2023/04/17 06:25:14 by faksouss          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME := minishell
 
 CFLAGS := -Wall -Wextra -Werror -fsanitize=address
 
-READLINE_LIB :=  -lreadline -L/Users/mfouadi/.brew/opt/readline/lib
+READLINE_LIB :=  -lreadline -L/Users/faksouss/.brew/opt/readline/lib
 
 RM := rm -rf
 
@@ -55,7 +55,7 @@ INC_HEADERS :=	-Ibuilt/inc \
 				-Iparsing/inc \
 				-Imain/inc \
 				-Ilibtool/inc \
-				-I/Users/mfouadi/.brew/opt/readline/include
+				-I/Users/faksouss/.brew/opt/readline/include
 
 
 LIBTOOL := libtool/libft.a

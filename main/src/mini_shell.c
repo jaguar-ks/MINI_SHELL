@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/17 23:41:02 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/04/18 09:17:17 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void wait_childs(t_minishell *mini)
 void	take_and_do_cmd(t_minishell *mini)
 {
 	take_cmd(mini);
+	if (!mini->exc->next || check_builtin(mini->exc->cmd_exec[0]))
 	if (fork() == 0)
 	{
 		signal(SIGINT, handl_segint_child);
