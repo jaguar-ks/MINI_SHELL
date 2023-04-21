@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:44:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/18 11:09:12 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:22:41 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_echo_flg(char *flg)
 	i = 1;
 	while (flg[i] == 'n')
 		i++;
-	if (flg[i] == '\0' && i > 1)
+	if (flg[0] == '-' && flg[i] == '\0' && i > 1)
 		return (1);
 	else
 		return (0);

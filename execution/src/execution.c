@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/18 15:09:26 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:42:38 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	_execute_command(t_minishell *mini, t_exec *cmd_to_exec)
 	char	*path;
 
 	path = NULL;
-	if (check_builtin(cmd_to_exec->cmd_exec[0]))
+	if (mini->exc->cmd_exec && check_builtin(cmd_to_exec->cmd_exec[0]))
 		return (do_builtin(cmd_to_exec, mini), exit(*mini->ext_st));
 	if (cmd_to_exec->cmd_exec && cmd_to_exec->cmd_exec[0])
 		path = get_cmd_path(mini, cmd_to_exec->cmd_exec[0]);
@@ -26,15 +26,25 @@ static void	_execute_command(t_minishell *mini, t_exec *cmd_to_exec)
 		cmd_not_found(cmd_to_exec->cmd_exec);
 	execve(path, cmd_to_exec->cmd_exec, take_char_env(mini->env));
 	cmd_not_found(cmd_to_exec->cmd_exec);
+	exit(error("execve", errno));
 }
 
 // **	Wait for child processes until they finish
 static int	wait_childs(t_minishell *mini)
 {
-	while (waitpid(-1, mini->ext_st, 0) != -1)
+	int	pid;
+
+	while (1)
+	{
+		pid = waitpid(-1, mini->ext_st, 0);
+		if (pid == -1)
+			return (*mini->ext_st);
 		if (WIFEXITED(*mini->ext_st))
 			*mini->ext_st = WEXITSTATUS(*mini->ext_st);
-	return (*mini->ext_st);
+		if (*mini->ext_st == 11)
+			*mini->ext_st = (ft_printf("%d segmentation fault\n", 2, pid), 139);
+	}
+	return (0);
 }
 
 // Initialize fd's variables to -1, which means normal STDIN / STDOUT
@@ -56,10 +66,10 @@ static void	_execute_in_child(t_minishell *mini, t_exec *command)
 {
 	if (command->in > 0)
 		if (dup2(command->in, STDIN_FILENO) < 0)
-			perror("dup");
+			exit(error("dup", errno));
 	if (command->out > 0)
 		if (dup2(command->out, STDOUT_FILENO) < 0)
-			perror("dup");
+			exit(error("dup", errno));
 	close_file_descriptors(mini);
 	_execute_command(mini, command);
 }
@@ -87,7 +97,7 @@ void	execute_pipeline(t_minishell *mini)
 			_execute_in_child(mini, tmp);
 		if (access(tmp->heredoc_filename, F_OK) == 0)
 			if (unlink(tmp->heredoc_filename) != 0)
-				perror("unlink");
+				exit(error("unlink", errno));
 		tmp = tmp->next;
 	}
 	close_file_descriptors(mini);

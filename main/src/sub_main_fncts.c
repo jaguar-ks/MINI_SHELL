@@ -98,7 +98,8 @@ void	free_exc(t_exec **lst)
 	while (lst && *lst)
 	{
 		tmp = (*lst)->next;
-		deallocate((*lst)->cmd_exec);
+		if ((*lst)->cmd_exec)
+			deallocate((*lst)->cmd_exec);
 		ft_lstclear(&(*lst)->redrc);
 		*lst = tmp;
 	}

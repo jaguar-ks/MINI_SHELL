@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 02:45:15 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/18 11:27:42 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:28:40 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,5 @@ void	cmd_not_found(char **cm)
 	}
 	else
 		ext = error(cm[0], 127);
-	deallocate(cm);
 	exit(ext);
 }

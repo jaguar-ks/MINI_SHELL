@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/18 11:38:17 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:52:27 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	handl_segint_child(int segnum)
 {
 	if (segnum == SIGINT)
 		exit(130);
+	else if (segnum == SIGQUIT)
+	{
+		ft_printf("Quit\n", 2);
+		exit(131);
+	}
 }
 
 void	handl_segint(int segnum)
@@ -29,12 +34,14 @@ void	handl_segint(int segnum)
 			rl_redisplay();
 		g_ext_st = 130;
 	}
+	else if (segnum == SIGQUIT)
+		rl_redisplay();
 }
 
 void	take_and_do_cmd(t_minishell *mini)
 {
 	take_cmd(mini);
-	if ((check_builtin(mini->exc->cmd_exec[0])
+	if (mini->exc->cmd_exec && (check_builtin(mini->exc->cmd_exec[0])
 			&& !should_not_fork(mini->exc->cmd_exec)) && !mini->exc->next)
 	{
 		open_heredoc_and_redirections(mini, mini->exc);
@@ -46,6 +53,7 @@ void	take_and_do_cmd(t_minishell *mini)
 		if (fork() == 0)
 		{
 			signal(SIGINT, handl_segint_child);
+			signal(SIGQUIT, handl_segint_child);
 			execute_pipeline(mini);
 		}
 		while (waitpid(-1, mini->ext_st, 0) != -1)
@@ -84,8 +92,8 @@ int	main(int ac, char **av, char **en)
 	}
 	mini.env = take_env(en);
 	mini.ext_st = &g_ext_st;
-	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handl_segint);
+	signal(SIGQUIT, handl_segint);
 	while (1)
 		mini_shell(&mini);
 }

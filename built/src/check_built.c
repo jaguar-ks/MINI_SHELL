@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/18 11:39:02 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:31:32 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	check_builtin(char *cmd)
 {
+	if (!cmd)
+		return (0);
 	if (is_cd(cmd) || is_echo(cmd) || is_env(cmd) || is_exit(cmd)
 		|| is_unset(cmd) || is_export(cmd) || is_pwd(cmd))
 		return (1);
