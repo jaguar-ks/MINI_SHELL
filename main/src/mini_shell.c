@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/21 11:52:27 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:38:18 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	take_and_do_cmd(t_minishell *mini)
 			signal(SIGQUIT, handl_segint_child);
 			execute_pipeline(mini);
 		}
-		while (waitpid(-1, mini->ext_st, 0) != -1)
-			if (WIFEXITED(*mini->ext_st))
-				*mini->ext_st = WEXITSTATUS(*mini->ext_st);
+		waitpid(-1, mini->ext_st, 0);
+		if (WIFEXITED(*mini->ext_st))
+			*mini->ext_st = WEXITSTATUS(*mini->ext_st);
 	}
 	free_exc(&mini->exc);
 }

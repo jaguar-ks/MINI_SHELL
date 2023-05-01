@@ -87,6 +87,7 @@ void	take_cmd(t_minishell *mini)
 	identify_arg(mini);
 	extract_wild_card(mini);
 	init_exc(mini);
+	take_heredoc(mini);
 }
 
 void	free_exc(t_exec **lst)

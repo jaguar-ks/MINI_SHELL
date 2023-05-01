@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/18 09:21:51 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:40:50 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSING_H
 
 # include"../../libtool/inc/libft.h"
+# include"../../main/inc/mini_shell.h"
 
 # define HEREDOC 1
 # define LMTR 2
@@ -120,5 +121,7 @@ void	init_exc(t_minishell *mini);
 void	cmd_not_found(char **cm);
 /*error printing*/
 int		error(char *er, int ext_er);
+/*open the heredoc read it and stor it for later*/
+void	take_heredoc(t_minishell *mini);
 
 #endif

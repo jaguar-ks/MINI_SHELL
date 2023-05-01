@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/21 11:42:38 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:45:10 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,15 @@ static int	wait_childs(t_minishell *mini)
 {
 	int	pid;
 
+	pid = waitpid(-1, mini->ext_st, 0);
+	if (WIFEXITED(*mini->ext_st))
+		*mini->ext_st = WEXITSTATUS(*mini->ext_st);
+	if (*mini->ext_st == 11)
+		*mini->ext_st = (ft_printf("%d segmentation fault\n", 2, pid), 139);
 	while (1)
-	{
-		pid = waitpid(-1, mini->ext_st, 0);
-		if (pid == -1)
-			return (*mini->ext_st);
-		if (WIFEXITED(*mini->ext_st))
-			*mini->ext_st = WEXITSTATUS(*mini->ext_st);
-		if (*mini->ext_st == 11)
-			*mini->ext_st = (ft_printf("%d segmentation fault\n", 2, pid), 139);
-	}
-	return (0);
+		if (wait(NULL) == -1)
+			break ;
+	return (*mini->ext_st);
 }
 
 // Initialize fd's variables to -1, which means normal STDIN / STDOUT

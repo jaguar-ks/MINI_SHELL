@@ -32,7 +32,8 @@ PARSE := 	parsing/src/check_redirection.c \
 			parsing/src/take_char_cmd.c \
 			parsing/src/take_dollar.c \
 			parsing/src/take_env.c \
-			parsing/src/wild_card.c
+			parsing/src/wild_card.c \
+			parsing/src/read_heredoc.c
 
 EXEC :=  	execution/src/execution.c \
 			execution/src/utils.c \
