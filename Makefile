@@ -12,7 +12,7 @@
 
 NAME := minishell
 
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror #-fsanitize=address
 
 READLINE_LIB :=  -lreadline -L/Users/faksouss/.brew/opt/readline/lib
 

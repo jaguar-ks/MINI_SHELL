@@ -17,7 +17,9 @@ void	out(t_minishell *mini)
 	ft_lstclear(&mini->env);
 	free(mini->prompt);
 	free(mini->line);
+	rl_clear_history();
 	ft_printf("exit\n", 1);
+	system("leaks minishell");
 	exit(*mini->ext_st / 255);
 }
 
@@ -96,7 +98,7 @@ void	free_exc(t_exec **lst)
 
 	if (!lst || !*lst)
 		return ;
-	while (lst && *lst)
+	while (lst)
 	{
 		tmp = (*lst)->next;
 		if ((*lst)->cmd_exec)
