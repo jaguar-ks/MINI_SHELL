@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/05/01 20:38:18 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/02 20:04:59 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	take_and_do_cmd(t_minishell *mini)
 	if (mini->exc->cmd_exec && (check_builtin(mini->exc->cmd_exec[0])
 			&& !should_not_fork(mini->exc->cmd_exec)) && !mini->exc->next)
 	{
-		open_heredoc_and_redirections(mini, mini->exc);
+		open_redirections(mini, mini->exc);
 		if (!mini->exc->rdrct_err)
 			do_builtin(mini->exc, mini);
 	}

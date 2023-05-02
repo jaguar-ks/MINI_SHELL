@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:56:16 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/01 20:36:02 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/02 20:03:43 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static inline int	_handle_redirections(t_minishell *mini, t_list *token,
 	Opens redirections '<' '>' '>>', and heredoc '<<' which is stored 
 	in a tmp file for later use in execute_pipeline()
 */
-void	open_heredoc_and_redirections(t_minishell *mini, t_exec *pipeline)
+void	open_redirections(t_minishell *mini, t_exec *pipeline)
 {
 	t_list	*tmp2;
 

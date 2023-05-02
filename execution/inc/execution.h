@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:31:17 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/17 06:39:46 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/05/02 20:03:54 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	close_file_descriptors(t_minishell *mini);
 	Opens redirections '<' '>' '>>', and heredoc '<<' which is stored
 	in a tmp file for later use in execute_pipeline()
 */
-void	open_heredoc_and_redirections(t_minishell *mini, t_exec *cmd_list);
+void	open_redirections(t_minishell *mini, t_exec *cmd_list);
 
 #endif

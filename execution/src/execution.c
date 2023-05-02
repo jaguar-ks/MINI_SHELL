@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/02 15:44:33 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/02 20:04:13 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	execute_pipeline(t_minishell *mini)
 	init_var(mini, mini->exc);
 	if (mini->exc->next)
 		open_pipes(mini, mini->exc);
-	open_heredoc_and_redirections(mini, mini->exc);
+	open_redirections(mini, mini->exc);
 	tmp = mini->exc;
 	while (tmp)
 	{
