@@ -81,7 +81,7 @@ all : $(NAME)
 #   "-L/Users/$USER/.brew/opt/readline/lib"
 #   "-I/Users/$USER/.brew/opt/readline/include"
 
-$(NAME): $(LIBTOOL) $(OBJ)
+$(NAME): $(OBJ) $(LIBTOOL)
 	cc $(CFLAGS) $^ -o $@ $(READLINE_LIB)
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
