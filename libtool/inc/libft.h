@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/05/01 22:31:47 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:44:11 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_exec
 	int				in;
 	int				out;
 	int				rdrct_err;
-	char			heredoc_filename[25];
 	struct s_exec	*next;
 }	t_exec;
 

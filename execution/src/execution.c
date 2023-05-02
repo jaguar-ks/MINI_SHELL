@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/01 19:45:10 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:44:33 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void	init_var(t_minishell *mini, t_exec *pipeline)
 		pipeline->rdrct_err = 0;
 		pipeline->in = -2;
 		pipeline->out = -2;
-		ft_bzero(pipeline->heredoc_filename, 25);
 		pipeline = pipeline->next;
 	}
 	return ;
@@ -93,9 +92,6 @@ void	execute_pipeline(t_minishell *mini)
 			pid = fork();
 		if (pid == 0)
 			_execute_in_child(mini, tmp);
-		if (access(tmp->heredoc_filename, F_OK) == 0)
-			if (unlink(tmp->heredoc_filename) != 0)
-				exit(error("unlink", errno));
 		tmp = tmp->next;
 	}
 	close_file_descriptors(mini);

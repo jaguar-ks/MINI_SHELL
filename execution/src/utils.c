@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:48:38 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/04/17 20:25:21 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/05/02 15:25:37 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ char	*get_cmd_path(t_minishell *mini, char *cmd)
 		}
 		tmp = tmp->next;
 	}
-	if (!path)
-		error("minishell_get_cmd_path", 127);
 	return (find_cmd(path, cmd));
 }
 
