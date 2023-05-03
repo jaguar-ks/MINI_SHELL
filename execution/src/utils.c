@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:48:38 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/03 21:50:31 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/03 22:39:59 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	close_file_descriptors(t_minishell *mini)
 
 void	execute_all_commands(t_minishell *mini, t_exec *tmp, int *pid)
 {
-    while (tmp)
+	while (tmp)
 	{
 		*pid = -1;
 		if (!tmp->rdrct_err)
