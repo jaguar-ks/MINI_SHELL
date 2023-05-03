@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 02:31:17 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/02 20:03:54 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:47:56 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,9 @@ void	close_file_descriptors(t_minishell *mini);
 */
 void	open_redirections(t_minishell *mini, t_exec *cmd_list);
 
+// **	Execute commands
+void    execute_all_commands(t_minishell *mini, t_exec *tmp, int *pid);
+
+// **	dup FD's and Runs a command in child process 
+void	_execute_in_child(t_minishell *mini, t_exec *command);
 #endif

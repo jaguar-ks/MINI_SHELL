@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:48:38 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/03 17:30:48 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/05/03 21:50:31 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,30 @@ void	close_file_descriptors(t_minishell *mini)
 		i++;
 	}
 	return ;
+}
+
+void	execute_all_commands(t_minishell *mini, t_exec *tmp, int *pid)
+{
+    while (tmp)
+	{
+		*pid = -1;
+		if (!tmp->rdrct_err)
+			*pid = fork();
+		else
+		{
+			tmp = tmp->next;
+			continue ;
+		}
+		if (*pid == 0)
+			_execute_in_child(mini, tmp);
+		else if (*pid == -1)
+			exit(error("fork", 1));
+		tmp = tmp->next;
+	}
+	if (*pid != -1)
+	{		
+		waitpid(*pid, mini->ext_st, 0);
+		if (WIFEXITED(*mini->ext_st))
+			*mini->ext_st = WEXITSTATUS(*mini->ext_st);
+	}
 }
