@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 20:05:30 by faksouss          #+#    #+#             */
-/*   Updated: 2023/05/02 20:05:41 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:46:29 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,23 @@ static char	*expand_hd(t_minishell *mini, char *old_str)
 	return (free(old_str), new_str);
 }
 
+void	read_and_stor_hd(t_minishell *mini, t_list *hd, int fd)
+{
+	char	*line;
+
+	line = NULL;
+	while (1)
+	{
+		line = readline("$> ");
+		if (!line || ft_strncmp(line, hd->pt, ft_strlen(hd->pt) + 1) == 0)
+			return (free(line), exit(EXIT_SUCCESS));
+		if (hd->acs)
+			line = expand_hd(mini, line);
+		ft_putendl_fd(line, fd);
+		free(line);
+	}
+}
+
 static char	*_heredoc_filename(void)
 {
 	char	*tmp;
@@ -60,30 +77,28 @@ static char	*_heredoc_filename(void)
 
 static void	read_heredoc(t_minishell *mini, t_list *hd)
 {
-	char	*line;
 	char	*name;
 	int		fd;
+	int		pid;
 
-	line = NULL;
+	if (g_ext_st == 130)
+		return ;
 	name = _heredoc_filename();
-	if (!fork())
+	pid = fork();
+	if (!pid)
 	{
 		signal(SIGINT, handl_segint_child);
 		fd = open(name, O_CREAT | O_WRONLY, 0644);
 		if (fd == -1)
 			exit(error(name, 1));
-		while (1)
-		{
-			line = readline("$> ");
-			if (!line || ft_strncmp(line, hd->pt, ft_strlen(hd->pt) + 1) == 0)
-				return (free(line), exit(EXIT_SUCCESS));
-			if (hd->acs)
-				line = expand_hd(mini, line);
-			ft_putendl_fd(line, fd);
-			free(line);
-		}
+		read_and_stor_hd(mini, hd, fd);
 	}
-	hd->wt = (wait(NULL), free(hd->pt), hd->pt = name, IN_F);
+	else if (pid == -1)
+	{
+		*mini->ext_st = error("fork", 1);
+		return ;
+	}
+	hd->wt = (wait(mini->ext_st), free(hd->pt), hd->pt = name, IN_F);
 }
 
 void	take_heredoc(t_minishell *mini)
