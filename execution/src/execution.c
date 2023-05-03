@@ -6,7 +6,7 @@
 /*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/03 17:30:24 by mfouadi          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:37:21 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	_execute_command(t_minishell *mini, t_exec *cmd_to_exec)
 	path = NULL;
 	if (mini->exc->cmd_exec && mini->exc->cmd_exec[0]
 		&& check_builtin(cmd_to_exec->cmd_exec[0]))
-			return (do_builtin(cmd_to_exec, mini), exit(*mini->ext_st));
+		return (do_builtin(cmd_to_exec, mini), exit(*mini->ext_st));
 	if (cmd_to_exec->cmd_exec && cmd_to_exec->cmd_exec[0])
 		path = get_cmd_path(mini, cmd_to_exec->cmd_exec[0]);
 	if (!path)
