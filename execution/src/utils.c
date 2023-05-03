@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:48:38 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/02 15:25:37 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:30:48 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	open_pipes(t_minishell *mini, t_exec *pipeline)
 	while (pipeline)
 	{
 		if (pipe(fd))
-			error("pipe", 1);
+			exit(error("pipe", 1));
 		mini->open_fds[mini->fd_cnt++] = fd[0];
 		mini->open_fds[mini->fd_cnt++] = fd[1];
 		if (pipeline->next)

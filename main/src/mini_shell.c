@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:17:06 by faksouss          #+#    #+#             */
-/*   Updated: 2023/05/02 20:04:59 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:22:34 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ void	handl_segint(int segnum)
 		rl_redisplay();
 }
 
+/*
+** 	 echo '"'$USER'"' (NEEDS TI BE EXPANDED)
+**	 << data cat   $> g"$USER"$?'$USER' (doesnt expand)
+**	ls  | data < > s ==> Minishell : Syntax error
+**	unset _ (in bash, '_' in export it doesnt exists)
+**	cd - (has to print OLDPWD)
+*/
 void	take_and_do_cmd(t_minishell *mini)
 {
 	take_cmd(mini);

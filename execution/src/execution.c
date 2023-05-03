@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 05:39:29 by mfouadi           #+#    #+#             */
-/*   Updated: 2023/05/02 20:04:13 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:30:24 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ static void	_execute_command(t_minishell *mini, t_exec *cmd_to_exec)
 	char	*path;
 
 	path = NULL;
-	if (mini->exc->cmd_exec && check_builtin(cmd_to_exec->cmd_exec[0]))
-		return (do_builtin(cmd_to_exec, mini), exit(*mini->ext_st));
+	if (mini->exc->cmd_exec && mini->exc->cmd_exec[0]
+		&& check_builtin(cmd_to_exec->cmd_exec[0]))
+			return (do_builtin(cmd_to_exec, mini), exit(*mini->ext_st));
 	if (cmd_to_exec->cmd_exec && cmd_to_exec->cmd_exec[0])
 		path = get_cmd_path(mini, cmd_to_exec->cmd_exec[0]);
 	if (!path)
@@ -92,6 +93,8 @@ void	execute_pipeline(t_minishell *mini)
 			pid = fork();
 		if (pid == 0)
 			_execute_in_child(mini, tmp);
+		else if (pid == -1)
+			exit(error("pipe", 1));
 		tmp = tmp->next;
 	}
 	close_file_descriptors(mini);
