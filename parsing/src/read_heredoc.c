@@ -12,6 +12,33 @@
 
 #include "../inc/parsing.h"
 
+static char	*expand_hd(t_minishell *mini, char *old_str)
+{
+	int		i;
+	int		s;
+	char	*new_str;
+
+	i = 0;
+	new_str = NULL;
+	while (1)
+	{
+		s = i;
+		while (old_str[i])
+		{
+			if (old_str[i] == '$')
+				break ;
+			i++;
+		}
+		if (i > s)
+			new_str = ft_strjoin(new_str, ft_substr(old_str, s, i - s));
+		if (old_str[i] == '$')
+			new_str = ft_strjoin(new_str, take_dollar(mini, old_str, &i));
+		if (old_str[i] == '\0')
+			break ;
+	}
+	return (free(old_str), new_str);
+}
+
 static char	*_heredoc_filename(void)
 {
 	char	*tmp;
@@ -51,7 +78,7 @@ static void	read_heredoc(t_minishell *mini, t_list *hd)
 			if (!line || ft_strncmp(line, hd->pt, ft_strlen(hd->pt) + 1) == 0)
 				return (free(line), exit(EXIT_SUCCESS));
 			if (hd->acs)
-				line = expand_var(mini, line);
+				line = expand_hd(mini, line);
 			ft_putendl_fd(line, fd);
 			free(line);
 		}

@@ -70,7 +70,7 @@ char	*take_new_str(t_minishell *mini, t_list *prt)
 		while (prt->pt[i] != '"' && prt->pt[i] != '\'' && prt->pt[i])
 			i++;
 		if (i > s)
-			r = ft_strjoin(r, ft_substr(prt->pt, s, i - s));
+			r = ft_strjoin(r, expand_var(mini, ft_substr(prt->pt, s, i - s)));
 		if (prt->pt[i] == '"' && prt->wt != LMTR)
 			r = ft_strjoin(r, take_and_expand(mini, prt->pt, &i));
 		else if (prt->pt[i] == '\'' || (prt->pt[i] == '"' && prt->wt == LMTR))
