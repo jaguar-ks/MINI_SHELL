@@ -12,9 +12,15 @@
 
 NAME := minishell
 
-CFLAGS := -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS := -Wall -Wextra -Werror
 
-READLINE_LIB :=  -lreadline -L/Users/faksouss/.brew/opt/readline/lib
+READLINE = $(shell brew --prefix readline)
+
+READLINE_LIB :=  $(patsubst %, -lreadline -L%/lib, $(READLINE))
+
+READLINE_HEADER := $(patsubst %, -I%/include, $(READLINE))
+
+LIBTOOL := libtool/libft.a
 
 RM := rm -rf
 
@@ -66,13 +72,9 @@ INC_HEADERS :=	-Ibuilt/inc \
 				-Iparsing/inc \
 				-Imain/inc \
 				-Ilibtool/inc \
-				-I/Users/faksouss/.brew/opt/readline/include
-
-
-LIBTOOL := libtool/libft.a
+				$(READLINE_HEADER)
 
 all : $(NAME)
-
 
 # readline is keg-only, which means it was not symlinked into /Users/$USER/.brew,
 # because macOS provides BSD libedit.
@@ -81,8 +83,8 @@ all : $(NAME)
 #   "-L/Users/$USER/.brew/opt/readline/lib"
 #   "-I/Users/$USER/.brew/opt/readline/include"
 
-$(NAME): $(OBJ) $(LIBTOOL)
-	cc $(CFLAGS) $^ -o $@ $(READLINE_LIB)
+$(NAME): $(LIBTOOL) $(OBJ) 
+	cc $(CFLAGS) $(OBJ) -o $@ $(READLINE_LIB) $(LIBTOOL)
 	printf "\r\033[0;33mMINISHELL is ready to lunch enjoy 😉\033[0m\n"
 
 $(OBJDIR)/%.o : %.c $(HEADERS)
