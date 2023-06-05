@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 18:15:18 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/02 06:42:53 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 09:56:22 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void	take_and_do_cmd(t_minishell *mini);
 void	handl_segint(int segnum);
 void	handl_segint_child(int segnum);
 char	*inisialise_prompt_2(void);
+void	free_exc(t_exec **lst);
 
 #endif

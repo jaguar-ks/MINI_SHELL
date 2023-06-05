@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 23:51:45 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/04 03:37:24 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:24:59 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,24 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+typedef struct s_exec
+{
+	char			**cmd_exec;
+	t_list			*redrc;
+	int				in;
+	int				out;
+	int				rdrct_err;
+	struct s_exec	*next;
+}	t_exec;
+
 typedef struct s_minishell
 {
 	int		*ext_st;
-	int		fd[2];
 	char	*line;
 	char	*prompt;
+	t_exec	*exc;
+	int		open_fds[OPEN_MAX];
+	int		fd_cnt;
 	t_list	*cmd;
 	t_list	*env;
 }	t_minishell;

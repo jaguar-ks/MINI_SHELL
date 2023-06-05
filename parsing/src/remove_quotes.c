@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mfouadi <mfouadi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:55:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/08 23:25:39 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/11 05:03:43 by mfouadi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*take_and_expand(t_minishell *mini, char *str, int *i)
 			j++;
 		}
 		if (j > s)
-			r = ft_strjoin(r, ft_substr(str, s, (j - s) - (str[j] == str[*i])));
+			r = ft_strjoin(r, ft_substr(str, s, (j - s)));
 		if (str[j] == '$')
 			r = ft_strjoin(r, take_dollar(mini, str, &j));
 		if (str[j] == str[*i])
@@ -70,7 +70,7 @@ char	*take_new_str(t_minishell *mini, t_list *prt)
 		while (prt->pt[i] != '"' && prt->pt[i] != '\'' && prt->pt[i])
 			i++;
 		if (i > s)
-			r = ft_strjoin(r, ft_substr(prt->pt, s, i - s));
+			r = ft_strjoin(r, expand_var(mini, ft_substr(prt->pt, s, i - s)));
 		if (prt->pt[i] == '"' && prt->wt != LMTR)
 			r = ft_strjoin(r, take_and_expand(mini, prt->pt, &i));
 		else if (prt->pt[i] == '\'' || (prt->pt[i] == '"' && prt->wt == LMTR))

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 03:17:16 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/03 21:26:16 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:31:32 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,82 +14,37 @@
 
 int	check_builtin(char *cmd)
 {
-	if (!ft_strncmp(cmd, "echo", 5) || !ft_strncmp(cmd, "cd", 3)
-		|| !ft_strncmp(cmd, "pwd", 4) || !ft_strncmp(cmd, "env", 4)
-		|| !ft_strncmp(cmd, "unset", 6) || !ft_strncmp(cmd, "export", 7)
-		|| !ft_strncmp(cmd, "exit", 5))
+	if (!cmd)
+		return (0);
+	if (is_cd(cmd) || is_echo(cmd) || is_env(cmd) || is_exit(cmd)
+		|| is_unset(cmd) || is_export(cmd) || is_pwd(cmd))
 		return (1);
 	else
 		return (0);
 }
 
-int	is_builtin(t_list *cmd)
+void	do_builtin(t_exec *cmd, t_minishell *mini)
 {
-	t_list	*tmp;
-
-	tmp = cmd;
-	while (tmp)
-	{
-		if (tmp->wt == CMD)
-			if (check_builtin(tmp->pt))
-				return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-int	rdrct_outside_fork(t_list *cmd, t_minishell *mini)
-{
-	int	pid;
-
-	pid = fork();
-	if (!pid)
-	{
-		if (check_in_rdrct(cmd) || check_out_rdrct(cmd))
-			open_rdrct(cmd, mini);
-		exit(EXIT_SUCCESS);
-	}
-	else
-		waitpid(pid, mini->ext_st, 0);
-	if (*mini->ext_st != 0)
-		return (0);
-	return (1);
-}
-
-void	do_builtin(t_list *cmd, t_minishell *mini, int f)
-{
-	*mini->ext_st = 0;
-	if (!f)
-		if (!rdrct_outside_fork(cmd, mini))
-			return ;
-	if (is_echo(cmd))
+	if (is_echo(cmd->cmd_exec[0]))
 		my_echo(cmd);
-	else if (is_cd(cmd))
+	else if (is_cd(cmd->cmd_exec[0]))
 		my_cd(cmd, mini);
-	else if (is_pwd(cmd))
+	else if (is_pwd(cmd->cmd_exec[0]))
 		my_pwd(mini->env);
-	else if (is_env(cmd))
+	else if (is_env(cmd->cmd_exec[0]))
 		my_env(mini->env);
-	else if (is_exit(cmd))
+	else if (is_exit(cmd->cmd_exec[0]))
 		my_exit(cmd, mini);
-	else if (is_unset(cmd))
+	else if (is_unset(cmd->cmd_exec[0]))
 		my_unset(cmd, mini);
-	else if (is_export(cmd))
+	else if (is_export(cmd->cmd_exec[0]))
 		my_export(cmd, mini);
 }
 
-int	should_not_fork(t_list *cmd)
+int	should_not_fork(char **cmd)
 {
-	char	**cm;
-
-	if (!is_cd(cmd) && !is_exit(cmd) && !is_unset(cmd) && !is_export(cmd))
+	if (is_cd(cmd[0]) || is_exit(cmd[0]) || is_unset(cmd[0])
+		|| (is_export(cmd[0]) && cmd[1]))
 		return (0);
-	if (is_export(cmd))
-	{
-		cm = take_char_cmd(cmd);
-		if (!cm[1])
-			return (deallocate(cm), 0);
-		deallocate(cm);
-	}
 	return (1);
 }

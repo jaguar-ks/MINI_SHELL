@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_env_list_to_char.c                         :+:      :+:    :+:   */
+/*   take_char_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 20:33:49 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 08:27:43 by faksouss         ###   ########.fr       */
+/*   Created: 2023/04/11 03:11:24 by faksouss          #+#    #+#             */
+/*   Updated: 2023/04/18 09:22:43 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../inc/execution.h"
+#include"../inc/parsing.h"
 
 int	env_len(t_list *en)
 {
@@ -52,4 +52,58 @@ char	**take_char_env(t_list *en)
 	}
 	env[i] = NULL;
 	return (env);
+}
+
+int	check_cmd(t_list *cmd)
+{
+	t_list	*tmp;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp->wt == CMD)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	count_cmd_prt(t_list *cmd)
+{
+	t_list	*tmp;
+	int		ct;
+
+	ct = 0;
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp->wt == CMD || tmp->wt == FLG || tmp->wt == ARG)
+			ct++;
+		tmp = tmp->next;
+	}
+	return (ct);
+}
+
+char	**take_char_cmd(t_list *cmd)
+{
+	t_list	*tmp;
+	char	**cm;
+	int		i;
+	int		j;
+
+	cm = NULL;
+	i = count_cmd_prt(cmd);
+	cm = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!cm)
+		return (NULL);
+	tmp = cmd;
+	j = -1;
+	while (tmp)
+	{
+		if (tmp->wt == CMD || tmp->wt == FLG || tmp->wt == ARG)
+			cm[++j] = ft_strdup(tmp->pt);
+		tmp = tmp->next;
+	}
+	cm[j + 1] = NULL;
+	return (cm);
 }

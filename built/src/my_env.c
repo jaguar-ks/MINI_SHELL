@@ -6,25 +6,15 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:50:21 by faksouss          #+#    #+#             */
-/*   Updated: 2023/03/10 08:20:42 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:09:44 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/built.h"
 
-int	is_env(t_list *cmd)
+int	is_env(char *cmd)
 {
-	t_list	*tmp;
-
-	tmp = cmd;
-	while (tmp)
-	{
-		if (tmp->wt == CMD)
-			if (!ft_strncmp(tmp->pt, "env", 4))
-				return (1);
-		tmp = tmp->next;
-	}
-	return (0);
+	return ((ft_strcmp(cmd, "env") == 0));
 }
 
 void	my_env(t_list *env)

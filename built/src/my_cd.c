@@ -6,25 +6,15 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:56:39 by faksouss          #+#    #+#             */
-/*   Updated: 2023/04/04 03:43:07 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:22:37 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/built.h"
 
-int	is_cd(t_list *cmd)
+int	is_cd(char *cmd)
 {
-	t_list	*tmp;
-
-	tmp = cmd;
-	while (tmp)
-	{
-		if (tmp->wt == CMD)
-			if (!ft_strncmp(tmp->pt, "cd", 3))
-				return (1);
-		tmp = tmp->next;
-	}
-	return (0);
+	return ((ft_strcmp(cmd, "cd") == 0));
 }
 
 void	go_home(t_minishell *mini)
@@ -97,15 +87,11 @@ void	update_env(t_minishell *mini)
 	}
 }
 
-void	my_cd(t_list *cmd, t_minishell *mini)
+void	my_cd(t_exec *cmd, t_minishell *mini)
 {
-	char	**cm;
-
-	cm = take_char_cmd(cmd);
-	if (!cm[1])
+	if (!cmd->cmd_exec[1])
 		go_home(mini);
-	else if (chdir(cm[1]) < 0)
-		*mini->ext_st = error(cm[1], 1);
-	deallocate(cm);
+	else if (chdir(cmd->cmd_exec[1]) < 0)
+		*mini->ext_st = error(cmd->cmd_exec[1], 1);
 	update_env(mini);
 }
